@@ -1,0 +1,102 @@
+[
+  {
+    "id": "grossesse",
+    "name": "Coffret Grossesse",
+    "subtitle": "Grossesse",
+    "description": "Accompagnez vos collaboratrices pendant les 9 mois avec des soins naturels et bio pensés pour elles et bébé.",
+    "composition": [
+      "Huile de massage ventre anti-vergetures",
+      "Tisane grossesse bio",
+      "Crème hydratante naturelle",
+      "Carnet de grossesse artisanal",
+      "Infusion bien-être & surprise"
+    ],
+    "nbProduits": "6–8 produits",
+    "price": "40€ TTC",
+    "priceNote": "À partir de · 40€ / 60€ / 80€ TTC",
+    "tag": "Plus populaire",
+    "tagBg": "var(--pink)",
+    "tagColor": "var(--green-deep)",
+    "accentColor": "var(--green-deep)",
+    "photo": "/uploads/1773414643689-kqpc7g.JPG",
+    "photoAlt": "Produits naturels grossesse",
+    "iconEmoji": "🌸",
+    "featured": true,
+    "detailProducts": []
+  },
+  {
+    "name": "Coffret Naissance",
+    "subtitle": "Naissance",
+    "description": "Célébrez l'arrivée du bébé avec un coffret pensé pour les jeunes parents, alliant praticité et tendresse.",
+    "composition": [
+      "Lingettes biodégradables certifiées",
+      "Baume protecteur 100% naturel",
+      "Lotion douce bébé sans parfum",
+      "Doudou artisanal français",
+      "Cadeau personnalisé pour maman"
+    ],
+    "nbProduits": "8–10 produits",
+    "price": "60€ TTC",
+    "priceNote": "À partir de · 60€ / 110€ / 160€ TTC",
+    "tag": "Idéal retour congé",
+    "tagBg": "rgba(139,158,122,0.18)",
+    "tagColor": "var(--sage-dark)",
+    "accentColor": "var(--green-deep)",
+    "photo": "/uploads/1774648800479-otg31c.png",
+    "photoAlt": "Coffret naissance naturel",
+    "iconEmoji": "🍃",
+    "featured": false,
+    "detailProducts": [],
+    "id": "naissance"
+  },
+  {
+    "name": "Coffret Fêtes de fin d'année",
+    "subtitle": "Noël & Avent",
+    "description": "Célébrez les fêtes avec vos équipes. Un calendrier de l'Avent et un coffret Noël réunis pour une fin d'année inoubliable.",
+    "composition": [
+      "Calendrier de l'Avent O'Méa",
+      "Coffret Noël complet",
+      "Packaging festif personnalisé",
+      "Carte message entreprise incluse",
+      "Présentation ruban & coffret luxe"
+    ],
+    "nbProduits": "14–18 produits",
+    "price": "45€ TTC",
+    "priceNote": "À partir de · 45€ / 65€ / 85€ / 99€ TTC",
+    "tag": "Offre complète",
+    "tagBg": "var(--green-deep)",
+    "tagColor": "white",
+    "accentColor": "var(--green-deep)",
+    "photo": "/uploads/1774648779752-ed8qkj.png",
+    "photoAlt": "Coffret fêtes de fin d'année",
+    "iconEmoji": "🎄",
+    "featured": false,
+    "detailProducts": [],
+    "id": "fetes"
+  },
+  {
+    "name": "Événements ",
+    "subtitle": "Événements & CSE",
+    "description": "Mariages, anniversaires, fêtes… Marquez tous les moments importants avec des coffrets personnalisés.",
+    "composition": [
+      "Sélection produits naturels & artisanaux",
+      "Packaging 100% personnalisable",
+      "Logo entreprise intégré",
+      "Message sur mesure inclus",
+      "Livraison flexible & planifiée"
+    ],
+    "nbProduits": "5–12 produits",
+    "price": "49€ TTC",
+    "priceNote": "À partir de · TTC par coffret",
+    "tag": "Toutes occasions",
+    "tagBg": "rgba(232,168,124,0.18)",
+    "tagColor": "#B8744A",
+    "accentColor": "var(--green-deep)",
+    "photo": "/uploads/1774647918553-feh57l.png",
+    "photoAlt": "Coffret événements entreprise",
+    "iconEmoji": "🎁",
+    "featured": false,
+    "detailProducts": [],
+    "id": "evenements"
+  }
+]

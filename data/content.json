@@ -1,0 +1,632 @@
+{
+  "banner": {
+    "enabled": true,
+    "text": "Coffrets Fêtes 2026 - Joyeux Noël - Livraison offerte !",
+    "bgColor": "#FFEFDA",
+    "textColor": "#2D4A3E"
+  },
+  "hero": {
+    "tagline": "Solution cadeaux pour RH, CSE & Dirigeants",
+    "headline": "Le cadeau d'entreprise qui ",
+    "highlightedText": "renforce votre marque employeur",
+    "headlineEnd": "",
+    "subtitle": "Coffrets naturels et personnalisables pour chaque moment clé : maternité, naissance, fêtes, évènements CSE. Conforme URSSAF, livraison multi-sites, zéro logistique côté RH.",
+    "keyPoints": [
+      "100% exonéré URSSAF",
+      "Livraison multi-sites & domicile",
+      "Logo & message personnalisés",
+      "Devis sous 24h"
+    ],
+    "ctaPrimary": "Voir nos coffrets",
+    "ctaSecondary": "Obtenir un devis en 24h",
+    "socialProofCount": "+50 entreprises partenaires"
+  },
+  "benefits": {
+    "sectionTitle": "Tout ce qu'un DRH attend d'un cadeau d'entreprise",
+    "sectionSubtitle": "Des coffrets conçus pour simplifier la vie des équipes RH et valoriser l'expérience collaborateur à chaque moment clé.",
+    "items": [
+      {
+        "title": "Marque employeur renforcée",
+        "description": "87% des salariés valorisent les entreprises qui célèbrent leurs moments de vie. Un geste concret qui fidélise vos talents et fait parler votre culture interne.",
+        "iconName": "Heart",
+        "image": "/uploads/1773424302034-6qae7o.JPG"
+      },
+      {
+        "title": "Conformité & sérénité",
+        "description": "Coffrets 100% exonérés URSSAF. Produits certifiés sans perturbateurs endocriniens, traçabilité complète. Justificatifs fournis pour votre CSE.",
+        "iconName": "Leaf",
+        "image": "/uploads/3.2.png"
+      },
+      {
+        "title": "Logistique clé en main",
+        "description": "On gère tout : personnalisation, emballage, livraison individuelle multi-sites ou domicile, même en télétravail. Vous commandez, on déploie.",
+        "iconName": "MapPin",
+        "image": "/uploads/1773840094503-gpc2v1.jpeg"
+      },
+      {
+        "title": "ROI mesurable",
+        "description": "Améliorez la QVT, réduisez le turnover et renforcez l'engagement. Un investissement dont l'impact se mesure dans vos indicateurs RH.",
+        "iconName": "TrendingUp",
+        "image": "/uploads/1774647595567-7hmrv4.png"
+      }
+    ]
+  },
+  "whyOmea": {
+    "leftFeatures": [
+      {
+        "title": "Produits utiles & certifiés",
+        "desc": "Chaque article est sélectionné pour son utilité réelle et sa conformité santé. Zéro superflu.",
+        "iconName": "CheckCircle2"
+      },
+      {
+        "title": "100% exonéré URSSAF",
+        "desc": "Nos coffrets respectent les seuils d'exonération. Justificatifs fournis à votre CSE sur simple demande.",
+        "iconName": "CheckCircle2"
+      },
+      {
+        "title": "Sélection experte",
+        "desc": "Chaque coffret est composé par des spécialistes en bien-être et en cadeaux d'entreprise.",
+        "iconName": "CheckCircle2"
+      }
+    ],
+    "rightFeatures": [
+      {
+        "title": "Made in France",
+        "desc": "100% des produits sourcés auprès d'artisans et marques françaises. Un engagement RSE vérifiable pour vos rapports extra-financiers.",
+        "iconName": "CheckCircle2"
+      },
+      {
+        "title": "Packaging éco-responsable",
+        "desc": "Emballages recyclés, encres végétales, zéro plastique superflu. L'élégance sans compromis écologique.",
+        "iconName": "CheckCircle2"
+      },
+      {
+        "title": "Logistique pilotée",
+        "desc": "Livraison individuelle, multi-sites ou télétravail. Un interlocuteur dédié gère tout le processus.",
+        "iconName": "CheckCircle2"
+      }
+    ],
+    "centerTitle": "Coffret O'Méa",
+    "centerSubtitle": "6-10 produits sélectionnés"
+  },
+  "impact": {
+    "sectionTitle": "Un investissement RH qui <accent>se mesure</accent>",
+    "subtitle": "Chaque coffret est un signal fort à vos équipes : ici, on prend soin de vous. L'impact sur l'engagement et la rétention est réel et documentable. N'attendez plus !",
+    "stats": [
+      {
+        "value": "+50",
+        "label": "entreprises partenaires"
+      },
+      {
+        "value": "98%",
+        "label": "taux de satisfaction"
+      },
+      {
+        "value": "100%",
+        "label": "Made in France"
+      }
+    ],
+    "description": [
+      {
+        "title": "Améliorez la QVT",
+        "desc": "Un geste tangible aux moments clés de la vie de vos collaborateurs. Impact direct sur le bien-être au travail et les indicateurs QVT.",
+        "iconName": "Smile"
+      },
+      {
+        "title": "Fidélisez vos talents",
+        "desc": "Les entreprises qui célèbrent les moments de vie constatent un taux de rétention 40% supérieur. Un levier RH concret et mesurable.",
+        "iconName": "Users",
+        "highlight": "+40%",
+        "highlightLabel": "de rétention"
+      },
+      {
+        "title": "Alimentez votre reporting RSE",
+        "desc": "Produits naturels, artisans français, empreinte carbone réduite. Des données concrètes pour vos rapports extra-financiers et votre communication interne.",
+        "iconName": "Award"
+      }
+    ]
+  },
+  "personalization": {
+    "sectionTitle": "Votre coffret, à votre image",
+    "sectionSubtitle": "Vous validez, on déploie. De la sélection produit à la livraison individuelle, un interlocuteur dédié pilote l'ensemble du processus.",
+    "steps": [
+      {
+        "title": "Message personnalisé",
+        "desc": "Intégrez un mot de votre direction, de votre CSE ou un message individuel pour chaque collaborateur.",
+        "iconName": "MessageSquare"
+      },
+      {
+        "title": "Branding entreprise",
+        "desc": "Votre logo, vos couleurs et votre charte graphique sur le packaging et les cartes de vœux.",
+        "iconName": "Tag"
+      },
+      {
+        "title": "Sélection sur-mesure",
+        "desc": "Choisissez parmi nos gammes ou composez un coffret unique adapté à votre évènement et à votre budget.",
+        "iconName": "Package"
+      }
+    ]
+  },
+  "cta": {
+    "sectionTitle": "Simplifiez vos cadeaux d'entreprise avec O'Méa",
+    "subtitle": "Recevez votre devis personnalisé sous 24h. Un interlocuteur dédié vous accompagne de A à Z.",
+    "guarantees": [
+      "Devis gratuit sous 24h ouvrées",
+      "Interlocuteur dédié de bout en bout",
+      "100% exonéré URSSAF — justificatifs fournis",
+      "Tarifs dégressifs dès 10 coffrets"
+    ],
+    "testimonial": {
+      "quote": "L'impact sur notre marque employeur a été immédiat. Nos collaboratrices partagent les coffrets sur LinkedIn, c'est devenu un vrai argument de recrutement. Et côté logistique, zéro effort.",
+      "name": "Sophie L.",
+      "role": "DRH — EasyVista (450 salariés)",
+      "initials": "SL"
+    }
+  },
+  "testimonials": {
+    "sectionLabel": "Ils témoignent",
+    "items": [
+      {
+        "quote": "L'impact sur notre marque employeur a été immédiat. Nos collaboratrices partagent les coffrets sur LinkedIn.",
+        "name": "Sophie L.",
+        "role": "DRH",
+        "company": "EasyVista",
+        "initials": "SL",
+        "highlight": "immédiat"
+      },
+      {
+        "quote": "Zéro logistique de notre côté, livraison individuelle impeccable. Même nos équipes en télétravail ont reçu leur coffret à temps.",
+        "name": "Marie D.",
+        "role": "CSE",
+        "company": "CDTS",
+        "initials": "MD",
+        "highlight": "impeccable"
+      },
+      {
+        "quote": "La qualité des produits a surpris tout le monde. Naturels, français, élégants. Un cadeau d'entreprise crédible.",
+        "name": "Thomas R.",
+        "role": "Office Manager",
+        "company": "Berlin Packaging",
+        "initials": "TR",
+        "highlight": "crédible"
+      }
+    ]
+  },
+  "partners": {
+    "tag": "Ils nous font confiance",
+    "title": "Ce qu'en disent",
+    "titleHighlight": "nos partenaires",
+    "counter": "+50",
+    "counterLabel": "entreprises",
+    "ctaText": "Rejoignez-les",
+    "ctaHref": "#devis",
+    "items": [
+      {
+        "quote": "L'impact sur notre marque employeur a été immédiat. Nos collaboratrices partagent les coffrets sur LinkedIn. C'est devenu un vrai argument de recrutement.",
+        "name": "Sophie L.",
+        "role": "DRH — EasyVista",
+        "employees": "450 collaborateurs",
+        "initials": "SL",
+        "metric": "98%",
+        "metricLabel": "satisfaction",
+        "logo": "/EasyVista-logo-r-color.svg",
+        "photo": "/uploads/1774812904572-7uz9yo.png"
+      },
+      {
+        "quote": "Zéro logistique de notre côté, livraison individuelle impeccable. Même nos équipes en télétravail ont reçu leur coffret à temps.",
+        "name": "Marie D.",
+        "role": "Responsable CSE — CDTS",
+        "employees": "120 collaborateurs",
+        "initials": "MD",
+        "metric": "100%",
+        "metricLabel": "livrés à temps",
+        "logo": "/telesurveillance_teleassistance_cdts.png",
+        "photo": "/uploads/1774785871396-qtyb19.png",
+        "avatar": "/uploads/1774785938183-42lude.JPG"
+      },
+      {
+        "quote": "La qualité des produits a surpris tout le monde. Naturels, français, élégants. Exactement ce qu'il faut pour un cadeau d'entreprise crédible.",
+        "name": "Thomas R.",
+        "role": "Office Manager — Berlin Packaging",
+        "employees": "280 collaborateurs",
+        "initials": "TR",
+        "metric": "3x",
+        "metricLabel": "renouvellement",
+        "logo": "/news-20211026-berlin-packaging-logo.png",
+        "photo": "/uploads/1774812956832-oonk1w.png"
+      }
+    ]
+  },
+  "process": {
+    "label": "Processus simplifié",
+    "title": "3 étapes.",
+    "titleItalic": "Zéro friction.",
+    "subtitle": "Un interlocuteur dédié pilote tout, de la demande de devis à la livraison individuelle.",
+    "timeBadge": "Temps moyen : 48h entre validation et expédition",
+    "ctaText": "Demander un devis conforme",
+    "ctaHref": "#devis",
+    "steps": [
+      {
+        "icon": "MessageSquare",
+        "title": "Échangez avec nous",
+        "desc": "Décrivez votre besoin : nombre de coffrets, occasion, budget, calendrier. Un interlocuteur dédié vous accompagne. Devis personnalisé sous 24h.",
+        "badge": "Interlocuteur dédié",
+        "image": "/RH%20cadeau%20maternit%C3%A9.JPG"
+      },
+      {
+        "icon": "Package",
+        "title": "Validez votre sélection",
+        "desc": "Choisissez vos coffrets, ajoutez votre branding et vos messages. On prépare les maquettes pour validation. Maquette offerte.",
+        "badge": "Maquette offerte",
+        "image": "/uploads/produits-box-omea.webp"
+      },
+      {
+        "icon": "Truck",
+        "title": "On déploie, vous recevez",
+        "desc": "Livraison individuelle multi-sites ou groupée. Bureau, domicile, télétravail. Chaque collaborateur reçoit son coffret à la date prévue.",
+        "badge": "Expédition en 48h",
+        "image": "/uploads/AUTRE%201.png"
+      }
+    ],
+    "guarantees": [
+      {
+        "icon": "ShieldCheck",
+        "label": "URSSAF conforme"
+      },
+      {
+        "icon": "FileText",
+        "label": "Documentation complète"
+      },
+      {
+        "icon": "MapPin",
+        "label": "Multi-sites"
+      },
+      {
+        "icon": "Clock",
+        "label": "Délais garantis"
+      }
+    ]
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "Questions fréquentes",
+    "subtitle": "Tout ce que les RH et CSE nous demandent avant de commander.",
+    "image": "/uploads/5.1.png",
+    "ctaText": "Demander un devis",
+    "ctaHref": "#devis",
+    "ctaAdditionalText": "Une autre question ?",
+    "items": [
+      {
+        "q": "Quels types d'occasions couvrez-vous ?",
+        "a": "Maternité, naissance, fêtes de fin d'année, évènements CSE, welcome pack, départ en congé… Nous proposons des coffrets pour chaque moment clé de la vie en entreprise, et nous composons aussi des coffrets sur-mesure."
+      },
+      {
+        "q": "Les coffrets sont-ils conformes URSSAF ?",
+        "a": "Oui. Nos coffrets sont conçus pour respecter les seuils d'exonération de charges sociales. Nous fournissons les justificatifs nécessaires à votre CSE ou service comptable."
+      },
+      {
+        "q": "Quel est le délai de livraison ?",
+        "a": "Comptez 5 à 10 jours ouvrables après validation de votre commande. Pour les commandes urgentes ou les volumes importants, contactez-nous pour un calendrier adapté."
+      },
+      {
+        "q": "Peut-on personnaliser les coffrets avec notre logo ?",
+        "a": "Absolument. Nous intégrons votre logo, vos couleurs et un message personnalisé sur le packaging et les cartes de vœux. Dès 10 coffrets, le branding est inclus."
+      },
+      {
+        "q": "Livrez-vous en multi-sites ou au domicile ?",
+        "a": "Oui, c'est notre spécialité. Livraison individuelle à domicile, sur site ou multi-sites. Nous gérons la logistique de bout en bout, y compris pour les collaborateurs en télétravail."
+      },
+      {
+        "q": "À partir de combien de coffrets peut-on commander ?",
+        "a": "Dès 1 coffret. Les tarifs dégressifs s'appliquent à partir de 10 coffrets. Pour les volumes supérieurs à 50 unités, nous proposons des conditions préférentielles sur devis."
+      }
+    ]
+  },
+  "footer": {
+    "description": "Coffrets cadeaux premium pour entreprises. Produits naturels, marques françaises, expérience mémorable.",
+    "socialLinks": [
+      {
+        "icon": "Linkedin",
+        "href": "https://linkedin.com"
+      },
+      {
+        "icon": "Mail",
+        "href": "mailto:contact@o-mea.fr"
+      }
+    ],
+    "navigationTitle": "Navigation",
+    "navigationLinks": [
+      {
+        "label": "Engagements",
+        "href": "#pourquoi"
+      },
+      {
+        "label": "Impact RH",
+        "href": "#impact"
+      },
+      {
+        "label": "Coffrets & Tarifs",
+        "href": "#produits"
+      },
+      {
+        "label": "Processus",
+        "href": "#processus"
+      },
+      {
+        "label": "FAQ",
+        "href": "#faq"
+      },
+      {
+        "label": "À propos",
+        "href": "/a-propos"
+      }
+    ],
+    "servicesTitle": "Nos coffrets",
+    "services": [
+      "Coffret Grossesse",
+      "Coffret Naissance",
+      "Coffret Fêtes de fin d'année",
+      "Coffret CSE",
+      "Coffret Évènements CSE"
+    ],
+    "servicesHref": "#produits",
+    "contactTitle": "Contact",
+    "contactEmail": "contact@o-mea.fr",
+    "contactLocation": "France",
+    "contactCtaText": "Demander un devis",
+    "contactCtaHref": "#devis",
+    "legalLinks": [
+      {
+        "label": "Mentions légales",
+        "href": "#"
+      },
+      {
+        "label": "Politique de confidentialité",
+        "href": "#"
+      }
+    ]
+  },
+  "topCoffrets": {
+    "label": "Les plus demandes",
+    "title": "Top 3 des coffrets",
+    "ctaText": "Voir tous les coffrets",
+    "ctaHref": "#produits",
+    "trustText": "98% de satisfaction",
+    "items": [
+      {
+        "rank": 1,
+        "name": "Coffret Grossesse",
+        "occasion": "Maternite",
+        "price": "33€ HT",
+        "desc": "Le coffret le plus commande par les RH. Soins naturels, artisanaux et 100% francais.",
+        "badge": "N°1 des commandes",
+        "photo": "/uploads/1774812552880-1if3nx.png",
+        "stats": "Commande par 68% de nos clients"
+      },
+      {
+        "rank": 2,
+        "name": "Coffret Naissance",
+        "occasion": "Retour de conge",
+        "price": "50€ HT",
+        "desc": "",
+        "badge": "Le plus offert au retour",
+        "photo": "/uploads/1774812605467-6a5b6c.png",
+        "stats": ""
+      },
+      {
+        "rank": 3,
+        "name": "Coffret Fetes",
+        "occasion": "Noel & Avent",
+        "price": "38€ HT",
+        "desc": "",
+        "badge": "Prefere des CSE",
+        "photo": "/uploads/1774812623874-xvh1ud.png",
+        "stats": ""
+      }
+    ]
+  },
+  "aboutPage": {
+    "hero": {
+      "tag": "Notre histoire",
+      "image": "/uploads/1774799056234-4pkinn.png",
+      "secondaryImage": "/uploads/1774800011674-hunu5g.png",
+      "titleLine1": "Transformer le",
+      "titleLine2": "cadeau d'entreprise",
+      "titleLine3": "en levier de performance",
+      "subtitleLines": [
+        "O'Méa aide les DRH, CSE et dirigeants à transformer chaque",
+        "moment de vie en un acte de reconnaissance qui fidélise,",
+        "engage et renforce votre culture d'entreprise."
+      ],
+      "ctaPrimary": "Découvrir nos coffrets",
+      "ctaPrimaryHref": "/#produits",
+      "ctaSecondary": "Obtenir un devis",
+      "ctaSecondaryHref": "/#devis",
+      "stats": [
+        {
+          "value": "+50",
+          "label": "Entreprises"
+        },
+        {
+          "value": "98%",
+          "label": "Satisfaction"
+        },
+        {
+          "value": "24h",
+          "label": "Délai devis"
+        }
+      ],
+      "badges": [
+        {
+          "title": "URSSAF conforme",
+          "subtitle": "Justificatifs fournis",
+          "position": "top-right",
+          "style": "dark"
+        },
+        {
+          "title": "98% satisfaction",
+          "subtitle": "+50 entreprises",
+          "position": "bottom-right",
+          "style": "light"
+        }
+      ]
+    },
+    "origin": {
+      "tag": "Notre histoire",
+      "image": "/uploads/1774799101619-lryna7.JPG",
+      "badgeTitle": "Fondée par Catherine",
+      "badgeSubtitle": "Inspirée de Hauméa, déesse du renouveau",
+      "title": "Le cadeau d'entreprise",
+      "titleAccent": "méritait mieux",
+      "paragraphs": [
+        "Inspirée par Hauméa, déesse polynésienne de la fertilité, Catherine a voulu en finir avec les cadeaux d'entreprise génériques et impersonnels.",
+        "Sa conviction : un coffret peut porter un message. Des produits naturels, fabriqués en France par des artisans passionnés, pour dire à chaque collaborateur : ici, on prend soin de vous.",
+        "Aujourd'hui, +50 entreprises nous font confiance. Pas parce que c'est tendance. Parce que les résultats sont là."
+      ],
+      "quote": "Chaque coffret que nous envoyons est une promesse tenue envers vos équipes.",
+      "quoteAuthor": "Catherine, Fondatrice d'O'Méa"
+    },
+    "values": {
+      "tag": "Nos valeurs",
+      "title": "Les piliers qui guident chaque coffret",
+      "subtitle": "Pas de compromis sur ce qui compte. Scrollez pour découvrir nos engagements.",
+      "items": [
+        {
+          "num": "01",
+          "title": "Écologie\nradicale",
+          "text": "Zéro plastique, packaging recyclé, encres végétales. Chaque coffret est un engagement environnemental vérifiable pour vos rapports RSE.",
+          "image": "/uploads/produits-naturels.webp",
+          "accent": "var(--sage)"
+        },
+        {
+          "num": "02",
+          "title": "Sécurité\nabsolue",
+          "text": "Sans perturbateurs endocriniens, sans parabènes. Des formules certifiées, adaptées aux femmes enceintes et aux nourrissons. Score Yuka A.",
+          "image": "/uploads/3.2.png",
+          "accent": "#D4956B"
+        },
+        {
+          "num": "03",
+          "title": "Made in\nFrance",
+          "text": "Artisans locaux, circuits courts, savoir-faire français. Un approvisionnement éthique qui soutient l'économie locale.",
+          "image": "/uploads/marque-francaise.webp",
+          "accent": "var(--green-deep)"
+        },
+        {
+          "num": "04",
+          "title": "Impact RH\nmesurable",
+          "text": "+40% de rétention, 87% de valorisation. Chaque coffret est un levier concret de QVT dont le ROI se lit dans vos indicateurs.",
+          "image": "/uploads/impact-positif.webp",
+          "accent": "#B8744A"
+        }
+      ]
+    },
+    "chiffres": {
+      "title": "O'Méa en chiffres",
+      "items": [
+        {
+          "value": "50",
+          "prefix": "+",
+          "suffix": "",
+          "label": "Entreprises partenaires"
+        },
+        {
+          "value": "98",
+          "prefix": "",
+          "suffix": "%",
+          "label": "Taux de satisfaction"
+        },
+        {
+          "value": "100",
+          "prefix": "",
+          "suffix": "%",
+          "label": "Made in France"
+        },
+        {
+          "value": "24h",
+          "prefix": "",
+          "suffix": "",
+          "label": "Délai devis"
+        }
+      ]
+    },
+    "benefits": {
+      "tag": "Ce que vous y gagnez",
+      "title": "Pourquoi +50 entreprises ont choisi O'Méa",
+      "subtitle": "Un coffret O'Méa n'est pas une dépense. C'est un investissement dans votre capital humain.",
+      "items": [
+        {
+          "metric": "+40%",
+          "metricLabel": "rétention",
+          "title": "Fidélisez vos talents",
+          "text": "Les entreprises qui célèbrent les moments de vie constatent une rétention 40% supérieure. Un coffret O'Méa transforme un geste RH en levier stratégique.",
+          "image": "/RH%20cadeau%20maternit%C3%A9.JPG"
+        },
+        {
+          "metric": "87%",
+          "metricLabel": "valorisation",
+          "title": "Renforcez votre marque employeur",
+          "text": "Vos collaborateurs partagent l'expérience sur LinkedIn, en parlent autour d'eux. Un argument de recrutement qui ne coûte presque rien.",
+          "image": "/uploads/femme-enceinte-travail.webp"
+        },
+        {
+          "metric": "Zéro",
+          "metricLabel": "effort RH",
+          "title": "On gère tout pour vous",
+          "text": "Personnalisation, emballage, livraison multi-sites ou domicile. Votre seul effort : valider le devis. Le reste, c'est nous.",
+          "image": "/uploads/produits-box-omea.webp"
+        },
+        {
+          "metric": "100%",
+          "metricLabel": "conforme",
+          "title": "URSSAF, c'est réglé",
+          "text": "Coffrets exonérés de charges sociales. Justificatifs fournis automatiquement à votre CSE. Aucun risque fiscal, aucune paperasse.",
+          "image": "/uploads/AUTRE%201.png"
+        }
+      ]
+    },
+    "cta": {
+      "bgImage": "/uploads/1773424302034-6qae7o.JPG",
+      "testimonial": {
+        "quote": "L'impact sur notre marque employeur a été immédiat. Nos collaboratrices partagent les coffrets sur LinkedIn, c'est devenu un vrai argument de recrutement. Et côté logistique, zéro effort.",
+        "name": "Sophie L.",
+        "role": "DRH — EasyVista (450 salariés)",
+        "initials": "SL"
+      },
+      "metrics": [
+        {
+          "value": "+40%",
+          "label": "rétention"
+        },
+        {
+          "value": "98%",
+          "label": "satisfaction"
+        },
+        {
+          "value": "24h",
+          "label": "délai devis"
+        }
+      ],
+      "title": "Prêt à transformer vos cadeaux d'entreprise ?",
+      "subtitle": "Rejoignez les +50 entreprises qui ont fait d'O'Méa un pilier de leur marque employeur. Devis personnalisé en 24h.",
+      "ctaPrimary": "Voir nos coffrets",
+      "ctaPrimaryHref": "/#produits",
+      "ctaSecondary": "Demander un devis",
+      "ctaSecondaryHref": "/#devis",
+      "trustPills": [
+        {
+          "label": "Devis en 24h"
+        },
+        {
+          "label": "URSSAF conforme"
+        },
+        {
+          "label": "Livraison clé en main"
+        },
+        {
+          "label": "Interlocuteur dédié"
+        }
+      ]
+    }
+  }
+}

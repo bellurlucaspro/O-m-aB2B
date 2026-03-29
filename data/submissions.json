@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1774646352984",
+    "date": "2026-03-27T21:19:12.984Z",
+    "company": "Entreprise GOOGLE",
+    "representative": "GOOGLE",
+    "role": "RH",
+    "email": "bellurdylan@gmail.fr",
+    "phone": "0600000000",
+    "tva": "",
+    "siret": "",
+    "quantity": "5–50 coffrets",
+    "message": "Besoin de cadeaux \n",
+    "read": true
+  },
+  {
+    "id": "1773410712254",
+    "date": "2026-03-13T14:05:12.254Z",
+    "company": "test",
+    "representative": "test france",
+    "role": "rh",
+    "email": "bellurdylan@gmail.com",
+    "phone": "+33652892358",
+    "tva": "FR74789380524",
+    "siret": "78938052400015",
+    "quantity": "5–10 coffrets",
+    "message": "je veux 1000 coffrets\n",
+    "read": true
+  }
+]
