@@ -1,5 +1,56 @@
 [
   {
+    "id": "1775726080893",
+    "date": "2026-04-09T09:14:40.893Z",
+    "company": "Bernard entreprise",
+    "representative": "bernard",
+    "role": "",
+    "email": "bellurlucas@gmail.com",
+    "phone": "+33781033648",
+    "tva": "",
+    "siret": "",
+    "quantity": "15",
+    "message": "kjfljefklemlfmle\n\n--- COFFRET SUR-MESURE ---\nQuantité : 15 coffret(s)\n• Branding logo sur packaging x13 — 26.00€ HT\n• Message personnalisé x8 — 8.00€ HT\n• Carte de vœux entreprise x10 — 15.00€ HT\n• Huile anti-vergetures x1 — 4.50€ HT\n• Crème hydratante naturelle x2 — 10.40€ HT\n\nTotal HT : 958.50€\nTotal TTC : 1150.20€",
+    "read": true,
+    "customCoffret": {
+      "products": [
+        {
+          "id": "branding-logo",
+          "name": "Branding logo sur packaging",
+          "price": 2600,
+          "qty": 13
+        },
+        {
+          "id": "message-perso",
+          "name": "Message personnalisé",
+          "price": 800,
+          "qty": 8
+        },
+        {
+          "id": "carte-voeux",
+          "name": "Carte de vœux entreprise",
+          "price": 1500,
+          "qty": 10
+        },
+        {
+          "id": "huile-vergetures",
+          "name": "Huile anti-vergetures",
+          "price": 450,
+          "qty": 1
+        },
+        {
+          "id": "creme-hydratante",
+          "name": "Crème hydratante naturelle",
+          "price": 1040,
+          "qty": 2
+        }
+      ],
+      "totalHT": 95850,
+      "totalTTC": 115020,
+      "quantity": 15
+    }
+  },
+  {
     "id": "1774646352984",
     "date": "2026-03-27T21:19:12.984Z",
     "company": "Entreprise GOOGLE",

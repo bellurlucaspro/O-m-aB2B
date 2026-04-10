@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { gsap, ScrollTrigger, ease, duration, distance } from "@/lib/motion";
 import type { TestimonialsContent } from "@/lib/types";
 
@@ -145,9 +145,8 @@ export default function TestimonialsSection({ content }: { content?: Testimonial
     if (!sectionRef.current) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    // On mobile, show everything instantly — no scroll animations
     if (window.innerWidth < 900) {
-      gsap.set(sectionRef.current.querySelectorAll(".testi-line, .testi-star, .testi-dot"), { opacity: 1, y: 0, x: 0, scale: 1, scaleX: 1 });
+      gsap.set(sectionRef.current.querySelectorAll(".testi-dot"), { opacity: 1, scale: 1 });
       gsap.set(quoteRef.current, { opacity: 1, y: 0, filter: "blur(0px)" });
       gsap.set(authorRef.current, { opacity: 1, y: 0 });
       return;
@@ -155,72 +154,20 @@ export default function TestimonialsSection({ content }: { content?: Testimonial
 
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
-      // Thin decorative line grows
-      gsap.fromTo(".testi-line", {
-        scaleX: 0,
-      }, {
-        scaleX: 1,
-        duration: 0.8,
-        ease: ease.enter,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-      });
-
-      // Quote text
       gsap.fromTo(quoteRef.current, {
-        opacity: 0, y: distance.md, filter: "blur(4px)",
+        opacity: 0, y: distance.sm, filter: "blur(3px)",
       }, {
         opacity: 1, y: 0, filter: "blur(0px)",
         duration: duration.reveal, ease: ease.enter,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-          toggleActions: "play none none none",
-        },
+        scrollTrigger: { trigger: sectionRef.current, start: "top 80%", toggleActions: "play none none none" },
       });
 
-      // Author
       gsap.fromTo(authorRef.current, {
-        opacity: 0, y: distance.sm,
+        opacity: 0, y: 10,
       }, {
         opacity: 1, y: 0,
-        duration: duration.enter, delay: 0.25, ease: ease.enter,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-          toggleActions: "play none none none",
-        },
-      });
-
-      // Stars
-      gsap.fromTo(".testi-star", {
-        opacity: 0, scale: 0,
-      }, {
-        opacity: 1, scale: 1,
-        duration: 0.35, ease: "back.out(3)",
-        stagger: 0.06, delay: 0.4,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-          toggleActions: "play none none none",
-        },
-      });
-
-      // Dots
-      gsap.fromTo(".testi-dot", {
-        opacity: 0, scale: 0,
-      }, {
-        opacity: 1, scale: 1,
-        duration: 0.3, ease: "back.out(2)",
-        stagger: 0.05, delay: 0.5,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-          toggleActions: "play none none none",
-        },
+        duration: duration.enter, delay: 0.15, ease: ease.enter,
+        scrollTrigger: { trigger: sectionRef.current, start: "top 80%", toggleActions: "play none none none" },
       });
     }, sectionRef);
 
@@ -260,237 +207,130 @@ export default function TestimonialsSection({ content }: { content?: Testimonial
         position: "relative",
         overflow: "hidden",
         background: "var(--cream)",
-        padding: "100px 32px 80px",
+        padding: "40px 32px",
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <style>{`
         .testi-nav-btn {
-          width: 44px; height: 44px; border-radius: 50%;
+          width: 34px; height: 34px; border-radius: 50%;
           background: transparent;
-          border: 1.5px solid rgba(45,74,62,0.12);
+          border: 1.5px solid rgba(45,74,62,0.1);
           color: var(--text-light);
           display: flex; align-items: center; justify-content: center;
-          cursor: pointer;
+          cursor: pointer; flex-shrink: 0;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .testi-nav-btn:hover {
           border-color: var(--sage);
           color: var(--green-deep);
-          transform: scale(1.06);
         }
-        .testi-nav-btn:active {
-          transform: scale(0.95);
-        }
-        @media (max-width: 900px) {
-          .testi-nav-desktop { display: none !important; }
-          .testi-quote-text { font-size: clamp(1.15rem, 4.5vw, 1.5rem) !important; }
-        }
-        @media (max-width: 600px) {
-          .testi-quote-text { font-size: 1.05rem !important; line-height: 1.7 !important; }
+        @media (max-width: 700px) {
+          .testi-quote-text { font-size: 0.95rem !important; }
+          .testi-inner { flex-direction: column !important; gap: 16px !important; text-align: center !important; }
+          .testi-author-block { justify-content: center !important; }
         }
       `}</style>
 
-      {/* Content */}
       <div style={{
-        maxWidth: "800px",
+        maxWidth: "900px",
         margin: "0 auto",
         position: "relative",
         zIndex: 2,
       }}>
-        {/* Thin line + label + thin line */}
-        <div style={{
+        {/* Compact single-row layout */}
+        <div className="testi-inner" style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
-          gap: "16px",
-          marginBottom: "52px",
+          gap: "28px",
         }}>
-          <div className="testi-line" style={{
-            width: "48px", height: "1px",
-            background: "rgba(45,74,62,0.12)",
-            transformOrigin: "right center",
-          }} />
-          <span style={{
-            fontSize: "0.7rem",
-            fontWeight: 700,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            color: "var(--text-light)",
-            fontFamily: "'Manrope', sans-serif",
-          }}>
-            {sectionLabel}
-          </span>
-          <div className="testi-line" style={{
-            width: "48px", height: "1px",
-            background: "rgba(45,74,62,0.12)",
-            transformOrigin: "left center",
-          }} />
-        </div>
-
-        {/* Stars — small, subtle */}
-        <div style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "4px",
-          marginBottom: "36px",
-        }}>
-          {[1, 2, 3, 4, 5].map((s) => (
-            <span key={s} className="testi-star">
-              <Star size={14} fill="#D4A574" style={{ color: "#D4A574" }} />
-            </span>
-          ))}
-        </div>
-
-        {/* Quote area */}
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "32px",
-          minHeight: "150px",
-        }}>
-          {/* Left arrow */}
-          <button
-            className="testi-nav-btn testi-nav-desktop"
-            onClick={goPrev}
-            aria-label="Témoignage précédent"
-          >
-            <ChevronLeft size={18} />
+          {/* Nav prev */}
+          <button className="testi-nav-btn" onClick={goPrev} aria-label="Précédent">
+            <ChevronLeft size={15} />
           </button>
 
-          {/* Quote */}
-          <div style={{ flex: 1, textAlign: "center" }}>
+          {/* Quote + Author inline */}
+          <div style={{ flex: 1, minWidth: 0 }}>
             <div ref={quoteRef}>
               <p
                 className="testi-quote-text"
                 style={{
-                  fontSize: "clamp(1.2rem, 2.2vw, 1.55rem)",
+                  fontSize: "clamp(1rem, 1.8vw, 1.15rem)",
                   fontFamily: "'Manrope', sans-serif",
                   fontWeight: 500,
                   color: "var(--text-dark)",
-                  lineHeight: 1.7,
+                  lineHeight: 1.65,
                   fontStyle: "italic",
                   letterSpacing: "-0.01em",
-                  margin: 0,
+                  margin: "0 0 12px",
+                  textAlign: "center",
                 }}
               >
                 {renderQuote(t.quote, t.highlight)}
               </p>
             </div>
+
+            <div
+              ref={authorRef}
+              className="testi-author-block"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "10px",
+              }}
+            >
+              <div style={{
+                width: "28px", height: "28px", borderRadius: "50%",
+                background: "linear-gradient(135deg, var(--sage), var(--sage-dark))",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontFamily: "'Manrope', sans-serif",
+                fontWeight: 800, fontSize: "0.55rem", color: "white",
+                flexShrink: 0,
+              }}>
+                {t.initials}
+              </div>
+              <span style={{
+                fontSize: "0.75rem", color: "var(--text-mid)", fontWeight: 600,
+                fontFamily: "'Manrope', sans-serif",
+              }}>
+                <strong style={{ color: "var(--text-dark)", fontWeight: 800 }}>{t.name}</strong>
+                <span style={{ margin: "0 6px", opacity: 0.3 }}>·</span>
+                {t.role}, {t.company}
+              </span>
+            </div>
           </div>
 
-          {/* Right arrow */}
-          <button
-            className="testi-nav-btn testi-nav-desktop"
-            onClick={goNext}
-            aria-label="Témoignage suivant"
-          >
-            <ChevronRight size={18} />
+          {/* Nav next */}
+          <button className="testi-nav-btn" onClick={goNext} aria-label="Suivant">
+            <ChevronRight size={15} />
           </button>
         </div>
 
-        {/* Author */}
-        <div
-          ref={authorRef}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "14px",
-            marginTop: "36px",
-          }}
-        >
-          <div style={{
-            width: "42px", height: "42px", borderRadius: "50%",
-            background: "linear-gradient(135deg, var(--sage), var(--sage-dark))",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: "'Manrope', sans-serif",
-            fontWeight: 800, fontSize: "0.75rem", color: "white",
-          }}>
-            {t.initials}
-          </div>
-          <div>
-            <div style={{
-              fontFamily: "'Manrope', sans-serif",
-              fontWeight: 800, fontSize: "0.95rem",
-              color: "var(--text-dark)", letterSpacing: "-0.01em",
-            }}>
-              {t.name}
-            </div>
-            <div style={{
-              fontSize: "0.76rem", color: "var(--text-mid)",
-              fontWeight: 500,
-            }}>
-              {t.role} — {t.company}
-            </div>
-          </div>
-        </div>
-
-        {/* Dots + progress */}
+        {/* Dots — minimal */}
         <div style={{
-          display: "flex", flexDirection: "column",
-          alignItems: "center", gap: "16px", marginTop: "40px",
+          display: "flex", justifyContent: "center",
+          gap: "6px", marginTop: "16px", alignItems: "center",
         }}>
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-            {items.map((_, i) => (
-              <button
-                key={i}
-                className="testi-dot"
-                onClick={() => goTo(i)}
-                aria-label={`Témoignage ${i + 1}`}
-                style={{
-                  width: i === active ? "28px" : "8px",
-                  height: "8px",
-                  borderRadius: "999px",
-                  background: i === active
-                    ? "var(--green-deep)"
-                    : "rgba(45,74,62,0.12)",
-                  border: "none",
-                  cursor: "pointer",
-                  transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-                  padding: 0,
-                }}
-              />
-            ))}
-          </div>
-
-          <div style={{
-            width: "80px", height: "1.5px",
-            background: "rgba(45,74,62,0.06)",
-            borderRadius: "999px", overflow: "hidden",
-          }}>
-            <div
-              ref={progressRef}
+          {items.map((_, i) => (
+            <button
+              key={i}
+              className="testi-dot"
+              onClick={() => goTo(i)}
+              aria-label={`Témoignage ${i + 1}`}
               style={{
-                width: "100%", height: "100%",
-                background: "var(--sage)",
+                width: i === active ? "20px" : "6px",
+                height: "6px",
                 borderRadius: "999px",
-                transformOrigin: "left center",
-                transform: "scaleX(0)",
+                background: i === active ? "var(--green-deep)" : "rgba(45,74,62,0.1)",
+                border: "none",
+                cursor: "pointer",
+                transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                padding: 0,
               }}
             />
-          </div>
-        </div>
-
-        {/* Mobile nav */}
-        <style>{`
-          @media (max-width: 900px) {
-            .testi-mobile-nav { display: flex !important; }
-          }
-        `}</style>
-        <div className="testi-mobile-nav" style={{
-          display: "none",
-          justifyContent: "center",
-          gap: "14px",
-          marginTop: "20px",
-        }}>
-          <button className="testi-nav-btn" onClick={goPrev} aria-label="Précédent">
-            <ChevronLeft size={16} />
-          </button>
-          <button className="testi-nav-btn" onClick={goNext} aria-label="Suivant">
-            <ChevronRight size={16} />
-          </button>
+          ))}
         </div>
       </div>
     </section>

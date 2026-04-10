@@ -1,6 +1,5 @@
 [
   {
-    "id": "grossesse",
     "name": "Coffret Grossesse",
     "subtitle": "Grossesse",
     "description": "Accompagnez vos collaboratrices pendant les 9 mois avec des soins naturels et bio pensés pour elles et bébé.",
@@ -22,7 +21,64 @@
     "photoAlt": "Produits naturels grossesse",
     "iconEmoji": "🌸",
     "featured": true,
-    "detailProducts": []
+    "detailProducts": [
+      {
+        "name": "Vahine",
+        "price": "40€ TTC",
+        "nbProduits": "5 produits",
+        "image": "/uploads/1775653237607-vwhnsl.png",
+        "description": "Idéal pour découvrir O’Méa",
+        "composition": [
+          "Huile anti-vergetures",
+          "Démaquillant solide bio",
+          "Cartes étapes grossesse",
+          "Baume à lèvres hydratant",
+          "Crème désaltérante visage"
+        ]
+      },
+      {
+        "name": "Eeva",
+        "price": "60€ TTC",
+        "nbProduits": "9 produits",
+        "image": "/uploads/1775653280169-sv771f.png",
+        "description": "Idéal pour baby shower & gender reveal",
+        "composition": [
+          "Trousse de toilette O’Méa",
+          "Pain d’hygiène intime Avril",
+          "Éponge konjac visage",
+          "Huile anti-vergetures F&W Paris",
+          "Masque énergisant Avril",
+          "3 disques démaquillants bio",
+          "Déodorant solide Comme Avant",
+          "Cartes étapes grossesse",
+          "Tote bag O’Méa"
+        ]
+      },
+      {
+        "name": "Tama",
+        "price": "80€ TTC",
+        "nbProduits": "14 produits",
+        "image": "/uploads/1775653343535-rwgyq4.JPG",
+        "description": "L’expérience grossesse complète",
+        "composition": [
+          "Livre 9 mois à t’attendre",
+          "Trousse de toilette O’Méa",
+          "3 soins solides Comme Avant",
+          "Pain d’hygiène intime Avril",
+          "Huile sèche corporelle Avril",
+          "Éponge konjac visage",
+          "Disques démaquillants bio",
+          "Crème désaltérante Avril",
+          "Filet à savon",
+          "Baume à lèvres Avril",
+          "Tisane bio",
+          "Cartes étapes grossesse",
+          "Graines à planter",
+          "Poster savon magnétique"
+        ]
+      }
+    ],
+    "id": "grossesse"
   },
   {
     "name": "Coffret Naissance",
@@ -46,7 +102,61 @@
     "photoAlt": "Coffret naissance naturel",
     "iconEmoji": "🍃",
     "featured": false,
-    "detailProducts": [],
+    "detailProducts": [
+      {
+        "name": "Coffret Naissance HEREITI",
+        "price": "60€ TTC",
+        "nbProduits": "6 produits",
+        "image": "/uploads/1775663872307-icv3r2.webp",
+        "description": "Découvrez la Box naissance HEREITI, un coffret naissance artisanal et made in France, pensé pour offrir un départ tout en douceur à bébé. Ce coffret est le cadeau parfait pour une naissance : il contient des produits naturels, doux et utiles fabriqués localement, pour les premiers soins et les moments de tendresse partagés avec votre nouveau-né.",
+        "composition": [
+          "Cape de bain en coton OEKO-TEX",
+          "Savon solide doux",
+          "Éponge de mer naturelle",
+          "Cartes étapes O’méa",
+          "Autocollant \"bébé à bord\" O’méa",
+          ""
+        ]
+      },
+      {
+        "name": " Coffret Naissance HERE",
+        "price": "110€ TTC",
+        "nbProduits": "10 produits",
+        "image": "/uploads/1775663986844-drdnsr.webp",
+        "description": "Soins bébé & maman complets",
+        "composition": [
+          "Cape de bain en coton OEKO-TEX",
+          "Éponge de mer naturelle",
+          "Savon solide naturel",
+          "Autocollant \"bébé à bord\" O’méa",
+          "Cartes étapes O’méa",
+          "Tétine avec pochon de rangement ",
+          "Attache-tétine artisanale",
+          "Lange coordonné à la cape",
+          "Trousse/pochette de toilette O’méa",
+          "Brosse à cheveux douce"
+        ]
+      },
+      {
+        "name": "Naissance HERENUI",
+        "price": "160€ TTC",
+        "nbProduits": "14 produits",
+        "image": "/uploads/1775663994760-6az2jb.webp",
+        "description": "La box naissance HERENUI est un coffret premium 0–6 mois, conçu et fabriqué en France. Composé de produits bio, de textiles certifiés Oeko‑Tex et d’accessoires essentiels, il accompagne bébé avec douceur et élégance dès ses premiers jours.",
+        "composition": [
+          "Cape de bain 100 % coton bio, Oeko‑Tex, fabriquée en France",
+          "Savon solide naturel, doux pour la peau délicate",
+          "Éponge de mer 100 % naturelle",
+          "Cartes étapes naissance O’Méa pour immortaliser chaque moment",
+          "Autocollant « Bébé à bord » O’Méa",
+          "Tétine & pochon assortis",
+          "Attache‑tétine fait main",
+          "Lange fait main coordonné",
+          "Trousse de toilette O’Méa",
+          "Brosse à cheveux douce pour nourrissons"
+        ]
+      }
+    ],
     "id": "naissance"
   },
   {

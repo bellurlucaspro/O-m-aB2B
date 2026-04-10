@@ -57,7 +57,7 @@ export default function AdminLogin() {
             style={{
               fontSize: "1.5rem",
               fontWeight: 800,
-              color: "#2D4A3E",
+              color: "#5F7263",
               fontFamily: "'Manrope', sans-serif",
               marginBottom: "8px",
             }}
@@ -150,7 +150,7 @@ export default function AdminLogin() {
           style={{
             width: "100%",
             padding: "14px",
-            background: "#2D4A3E",
+            background: "#5F7263",
             color: "white",
             border: "none",
             borderRadius: "10px",

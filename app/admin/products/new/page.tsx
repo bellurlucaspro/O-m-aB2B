@@ -48,7 +48,7 @@ const EMPTY_FORM: ProductForm = {
   detailProducts: [],
 };
 
-const ACCENT = "#2D4A3E";
+const ACCENT = "#5F7263";
 const SAGE = "#87A38D";
 
 const labelStyle: React.CSSProperties = {

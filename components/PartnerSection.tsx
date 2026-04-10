@@ -113,7 +113,7 @@ export default function PartnerSection({ content }: { content?: PartnersContent 
           grid-template-columns: 1fr 1.2fr;
           border-radius: 28px;
           overflow: hidden;
-          background: white;
+          background: var(--cream);
           border: 1.5px solid rgba(135,163,141,0.1);
           box-shadow: 0 24px 80px rgba(45,74,62,0.08);
           min-height: 420px;
@@ -123,7 +123,7 @@ export default function PartnerSection({ content }: { content?: PartnersContent 
         }
         .ps-nav-btn {
           width: 44px; height: 44px; border-radius: 50%;
-          background: white; border: 1.5px solid rgba(135,163,141,0.15);
+          background: var(--cream); border: 1.5px solid rgba(135,163,141,0.15);
           color: var(--text-mid); display: flex; align-items: center;
           justify-content: center; cursor: pointer;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -192,7 +192,7 @@ export default function PartnerSection({ content }: { content?: PartnersContent 
               {/* Metric badge — floating on photo */}
               <div className="ps-metric" style={{
                 position: "absolute", bottom: "24px", left: "24px", zIndex: 2,
-                background: "white", borderRadius: "16px",
+                background: "var(--cream)", borderRadius: "16px",
                 padding: "14px 20px", display: "flex", alignItems: "baseline", gap: "6px",
                 boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
               }}>
@@ -280,7 +280,7 @@ export default function PartnerSection({ content }: { content?: PartnersContent 
                 </div>
                 <div style={{ display: "flex", gap: "2px" }}>
                   {[1, 2, 3, 4, 5].map((s) => (
-                    <Star key={s} size={13} fill="#E8A87C" style={{ color: "#E8A87C" }} />
+                    <Star key={s} size={13} fill="var(--accent-gold)" style={{ color: "var(--accent-gold)" }} />
                   ))}
                 </div>
               </div>

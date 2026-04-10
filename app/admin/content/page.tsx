@@ -37,6 +37,9 @@ interface SiteContent {
     tagline: string; headline: string; highlightedText: string;
     headlineEnd: string; subtitle: string; keyPoints: string[];
     ctaPrimary: string; ctaSecondary: string; socialProofCount: string;
+    carouselImages?: { src: string; alt: string }[];
+    carouselBadgeUrssaf?: string;
+    carouselBadgeProducts?: string;
   };
   benefits: { sectionTitle: string; sectionSubtitle: string; items: BenefitItem[]; };
   whyOmea: { leftFeatures: Feature[]; rightFeatures: Feature[]; centerTitle: string; centerSubtitle: string; };
@@ -63,11 +66,11 @@ interface SectionDef {
 }
 
 const SECTIONS: SectionDef[] = [
-  { key: "banner", label: "Bannière", icon: Megaphone, color: "#2D4A3E" },
+  { key: "banner", label: "Bannière", icon: Megaphone, color: "#5F7263" },
   { key: "hero", label: "Hero", icon: Sparkles, color: "#87A38D" },
   { key: "topCoffrets", label: "Top Coffrets", icon: Star, color: "#d97706" },
   { key: "benefits", label: "Avantages", icon: Heart, color: "#E8A87C" },
-  { key: "whyOmea", label: "Pourquoi O'Méa", icon: Columns2, color: "#2D4A3E" },
+  { key: "whyOmea", label: "Pourquoi O'Méa", icon: Columns2, color: "#5F7263" },
   { key: "impact", label: "Impact", icon: BarChart3, color: "#6366f1" },
   { key: "testimonials", label: "Témoignages", icon: MessageSquare, color: "#8b5cf6" },
   { key: "personalization", label: "Personnalisation", icon: Palette, color: "#ec4899" },
@@ -388,7 +391,7 @@ export default function AdminContentPage() {
             onClick={() => set("banner", { enabled: !b.enabled })}
             style={{
               width: "40px", height: "22px", borderRadius: "11px", border: "none",
-              background: b.enabled ? "#2D4A3E" : "#d1d5db", cursor: "pointer",
+              background: b.enabled ? "#5F7263" : "#d1d5db", cursor: "pointer",
               position: "relative", transition: "background 0.2s ease", flexShrink: 0,
             }}
           >
@@ -402,21 +405,21 @@ export default function AdminContentPage() {
           </button>
           <span style={{
             fontSize: "0.84rem", fontWeight: 600,
-            color: b.enabled ? "#2D4A3E" : "#9ca3af",
+            color: b.enabled ? "#5F7263" : "#9ca3af",
           }}>
             {b.enabled ? "Bannière active" : "Bannière désactivée"}
           </span>
         </div>
         <Field label="Texte de la bannière" hint="Affiché au-dessus de la navigation" value={b.text} onChange={(v) => set("banner", { text: v })} />
         <div className="ce-row">
-          <Field label="Couleur de fond" hint="Code hex (ex: #2D4A3E)" value={b.bgColor} onChange={(v) => set("banner", { bgColor: v })} />
+          <Field label="Couleur de fond" hint="Code hex (ex: #5F7263)" value={b.bgColor} onChange={(v) => set("banner", { bgColor: v })} />
           <Field label="Couleur du texte" hint="Code hex (ex: #ffffff)" value={b.textColor} onChange={(v) => set("banner", { textColor: v })} />
         </div>
         {b.text && (
           <div style={{ marginTop: "16px" }}>
             <p className="ce-label" style={{ marginBottom: "8px" }}>Aperçu</p>
             <div style={{
-              background: b.bgColor || "#2D4A3E",
+              background: b.bgColor || "#5F7263",
               color: b.textColor || "#ffffff",
               padding: "10px 20px",
               borderRadius: "8px",
@@ -465,6 +468,82 @@ export default function AdminContentPage() {
           <button className="ce-btn-add" onClick={() => set("hero", { keyPoints: [...h.keyPoints, ""] })}>
             <Plus size={14} /> Ajouter
           </button>
+        </div>
+
+        {/* Carousel images */}
+        <div className="ce-subsection">
+          <div className="ce-subsection__header">
+            <ImageIcon size={15} />
+            <span>Images du carrousel</span>
+            <span className="ce-badge">{(h.carouselImages || []).length}</span>
+          </div>
+          {(h.carouselImages || []).map((img: { src: string; alt: string }, i: number) => (
+            <div key={i} style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "8px" }}>
+              {img.src && (
+                <div style={{ width: "48px", height: "48px", borderRadius: "8px", overflow: "hidden", flexShrink: 0, border: "1px solid #e5e7eb" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={img.src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </div>
+              )}
+              <input
+                className="ce-input"
+                value={img.src}
+                onChange={(e) => {
+                  const arr = [...(h.carouselImages || [])];
+                  arr[i] = { ...arr[i], src: e.target.value };
+                  set("hero", { carouselImages: arr });
+                }}
+                placeholder="/uploads/image.jpg"
+                style={{ flex: 1 }}
+              />
+              <input
+                className="ce-input"
+                value={img.alt}
+                onChange={(e) => {
+                  const arr = [...(h.carouselImages || [])];
+                  arr[i] = { ...arr[i], alt: e.target.value };
+                  set("hero", { carouselImages: arr });
+                }}
+                placeholder="Description (alt)"
+                style={{ flex: 1 }}
+              />
+              <label style={{ cursor: "pointer", padding: "6px 10px", background: "#f3f4f6", borderRadius: "6px", fontSize: "0.7rem", fontWeight: 600, color: "#6B7280", whiteSpace: "nowrap" }}>
+                Upload
+                <input type="file" accept="image/*" hidden onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  const fd = new FormData(); fd.append("file", file);
+                  const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+                  if (res.ok) {
+                    const data = await res.json();
+                    const arr = [...(h.carouselImages || [])];
+                    arr[i] = { ...arr[i], src: data.url };
+                    set("hero", { carouselImages: arr });
+                  }
+                }} />
+              </label>
+              <button className="ce-btn-del" onClick={() => {
+                set("hero", { carouselImages: (h.carouselImages || []).filter((_: unknown, idx: number) => idx !== i) });
+              }}>
+                <Trash2 size={13} />
+              </button>
+            </div>
+          ))}
+          <button className="ce-btn-add" onClick={() => set("hero", { carouselImages: [...(h.carouselImages || []), { src: "", alt: "" }] })}>
+            <Plus size={14} /> Ajouter une image
+          </button>
+        </div>
+
+        {/* Carousel badges */}
+        <div className="ce-subsection">
+          <div className="ce-subsection__header">
+            <Sparkles size={15} />
+            <span>Badges du carrousel</span>
+          </div>
+          <div className="ce-row">
+            <Field label="Badge conformité" hint="Texte du badge vert en bas à gauche" value={h.carouselBadgeUrssaf || ""} onChange={(v) => set("hero", { carouselBadgeUrssaf: v })} />
+            <Field label="Badge produits" hint="Texte du badge en haut à droite" value={h.carouselBadgeProducts || ""} onChange={(v) => set("hero", { carouselBadgeProducts: v })} />
+          </div>
         </div>
       </>
     );
@@ -534,7 +613,7 @@ export default function AdminContentPage() {
                   <input className="ce-input" value={item.photo || ""} onChange={(e) => {
                     const arr = [...tc.items]; arr[i] = { ...arr[i], photo: e.target.value }; set("topCoffrets", { items: arr });
                   }} placeholder="/uploads/photo.jpg" style={{ flex: 1 }} />
-                  <label style={{ padding: "8px 14px", borderRadius: "8px", fontSize: "0.78rem", fontWeight: 600, background: "#2D4A3E", color: "white", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>
+                  <label style={{ padding: "8px 14px", borderRadius: "8px", fontSize: "0.78rem", fontWeight: 600, background: "#5F7263", color: "white", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>
                     Choisir
                     <input type="file" accept="image/*" style={{ display: "none" }} onChange={async (e) => {
                       const file = e.target.files?.[0];
@@ -610,7 +689,7 @@ export default function AdminContentPage() {
                     <label
                       style={{
                         padding: "8px 14px", borderRadius: "8px", fontSize: "0.78rem", fontWeight: 600,
-                        background: "#2D4A3E", color: "white", cursor: "pointer", whiteSpace: "nowrap",
+                        background: "#5F7263", color: "white", cursor: "pointer", whiteSpace: "nowrap",
                         flexShrink: 0, display: "inline-flex", alignItems: "center", gap: "6px",
                       }}
                     >
@@ -732,6 +811,34 @@ export default function AdminContentPage() {
       <>
         <Field label="Titre de la section" value={p.sectionTitle} onChange={(v) => set("personalization", { sectionTitle: v })} />
         <Field label="Sous-titre" value={p.sectionSubtitle} onChange={(v) => set("personalization", { sectionSubtitle: v })} multiline />
+
+        {/* Image de la section */}
+        <div className="ce-field">
+          <label className="ce-label"><ImageIcon size={13} style={{ opacity: 0.5 }} /> Image principale</label>
+          {(p as Record<string, unknown>).image && (
+            <div style={{ width: "100%", height: "120px", borderRadius: "12px", overflow: "hidden", marginBottom: "8px", border: "1.5px solid #e5e7eb" }}>
+              <img src={String((p as Record<string, unknown>).image)} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            </div>
+          )}
+          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            <input className="ce-input" value={String((p as Record<string, unknown>).image || "")} onChange={(e) => {
+              set("personalization", { image: e.target.value } as Partial<SiteContent["personalization"]>);
+            }} placeholder="/uploads/photo.jpg" style={{ flex: 1 }} />
+            <label style={{ padding: "8px 14px", borderRadius: "8px", fontSize: "0.78rem", fontWeight: 600, background: "#5F7263", color: "white", cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>
+              Choisir
+              <input type="file" accept="image/*" style={{ display: "none" }} onChange={async (e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                const fd = new FormData(); fd.append("file", file);
+                try {
+                  const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+                  if (res.ok) { const data = await res.json(); set("personalization", { image: data.url } as Partial<SiteContent["personalization"]>); }
+                } catch { /* silent */ }
+              }} />
+            </label>
+          </div>
+          <p className="ce-hint">Photo affichée à gauche de la section personnalisation (pleine hauteur)</p>
+        </div>
         <div className="ce-subsection">
           <div className="ce-subsection__header">
             <Palette size={15} />
@@ -917,7 +1024,7 @@ export default function AdminContentPage() {
         />
         <label style={{
           padding: "8px 14px", borderRadius: "8px", fontSize: "0.78rem", fontWeight: 600,
-          background: "#2D4A3E", color: "white", cursor: "pointer", whiteSpace: "nowrap",
+          background: "#5F7263", color: "white", cursor: "pointer", whiteSpace: "nowrap",
           flexShrink: 0, display: "inline-flex", alignItems: "center", gap: "6px",
         }}>
           Choisir
@@ -1347,7 +1454,7 @@ export default function AdminContentPage() {
         }
         .ce-topbar__bar-fill {
           height: 100%; border-radius: 2px;
-          background: linear-gradient(90deg, #87A38D, #2D4A3E);
+          background: linear-gradient(90deg, #87A38D, #5F7263);
           transition: width 0.4s ease;
         }
         .ce-topbar__percent {
@@ -1378,11 +1485,11 @@ export default function AdminContentPage() {
           transition: all 0.15s ease; font-family: inherit;
           white-space: nowrap;
         }
-        .ce-panel-btn:hover { border-color: #87A38D; color: #2D4A3E; background: #f0fdf4; }
+        .ce-panel-btn:hover { border-color: #87A38D; color: #5F7263; background: #f0fdf4; }
         .ce-panel-btn--active {
-          background: #2D4A3E; color: white; border-color: #2D4A3E;
+          background: #5F7263; color: white; border-color: #5F7263;
         }
-        .ce-panel-btn--active:hover { background: #1E3329; border-color: #1E3329; color: white; }
+        .ce-panel-btn--active:hover { background: #4A5C4E; border-color: #4A5C4E; color: white; }
 
         /* ---- 3-column body ---- */
         .ce-builder {
@@ -1417,8 +1524,8 @@ export default function AdminContentPage() {
         }
         .ce-sidebar__item--active {
           background: rgba(135,163,141,0.1);
-          border-left-color: #2D4A3E;
-          color: #2D4A3E; font-weight: 600;
+          border-left-color: #5F7263;
+          color: #5F7263; font-weight: 600;
         }
         .ce-sidebar__icon {
           width: 30px; height: 30px; border-radius: 8px;
@@ -1479,7 +1586,7 @@ export default function AdminContentPage() {
           color: #6b7280; cursor: pointer; transition: all 0.15s ease;
           font-family: inherit;
         }
-        .ce-section-nav-btn:hover { border-color: #87A38D; color: #2D4A3E; background: #f0fdf4; }
+        .ce-section-nav-btn:hover { border-color: #87A38D; color: #5F7263; background: #f0fdf4; }
         .ce-section-nav-btn:disabled { opacity: 0.3; cursor: default; }
 
         /* Editor body — animate entrance */
@@ -1567,7 +1674,7 @@ export default function AdminContentPage() {
           color: #6b7280; cursor: pointer; margin-top: 10px;
           transition: all 0.15s ease; font-family: inherit;
         }
-        .ce-btn-add:hover { border-color: #87A38D; color: #2D4A3E; background: #f0fdf4; }
+        .ce-btn-add:hover { border-color: #87A38D; color: #5F7263; background: #f0fdf4; }
 
         .ce-btn-icon {
           display: flex; align-items: center; justify-content: center;
@@ -1592,8 +1699,8 @@ export default function AdminContentPage() {
           font-weight: 700; font-size: 0.8rem; cursor: pointer;
           transition: all 0.15s ease;
         }
-        .ce-save--default { background: #2D4A3E; color: white; }
-        .ce-save--default:hover { background: #1E3329; }
+        .ce-save--default { background: #5F7263; color: white; }
+        .ce-save--default:hover { background: #4A5C4E; }
         .ce-save--saving { background: #6b7280; color: white; cursor: wait; opacity: 0.8; }
         .ce-save--saved { background: #10b981; color: white; }
 
@@ -1622,7 +1729,7 @@ export default function AdminContentPage() {
         }
         .ce-spinner {
           width: 28px; height: 28px;
-          border: 2.5px solid #eef0f2; border-top-color: #2D4A3E;
+          border: 2.5px solid #eef0f2; border-top-color: #5F7263;
           border-radius: 50%; animation: spin 0.7s linear infinite;
         }
 
@@ -1656,7 +1763,7 @@ export default function AdminContentPage() {
           background: white; color: #6b7280; cursor: pointer;
           transition: all 0.15s ease;
         }
-        .cp-refresh:hover { border-color: #87A38D; color: #2D4A3E; background: #f0fdf4; }
+        .cp-refresh:hover { border-color: #87A38D; color: #5F7263; background: #f0fdf4; }
         .cp-refresh:disabled { opacity: 0.5; cursor: wait; }
         .cp-viewport {
           background: white;
@@ -1855,12 +1962,12 @@ export default function AdminContentPage() {
                         display: "flex", alignItems: "center", gap: "8px",
                         padding: "10px 20px", borderRadius: "10px",
                         border: "1.5px solid #e5e7eb", background: "white",
-                        color: "#2D4A3E", fontSize: "0.82rem", fontWeight: 600,
+                        color: "#5F7263", fontSize: "0.82rem", fontWeight: 600,
                         cursor: "pointer", transition: "all 0.15s ease",
                         fontFamily: "inherit",
                       }}
                       onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.borderColor = "#2D4A3E";
+                        (e.currentTarget as HTMLElement).style.borderColor = "#5F7263";
                         (e.currentTarget as HTMLElement).style.background = "rgba(45,74,62,0.04)";
                       }}
                       onMouseLeave={(e) => {

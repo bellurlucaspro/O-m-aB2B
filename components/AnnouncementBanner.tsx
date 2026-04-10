@@ -23,7 +23,7 @@ export default function AnnouncementBanner({ text, bgColor, textColor }: Props) 
         left: 0,
         right: 0,
         zIndex: 110,
-        background: bgColor || "#1E3329",
+        background: bgColor || "#4A5C4E",
         color: textColor || "#ffffff",
         display: "flex",
         alignItems: "center",

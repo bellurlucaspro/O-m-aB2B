@@ -13,11 +13,15 @@
   --cream: #F3F0E8;
   --cream-dark: #EBE7DD;
   --cream-gold: #FFEFDA;
-  --green-deep: #2D4A3E;
-  --green-darker: #1E3329;
+  --green-deep: #5F7263;
+  --green-darker: #4A5C4E;
   --text-dark: #2A3828;
   --text-mid: #5F7263;
   --text-light: #87A38D;
+  /* Extended accents — coherent with brand warmth */
+  --accent-terracotta: #B8744A;
+  --accent-mauve: #B4707A;
+  --accent-gold: #E8A87C;
 }
 
 @theme inline {

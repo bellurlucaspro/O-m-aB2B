@@ -11,7 +11,7 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 
 export default function Footer({ content }: { content?: FooterContent }) {
   const description = content?.description ?? "Coffrets cadeaux premium pour entreprises. Produits naturels, marques françaises, expérience mémorable.";
-  const socialLinks = content?.socialLinks ?? [{ icon: "Linkedin", href: "https://linkedin.com" }, { icon: "Mail", href: "mailto:contact@o-mea.fr" }];
+  const socialLinks = content?.socialLinks ?? [{ icon: "Linkedin", href: "https://linkedin.com" }, { icon: "Mail", href: "mailto:pro@o-mea.fr" }];
   const navLinks = content?.navigationLinks ?? [
     { label: "Engagements", href: "#pourquoi" },
     { label: "Impact RH", href: "#impact" },
@@ -22,7 +22,7 @@ export default function Footer({ content }: { content?: FooterContent }) {
   ];
   const services = content?.services ?? ["Coffret Grossesse", "Coffret Naissance", "Coffret Fêtes de fin d'année", "Coffret CSE"];
   const srvHref = content?.servicesHref ?? "#produits";
-  const contactEmail = content?.contactEmail ?? "contact@o-mea.fr";
+  const contactEmail = content?.contactEmail ?? "pro@o-mea.fr";
   const contactCtaHref = content?.contactCtaHref ?? "#devis";
   const legalLinks = content?.legalLinks ?? [
     { label: "Mentions légales", href: "#" },
@@ -74,7 +74,7 @@ export default function Footer({ content }: { content?: FooterContent }) {
           {/* Headline row */}
           <div className="ft-top" style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "48px", marginBottom: "48px" }}>
             <div className="ft-top-left" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-              <Image src="/O_MEA_TEXTE_-15 (1).png" alt="O'Méa" width={180} height={60}
+              <Image src="/Omea LOGO B2B.png" alt="O'Méa" width={180} height={60}
                 style={{ height: "44px", width: "auto", objectFit: "contain", marginBottom: "20px" }} />
               <h2 className="ft-headline" style={{
                 fontFamily: "'Manrope', sans-serif", fontWeight: 900,
@@ -178,9 +178,29 @@ export default function Footer({ content }: { content?: FooterContent }) {
             display: "flex", alignItems: "center", justifyContent: "space-between",
             flexWrap: "wrap", gap: "12px",
           }}>
-            <p style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", gap: "4px" }}>
-              © {new Date().getFullYear()} O&apos;Méa & Cie — Fabriqué avec <Heart size={8} style={{ color: "var(--pink)" }} /> en France
-            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+              <p style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", gap: "4px", margin: 0 }}>
+                © {new Date().getFullYear()} O&apos;Méa & Cie — Fabriqué avec <Heart size={8} style={{ color: "var(--pink)" }} /> en France
+              </p>
+              <p style={{ fontSize: "0.62rem", color: "rgba(255,255,255,0.2)", margin: 0 }}>
+                Site conçu par{" "}
+                <a
+                  href="https://otika.fr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    color: "rgba(255,255,255,0.35)",
+                    textDecoration: "none",
+                    fontWeight: 600,
+                    transition: "color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => { (e.target as HTMLElement).style.color = "var(--pink)"; }}
+                  onMouseLeave={(e) => { (e.target as HTMLElement).style.color = "rgba(255,255,255,0.35)"; }}
+                >
+                  Otika — Agence digitale
+                </a>
+              </p>
+            </div>
             <div style={{ display: "flex", gap: "20px" }}>
               {legalLinks.map((item) => (
                 <a key={item.label} href={item.href} style={{

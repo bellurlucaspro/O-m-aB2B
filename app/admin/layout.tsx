@@ -15,6 +15,7 @@ import {
   Bell,
   MessageCircle,
   Info,
+  SlidersHorizontal,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -30,6 +31,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Contenu", href: "/admin/content", icon: FileText, group: "menu" },
   { label: "Page À propos", href: "/admin/about", icon: Info, group: "menu" },
   { label: "Coffrets", href: "/admin/products", icon: Package, group: "menu" },
+  { label: "Configurateur", href: "/admin/custom-products", icon: SlidersHorizontal, group: "menu" },
   { label: "Demandes", href: "/admin/submissions", icon: Inbox, group: "menu" },
   { label: "Paramètres", href: "#", icon: Settings, group: "general" },
 ];
@@ -128,11 +130,11 @@ export default function AdminLayout({
           position: relative;
         }
         .adm-nav-item:hover {
-          color: #2D4A3E;
+          color: #5F7263;
           background: rgba(45,74,62,0.05);
         }
         .adm-nav-item.active {
-          color: #2D4A3E;
+          color: #5F7263;
           background: rgba(45,74,62,0.08);
           font-weight: 600;
         }
@@ -145,7 +147,7 @@ export default function AdminLayout({
           width: 3px;
           height: 22px;
           border-radius: 0 4px 4px 0;
-          background: #2D4A3E;
+          background: #5F7263;
         }
         .adm-nav-icon {
           width: 36px;
@@ -158,7 +160,7 @@ export default function AdminLayout({
           transition: all 0.15s ease;
         }
         .adm-nav-item.active .adm-nav-icon {
-          background: #2D4A3E;
+          background: #5F7263;
           color: white;
         }
         .adm-nav-item:not(.active) .adm-nav-icon {
@@ -166,14 +168,14 @@ export default function AdminLayout({
           color: #94a3b8;
         }
         .adm-nav-item:hover:not(.active) .adm-nav-icon {
-          color: #2D4A3E;
+          color: #5F7263;
         }
         .adm-nav-badge {
           margin-left: auto;
           min-width: 22px;
           height: 22px;
           border-radius: 11px;
-          background: #2D4A3E;
+          background: #5F7263;
           color: white;
           font-size: 0.68rem;
           font-weight: 700;
@@ -225,8 +227,8 @@ export default function AdminLayout({
           transition: all 0.15s ease;
         }
         .adm-header-btn:hover {
-          border-color: #2D4A3E;
-          color: #2D4A3E;
+          border-color: #5F7263;
+          color: #5F7263;
           background: rgba(45,74,62,0.03);
         }
         .adm-whatsapp {
@@ -304,7 +306,7 @@ export default function AdminLayout({
         <div style={{ padding: "20px 20px 16px", display: "flex", alignItems: "center", gap: "12px" }}>
           <div style={{
             width: "40px", height: "40px", borderRadius: "12px",
-            background: "#2D4A3E",
+            background: "#5F7263",
             display: "flex", alignItems: "center", justifyContent: "center",
             flexShrink: 0,
           }}>
@@ -373,7 +375,7 @@ export default function AdminLayout({
         {/* Bottom */}
         <div style={{ padding: "12px 10px 16px", borderTop: "1px solid #f1f5f9", display: "flex", flexDirection: "column", gap: "6px" }}>
           <a
-            href="https://wa.me/message/omea"
+            href="https://wa.me/33756971031"
             target="_blank"
             rel="noopener noreferrer"
             className="adm-whatsapp"
@@ -442,7 +444,7 @@ export default function AdminLayout({
             }}>
               <div style={{
                 width: "32px", height: "32px", borderRadius: "10px",
-                background: "linear-gradient(135deg, #2D4A3E, #87A38D)",
+                background: "linear-gradient(135deg, #5F7263, #87A38D)",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: "0.75rem", fontWeight: 700, color: "white",
               }}>

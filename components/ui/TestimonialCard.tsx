@@ -17,7 +17,7 @@ export default function TestimonialCard({
     <div
       style={{
         padding: "24px",
-        background: "white",
+        background: "var(--cream)",
         borderRadius: "16px",
         border: "1px solid rgba(135,163,141,0.12)",
       }}

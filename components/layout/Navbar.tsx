@@ -203,7 +203,7 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
           white-space: nowrap;
         }
         .nav-cta:hover {
-          background: white;
+          background: var(--cream);
           transform: translateY(-1px);
           box-shadow: 0 6px 20px rgba(255,255,255,0.15);
         }
@@ -296,7 +296,7 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
           {/* Logo */}
           <a href="/" className="nav-logo">
             <Image
-              src="/O_MEA_TEXTE_-15 (1).png"
+              src="/Omea LOGO B2B.png"
               alt="O'Méa"
               width={180}
               height={60}
@@ -324,10 +324,10 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
 
           {/* Actions */}
           <div className="nav-actions desktop">
-            <a href="mailto:contact@o-mea.fr" aria-label="Email" className="nav-icon-btn">
+            <a href="mailto:pro@o-mea.fr" aria-label="Email" className="nav-icon-btn">
               <Mail size={15} />
             </a>
-            <a href="https://wa.me/message/omea" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="nav-icon-btn">
+            <a href="https://wa.me/33756971031" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="nav-icon-btn">
               <Phone size={15} />
             </a>
             <div className="nav-divider" />

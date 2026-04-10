@@ -1,0 +1,131 @@
+[
+  {
+    "id": "huile-vergetures",
+    "name": "Huile anti-vergetures",
+    "category": "cat-1775740572108",
+    "price": 450,
+    "image": "/uploads/1773414643689-kqpc7g.JPG",
+    "description": "Huile naturelle pour prévenir les vergetures",
+    "tvaRate": 10,
+    "isCustomOption": false
+  },
+  {
+    "id": "tisane-grossesse",
+    "name": "Tisane grossesse bio",
+    "category": "gourmandise",
+    "price": 280,
+    "image": "/uploads/1773424302034-6qae7o.JPG",
+    "description": "Infusion bio adaptée à la grossesse"
+  },
+  {
+    "id": "creme-hydratante",
+    "name": "Crème hydratante naturelle",
+    "category": "soin",
+    "price": 520,
+    "image": "/uploads/1773424194180-dpp83m.JPG",
+    "description": "Soin visage hydratant certifié bio"
+  },
+  {
+    "id": "baume-levres",
+    "name": "Baume à lèvres Avril",
+    "category": "soin",
+    "price": 180,
+    "image": "/uploads/1773840077262-sijz71.JPG",
+    "description": "Baume hydratant naturel"
+  },
+  {
+    "id": "eponge-konjac",
+    "name": "Éponge konjac visage",
+    "category": "accessoire",
+    "price": 320,
+    "image": "/uploads/1.2.png",
+    "description": "Nettoyage doux et naturel"
+  },
+  {
+    "id": "demaquillant-solide",
+    "name": "Démaquillant solide bio",
+    "category": "soin",
+    "price": 380,
+    "image": "/uploads/2.2.png",
+    "description": "Démaquillant écologique et naturel"
+  },
+  {
+    "id": "cartes-etapes",
+    "name": "Cartes étapes grossesse",
+    "category": "accessoire",
+    "price": 250,
+    "image": "/uploads/1.4.png",
+    "description": "Immortalisez chaque moment"
+  },
+  {
+    "id": "tote-bag",
+    "name": "Tote bag O'Méa",
+    "category": "accessoire",
+    "price": 350,
+    "image": "/uploads/1.5.png",
+    "description": "Sac en coton bio réutilisable"
+  },
+  {
+    "id": "trousse-toilette",
+    "name": "Trousse de toilette O'Méa",
+    "category": "accessoire",
+    "price": 480,
+    "image": "/uploads/7.png",
+    "description": "Trousse pratique pour vos déplacements"
+  },
+  {
+    "id": "deodorant-solide",
+    "name": "Déodorant solide Comme Avant",
+    "category": "soin",
+    "price": 420,
+    "image": "/uploads/1773840094503-gpc2v1.jpeg",
+    "description": "Déodorant naturel et efficace"
+  },
+  {
+    "id": "doudou-artisanal",
+    "name": "Doudou artisanal français",
+    "category": "accessoire",
+    "price": 680,
+    "image": "/uploads/AUTRE2.png",
+    "description": "Doudou fait main en France"
+  },
+  {
+    "id": "graines-planter",
+    "name": "Graines à planter",
+    "category": "accessoire",
+    "price": 150,
+    "image": "/uploads/1774647595567-7hmrv4.png",
+    "description": "Symbole de nouvelle vie"
+  },
+  {
+    "id": "branding-logo",
+    "name": "Branding logo sur packaging",
+    "category": "custom",
+    "price": 200,
+    "description": "Votre logo sur chaque coffret",
+    "isCustomOption": true
+  },
+  {
+    "id": "message-perso",
+    "name": "Message personnalisé",
+    "category": "custom",
+    "price": 100,
+    "description": "Carte avec message de votre direction",
+    "isCustomOption": true
+  },
+  {
+    "id": "carte-voeux",
+    "name": "Carte de vœux entreprise",
+    "category": "custom",
+    "price": 150,
+    "description": "Carte aux couleurs de votre entreprise",
+    "isCustomOption": true
+  },
+  {
+    "id": "product-1775740642604",
+    "name": "",
+    "category": "soin",
+    "price": 0,
+    "description": ""
+  }
+]

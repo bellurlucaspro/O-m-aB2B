@@ -2,8 +2,149 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Send, CheckCircle2, ArrowRight, Sparkles, Shield, Clock, Package } from "lucide-react";
+import { Send, CheckCircle2, ArrowRight, Sparkles, Shield, Clock, Package, ChevronDown, Check } from "lucide-react";
 import { gsap, ScrollTrigger, ease, duration, distance } from "@/lib/motion";
+
+/* ═══════ Custom Select (brand-aligned) ═══════ */
+function CustomSelect({
+  value, onChange, options, placeholder = "Choisir...", focused, onFocus, onBlur,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+  placeholder?: string;
+  focused: boolean;
+  onFocus: () => void;
+  onBlur: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) {
+        setOpen(false); onBlur();
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open, onBlur]);
+
+  const displayValue = value || placeholder;
+  const isEmpty = !value;
+
+  return (
+    <div ref={wrapRef} style={{ position: "relative", width: "100%" }}>
+      <button
+        type="button"
+        onClick={() => {
+          const next = !open;
+          setOpen(next);
+          if (next) onFocus(); else onBlur();
+        }}
+        style={{
+          width: "100%",
+          padding: "14px 44px 14px 16px",
+          background: focused || open ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.5)",
+          border: `1.5px solid ${focused || open ? "var(--sage)" : "rgba(135,163,141,0.2)"}`,
+          borderRadius: "14px",
+          fontFamily: "'Inter', sans-serif",
+          fontSize: "0.88rem",
+          color: isEmpty ? "rgba(90,107,92,0.5)" : "var(--text-dark)",
+          textAlign: "left",
+          cursor: "pointer",
+          outline: "none",
+          transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
+          boxShadow: focused || open ? "0 0 0 4px rgba(135,163,141,0.12)" : "none",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "10px",
+        }}
+      >
+        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {displayValue}
+        </span>
+        <ChevronDown
+          size={16}
+          strokeWidth={2.2}
+          style={{
+            color: "var(--sage)",
+            flexShrink: 0,
+            transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+            transform: open ? "rotate(180deg)" : "rotate(0deg)",
+          }}
+        />
+      </button>
+
+      {open && (
+        <div
+          style={{
+            position: "absolute",
+            top: "calc(100% + 6px)",
+            left: 0,
+            right: 0,
+            background: "var(--cream)",
+            border: "1.5px solid rgba(135,163,141,0.18)",
+            borderRadius: "14px",
+            boxShadow: "0 16px 48px rgba(45,74,62,0.15), 0 4px 12px rgba(45,74,62,0.08)",
+            zIndex: 20,
+            overflow: "hidden",
+            animation: "csFade 0.22s cubic-bezier(0.16, 1, 0.3, 1)",
+          }}
+        >
+          <style>{`
+            @keyframes csFade {
+              from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+              to   { opacity: 1; transform: translateY(0)    scale(1); }
+            }
+            .cs-option:hover { background: rgba(135,163,141,0.1) !important; }
+          `}</style>
+          <div style={{ maxHeight: "260px", overflowY: "auto", padding: "6px" }}>
+            {options.map((opt) => {
+              const selected = value === opt;
+              return (
+                <button
+                  key={opt}
+                  type="button"
+                  className="cs-option"
+                  onClick={() => {
+                    onChange(opt);
+                    setOpen(false);
+                    onBlur();
+                  }}
+                  style={{
+                    width: "100%",
+                    padding: "10px 14px",
+                    background: selected ? "rgba(135,163,141,0.15)" : "transparent",
+                    border: "none",
+                    borderRadius: "10px",
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.82rem",
+                    fontWeight: selected ? 700 : 500,
+                    color: selected ? "var(--green-deep)" : "var(--text-mid)",
+                    textAlign: "left",
+                    cursor: "pointer",
+                    outline: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "10px",
+                    transition: "background 0.15s ease",
+                  }}
+                >
+                  <span>{opt}</span>
+                  {selected && <Check size={14} strokeWidth={2.5} style={{ color: "var(--sage)" }} />}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 interface CTAProps {
   sectionTitle?: string;
@@ -45,6 +186,8 @@ export default function CTASection({
     email: "",
     phone: "",
     quantity: "",
+    boxType: "",
+    budgetPerBox: "",
     message: "",
   });
 
@@ -164,7 +307,7 @@ export default function CTASection({
     borderStyle: "solid",
     borderColor: "rgba(135,163,141,0.15)",
     borderRadius: "12px",
-    background: "white",
+    background: "var(--cream)",
     fontFamily: "'Inter', sans-serif",
     fontSize: "0.88rem",
     color: "var(--text-dark)",
@@ -289,7 +432,7 @@ export default function CTASection({
                     style={{
                       display: "inline-flex", alignItems: "center", gap: "8px",
                       padding: "10px 16px", borderRadius: "999px",
-                      background: isUrssaf ? "rgba(45,74,62,0.06)" : "white",
+                      background: isUrssaf ? "rgba(45,74,62,0.06)" : "var(--cream)",
                       borderWidth: isUrssaf ? "1.5px" : "1px",
                       borderStyle: "solid",
                       borderColor: isUrssaf ? "rgba(45,74,62,0.2)" : "rgba(135,163,141,0.1)",
@@ -349,7 +492,7 @@ export default function CTASection({
             className="cta2-form-card"
             style={{
               borderRadius: "24px",
-              background: "white",
+              background: "var(--cream)",
               padding: "36px 32px",
               border: "1px solid rgba(135,163,141,0.1)",
               boxShadow: "0 16px 60px rgba(45,74,62,0.08)",
@@ -437,22 +580,40 @@ export default function CTASection({
                       onFocus={() => setFocusedField("phone")} onBlur={() => setFocusedField(null)} />
                   </div>
                   <div>
-                    <label htmlFor="cta-qty" style={labelStyle}>Quantité estimée</label>
-                    <select id="cta-qty" className="cta2-field-input" style={{
-                      ...getInputStyle("quantity"), cursor: "pointer",
-                      appearance: "none", WebkitAppearance: "none",
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235A6B5C' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
-                      backgroundRepeat: "no-repeat",
-                      backgroundPosition: "right 14px center",
-                      paddingRight: "38px",
-                    }} value={form.quantity}
-                      onChange={(e) => setForm({ ...form, quantity: e.target.value })}
-                      onFocus={() => setFocusedField("quantity")} onBlur={() => setFocusedField(null)}>
-                      <option value="">Choisir...</option>
-                      <option>5–50 coffrets</option>
-                      <option>50–200 coffrets</option>
-                      <option>+200 coffrets</option>
-                    </select>
+                    <label style={labelStyle}>Quantité estimée</label>
+                    <CustomSelect
+                      value={form.quantity}
+                      onChange={(v) => setForm({ ...form, quantity: v })}
+                      options={["5–50 coffrets", "50–200 coffrets", "+200 coffrets"]}
+                      focused={focusedField === "quantity"}
+                      onFocus={() => setFocusedField("quantity")}
+                      onBlur={() => setFocusedField(null)}
+                    />
+                  </div>
+                </div>
+
+                <div className="cta2-form-grid cta2-field" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                  <div>
+                    <label style={labelStyle}>Type de coffret</label>
+                    <CustomSelect
+                      value={form.boxType}
+                      onChange={(v) => setForm({ ...form, boxType: v })}
+                      options={["Coffrets prêts à offrir", "Coffrets à personnaliser", "Les deux"]}
+                      focused={focusedField === "boxType"}
+                      onFocus={() => setFocusedField("boxType")}
+                      onBlur={() => setFocusedField(null)}
+                    />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Budget par coffret TTC</label>
+                    <CustomSelect
+                      value={form.budgetPerBox}
+                      onChange={(v) => setForm({ ...form, budgetPerBox: v })}
+                      options={["Moins de 30€ TTC", "30€ – 50€ TTC", "50€ – 80€ TTC", "80€ – 120€ TTC", "+120€ TTC", "À définir ensemble"]}
+                      focused={focusedField === "budgetPerBox"}
+                      onFocus={() => setFocusedField("budgetPerBox")}
+                      onBlur={() => setFocusedField(null)}
+                    />
                   </div>
                 </div>
 

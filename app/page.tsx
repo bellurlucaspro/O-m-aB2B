@@ -42,7 +42,17 @@ export default async function Home() {
       )}
       <Navbar bannerOffset={hasBanner ? 34 : 0} />
 
-      <main>
+      <main className="page-sections">
+        <style>{`
+          .page-sections > * + * {
+            margin-top: 24px;
+          }
+          @media (max-width: 768px) {
+            .page-sections > * + * {
+              margin-top: 16px;
+            }
+          }
+        `}</style>
         <HeroSection
           tagline={content.hero.tagline}
           headlinePre={content.hero.headline}
@@ -51,6 +61,9 @@ export default async function Home() {
           ctaPrimary={content.hero.ctaPrimary}
           ctaSecondary={content.hero.ctaSecondary}
           keyPoints={content.hero.keyPoints}
+          carouselImages={content.hero.carouselImages}
+          carouselBadgeUrssaf={content.hero.carouselBadgeUrssaf}
+          carouselBadgeProducts={content.hero.carouselBadgeProducts}
         />
         <TopCoffretsSection content={content.topCoffrets} />
         <BenefitsSection
@@ -59,15 +72,16 @@ export default async function Home() {
           items={content.benefits.items}
         />
         <WhyOmea content={content.whyOmea} />
-        <ImpactSection content={content.impact} />
         <TestimonialsSection content={content.testimonials} />
         <PersonalizationSection
           sectionTitle={content.personalization.sectionTitle}
           sectionSubtitle={content.personalization.sectionSubtitle}
+          image={content.personalization.image}
           steps={content.personalization.steps}
         />
         <CoffretHub products={products} simulatorProducts={simulatorProducts} />
         <ProcessSection content={content.process} />
+        <ImpactSection content={content.impact} />
         <CTASection
           sectionTitle={content.cta.sectionTitle}
           subtitle={content.cta.subtitle}

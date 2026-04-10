@@ -1,14 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
-import { ArrowRight, ShieldCheck, Truck, Clock, Star } from "lucide-react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
+import { ArrowRight, ShieldCheck, Truck, Clock, Star, ChevronLeft, ChevronRight, Package } from "lucide-react";
 import { gsap, ScrollTrigger, ease, useCounter } from "@/lib/motion";
-
-const BoxModel3D = dynamic(() => import("@/components/BoxModel3D"), {
-  ssr: false,
-  loading: () => <div style={{ width: "100%", height: 420 }} />,
-});
 
 function HeroCounter({ value, prefix = "", suffix = "", color, mobile }: { value: number; prefix?: string; suffix?: string; color: string; mobile: boolean }) {
   const ref = useCounter(value, { suffix });
@@ -23,6 +18,13 @@ function HeroCounter({ value, prefix = "", suffix = "", color, mobile }: { value
   );
 }
 
+const DEFAULT_CAROUSEL_IMAGES = [
+  { src: "/uploads/1773414643689-kqpc7g.JPG", alt: "Coffret grossesse O'Méa — soins naturels" },
+  { src: "/uploads/1773424302034-6qae7o.JPG", alt: "Produits artisanaux français O'Méa" },
+  { src: "/uploads/produits-box-omea.webp", alt: "Box O'Méa — cadeau entreprise premium" },
+  { src: "/uploads/1773840094503-gpc2v1.jpeg", alt: "Coffret personnalisé O'Méa" },
+];
+
 interface HeroProps {
   tagline?: string;
   headlinePre?: string;
@@ -31,6 +33,9 @@ interface HeroProps {
   ctaPrimary?: string;
   ctaSecondary?: string;
   keyPoints?: string[];
+  carouselImages?: { src: string; alt: string }[];
+  carouselBadgeUrssaf?: string;
+  carouselBadgeProducts?: string;
 }
 
 export default function HeroSection({
@@ -41,9 +46,15 @@ export default function HeroSection({
   ctaPrimary = "Découvrir nos coffrets",
   ctaSecondary = "Demander un devis",
   keyPoints,
+  carouselImages,
+  carouselBadgeUrssaf = "Conforme URSSAF",
+  carouselBadgeProducts = "6–10 produits par coffret",
 }: HeroProps) {
+  const CAROUSEL_IMAGES = (carouselImages && carouselImages.length > 0) ? carouselImages : DEFAULT_CAROUSEL_IMAGES;
   const heroRef = useRef<HTMLElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 900);
@@ -51,6 +62,24 @@ export default function HeroSection({
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
+
+  // Carousel autoplay
+  const startAutoPlay = useCallback(() => {
+    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    autoPlayRef.current = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % CAROUSEL_IMAGES.length);
+    }, 4500);
+  }, []);
+
+  useEffect(() => {
+    startAutoPlay();
+    return () => { if (autoPlayRef.current) clearInterval(autoPlayRef.current); };
+  }, [startAutoPlay]);
+
+  const goTo = (index: number) => {
+    setCurrentSlide(index);
+    startAutoPlay();
+  };
 
   // ── Cinematic entrance ──
   useEffect(() => {
@@ -62,7 +91,6 @@ export default function HeroSection({
 
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
-      // Halo glow pulse in
       gsap.fromTo(".h-halo",
         { scale: 0.5, opacity: 0 },
         { scale: 1, opacity: 1, duration: 1.8, ease: "power2.out" }
@@ -71,58 +99,40 @@ export default function HeroSection({
       const tl = gsap.timeline({ defaults: { ease: ease.enter }, delay: 0.1 });
 
       tl
-        // Tag
         .fromTo(".h-tag", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4 })
-        // Headline words
         .fromTo(".h-word",
           { opacity: 0, y: 24, filter: "blur(6px)" },
           { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, stagger: 0.06 },
           "-=0.15"
         )
-        // SVG underline
         .fromTo(".h-underline",
           { strokeDashoffset: 500 },
           { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" },
           "-=0.2"
         )
-        // Subtitle
         .fromTo(".h-sub", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, "-=0.3")
-        // Product — dramatic scale entrance from behind
         .fromTo(".h-product",
-          { opacity: 0, scale: 0.85, y: 60 },
-          { opacity: 1, scale: 1, y: 0, duration: 1.2, ease: "power3.out" },
+          { opacity: 0, scale: 0.92, y: 40 },
+          { opacity: 1, scale: 1, y: 0, duration: 1, ease: "power3.out" },
           "-=0.7"
         )
-        // Floating badges — pop in around product
         .fromTo(".h-badge",
           { opacity: 0, scale: 0.7 },
           { opacity: 1, scale: 1, duration: 0.4, stagger: 0.12, ease: "back.out(1.7)" },
           "-=0.5"
         )
-        // CTAs
         .fromTo(".h-ctas", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4 }, "-=0.3")
-        // Trust bar
-        .fromTo(".h-trust", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35 }, "-=0.15")
-;
+        .fromTo(".h-trust", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35 }, "-=0.15");
 
-      // Continuous badge float
-      gsap.to(".h-badge-1", { y: -10, duration: 5, ease: ease.organic, repeat: -1, yoyo: true, delay: 0.5 });
-      gsap.to(".h-badge-2", { y: -8, duration: 4.5, ease: ease.organic, repeat: -1, yoyo: true, delay: 1 });
-      gsap.to(".h-badge-3", { y: -12, duration: 5.5, ease: ease.organic, repeat: -1, yoyo: true, delay: 0.8 });
-      gsap.to(".h-badge-4", { y: -9, duration: 4, ease: ease.organic, repeat: -1, yoyo: true, delay: 1.2 });
+      // Subtle badge float
+      gsap.to(".h-badge-1", { y: -6, duration: 4, ease: ease.organic, repeat: -1, yoyo: true, delay: 0.5 });
+      gsap.to(".h-badge-2", { y: -5, duration: 3.5, ease: ease.organic, repeat: -1, yoyo: true, delay: 1 });
 
-      // Product gentle float
-      gsap.to(".h-float", { y: -14, duration: 7, ease: ease.organic, repeat: -1, yoyo: true });
-
-      // Halo breathe
       gsap.to(".h-halo", { scale: 1.05, opacity: 0.8, duration: 4, ease: ease.organic, repeat: -1, yoyo: true, delay: 2 });
-
-      // No scroll parallax — keep hero elements in fixed position
     }, heroRef);
 
     return () => ctx.revert();
   }, [isMobile]);
-
 
   const allWords = [...headlinePre.split(" "), "||ACCENT||", ...headlineAccent.split(" ")];
 
@@ -139,24 +149,92 @@ export default function HeroSection({
       }}
     >
       <style>{`
-        .h-glass {
-          background: white;
-          backdrop-filter: blur(12px);
-          border: 1px solid rgba(135,163,141,0.12);
-          box-shadow: 0 8px 30px rgba(45,74,62,0.08);
-        }
         .h-split {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 32px;
+          grid-template-columns: 1fr 1.15fr;
+          gap: 48px;
           align-items: center;
-          max-width: 1260px;
+          max-width: 1340px;
           margin: 0 auto;
           padding: 40px 48px 0;
         }
+        .h-carousel {
+          position: relative;
+          border-radius: 24px;
+          overflow: hidden;
+          aspect-ratio: 4 / 3.2;
+          box-shadow: 0 24px 64px rgba(45,74,62,0.12);
+        }
+        .h-carousel-slide {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .h-carousel-slide--active {
+          opacity: 1;
+        }
+        .h-carousel-slide img {
+          transition: transform 6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .h-carousel-slide--active img {
+          transform: scale(1.05);
+        }
+        .h-carousel-nav {
+          position: absolute;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 8px;
+          z-index: 5;
+        }
+        .h-carousel-dot {
+          width: 28px;
+          height: 3px;
+          border-radius: 2px;
+          border: none;
+          cursor: pointer;
+          background: rgba(255,255,255,0.4);
+          transition: all 0.3s ease;
+          padding: 0;
+        }
+        .h-carousel-dot--active {
+          background: white;
+          width: 40px;
+        }
+        .h-carousel-arrow {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 5;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: none;
+          background: rgba(255,255,255,0.85);
+          backdrop-filter: blur(8px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: var(--green-deep);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+          transition: all 0.3s ease;
+          opacity: 0;
+        }
+        .h-carousel:hover .h-carousel-arrow {
+          opacity: 1;
+        }
+        .h-carousel-arrow:hover {
+          background: var(--cream);
+          transform: translateY(-50%) scale(1.08);
+        }
         @media (max-width: 900px) {
-          .h-split { grid-template-columns: 1fr !important; gap: 16px !important; padding: 24px 20px 0 !important; }
+          .h-split { grid-template-columns: 1fr !important; gap: 20px !important; padding: 24px 20px 0 !important; }
           .h-split-right { order: -1 !important; }
+          .h-carousel { aspect-ratio: 16 / 10; }
+          .h-carousel-arrow { opacity: 1; width: 32px; height: 32px; }
         }
       `}</style>
 
@@ -278,65 +356,114 @@ export default function HeroSection({
             marginTop: "32px",
           }}>
             <div style={{ display: "flex", gap: "2px" }}>
-              {[1,2,3,4,5].map(s => <Star key={s} size={12} fill="#E8A87C" style={{ color: "#E8A87C" }} />)}
+              {[1,2,3,4,5].map(s => <Star key={s} size={12} fill="var(--accent-gold)" style={{ color: "var(--accent-gold)" }} />)}
             </div>
             <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--text-dark)", fontFamily: "'Manrope', sans-serif" }}>+50 entreprises nous font confiance</span>
           </div>
         </div>
 
-        {/* ── RIGHT: 3D Product ── */}
+        {/* ── RIGHT: Photo Carousel ── */}
         <div className="h-split-right h-a h-product" style={{ position: "relative", zIndex: 2 }}>
-          <div className="h-float">
-            <BoxModel3D height={isMobile ? 360 : 520} />
-          </div>
-
-          {/* Floating badges around product (desktop only) */}
+          {/* Decorative blob behind carousel */}
           {!isMobile && (
-            <>
-              <div className="h-a h-badge h-badge-1" style={{
-                position: "absolute", top: "8%", left: "-20px",
-                borderRadius: "14px", padding: "12px 16px",
-                display: "flex", alignItems: "center", gap: "10px", zIndex: 3,
-                background: "white",
-                border: "1.5px solid rgba(45,74,62,0.15)",
-                boxShadow: "0 8px 30px rgba(45,74,62,0.12)",
-              }}>
-                <ShieldCheck size={16} style={{ color: "var(--green-deep)" }} />
-                <div>
-                  <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.78rem", color: "var(--green-deep)" }}>Conforme URSSAF</div>
-                  <div style={{ fontSize: "0.6rem", color: "var(--text-mid)", fontWeight: 500 }}>100% exonéré</div>
-                </div>
-              </div>
-              <div className="h-a h-badge h-badge-2 h-glass" style={{
-                position: "absolute", top: "15%", right: "-10px",
-                borderRadius: "14px", padding: "10px 14px",
-                display: "flex", alignItems: "center", gap: "8px", zIndex: 3,
-              }}>
-                <Truck size={14} style={{ color: "var(--sage)" }} />
-                <div>
-                  <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.72rem", color: "var(--text-dark)" }}>Livraison multi-sites</div>
-                  <div style={{ fontSize: "0.58rem", color: "var(--text-light)" }}>Bureau & domicile</div>
-                </div>
-              </div>
-              <div className="h-a h-badge h-badge-3 h-glass" style={{
-                position: "absolute", bottom: "18%", right: "0px",
-                borderRadius: "14px", padding: "10px 14px",
-                display: "flex", alignItems: "center", gap: "8px", zIndex: 3,
-              }}>
-                <Clock size={14} style={{ color: "var(--sage)" }} />
-                <div>
-                  <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.72rem", color: "var(--text-dark)" }}>Devis en 24h</div>
-                  <div style={{ fontSize: "0.58rem", color: "var(--text-light)" }}>Accompagnement dédié</div>
-                </div>
-              </div>
-            </>
+            <div style={{
+              position: "absolute", top: "-20px", right: "-20px",
+              width: "90%", height: "90%",
+              background: "var(--pink)",
+              borderRadius: "28px",
+              transform: "rotate(3deg)",
+              zIndex: -1,
+              opacity: 0.5,
+            }} />
           )}
+          <div className="h-carousel">
+            {CAROUSEL_IMAGES.map((img, i) => (
+              <div
+                key={i}
+                className={`h-carousel-slide ${i === currentSlide ? "h-carousel-slide--active" : ""}`}
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  style={{ objectFit: "cover" }}
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  priority={i === 0}
+                />
+              </div>
+            ))}
+
+            {/* Gradient overlay */}
+            <div style={{
+              position: "absolute", inset: 0,
+              background: "linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.2) 100%)",
+              zIndex: 2, pointerEvents: "none",
+            }} />
+
+            {/* Arrows */}
+            <button
+              className="h-carousel-arrow"
+              style={{ left: "12px" }}
+              onClick={() => goTo((currentSlide - 1 + CAROUSEL_IMAGES.length) % CAROUSEL_IMAGES.length)}
+              aria-label="Image précédente"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              className="h-carousel-arrow"
+              style={{ right: "12px" }}
+              onClick={() => goTo((currentSlide + 1) % CAROUSEL_IMAGES.length)}
+              aria-label="Image suivante"
+            >
+              <ChevronRight size={18} />
+            </button>
+
+            {/* Dots */}
+            <div className="h-carousel-nav">
+              {CAROUSEL_IMAGES.map((_, i) => (
+                <button
+                  key={i}
+                  className={`h-carousel-dot ${i === currentSlide ? "h-carousel-dot--active" : ""}`}
+                  onClick={() => goTo(i)}
+                  aria-label={`Slide ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Badge URSSAF — inside carousel, bottom-left */}
+            <div className="h-a h-badge h-badge-1" style={{
+              position: "absolute", bottom: "48px", left: "16px", zIndex: 5,
+              borderRadius: "12px", padding: "8px 14px",
+              display: "flex", alignItems: "center", gap: "8px",
+              background: "rgba(243,240,232,0.92)", backdropFilter: "blur(10px)",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
+            }}>
+              <ShieldCheck size={13} style={{ color: "var(--green-deep)" }} />
+              <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "var(--green-deep)" }}>
+                {carouselBadgeUrssaf}
+              </span>
+            </div>
+
+            {/* Badge produits — inside carousel, top-right */}
+            <div className="h-a h-badge h-badge-2" style={{
+              position: "absolute", top: "16px", right: "16px", zIndex: 5,
+              borderRadius: "12px", padding: "8px 14px",
+              display: "flex", alignItems: "center", gap: "8px",
+              background: "rgba(243,240,232,0.92)", backdropFilter: "blur(10px)",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
+            }}>
+              <Package size={13} style={{ color: "var(--green-deep)" }} />
+              <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "var(--green-deep)" }}>
+                {carouselBadgeProducts}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ════════ BENTO STATS ════════ */}
       <div className="h-a h-trust" style={{
-        maxWidth: "1260px", margin: "0 auto",
+        maxWidth: "1340px", margin: "0 auto",
         padding: isMobile ? "24px 20px 40px" : "0 48px 60px",
         width: "100%",
       }}>
@@ -371,7 +498,7 @@ export default function HeroSection({
 
           {/* Card 2 */}
           <div style={{
-            background: "white",
+            background: "var(--cream)",
             borderRadius: "20px",
             padding: isMobile ? "28px 24px" : "36px 32px",
             display: "flex", flexDirection: "column", justifyContent: "space-between",

@@ -118,7 +118,7 @@ export default function AdminProducts() {
             alignItems: "center",
             gap: "8px",
             padding: "12px 24px",
-            background: "#2D4A3E",
+            background: "#5F7263",
             color: "white",
             border: "none",
             borderRadius: "14px",
@@ -140,7 +140,7 @@ export default function AdminProducts() {
             width: "36px",
             height: "36px",
             border: "3px solid #f3f4f6",
-            borderTop: "3px solid #2D4A3E",
+            borderTop: "3px solid #5F7263",
             borderRadius: "50%",
             animation: "spin 0.8s linear infinite",
             margin: "0 auto 12px",
@@ -177,7 +177,7 @@ export default function AdminProducts() {
           <p style={{
             fontSize: "1.1rem",
             fontWeight: 700,
-            color: "#2D4A3E",
+            color: "#5F7263",
             fontFamily: "'Manrope', sans-serif",
             marginBottom: "8px",
           }}>
@@ -193,7 +193,7 @@ export default function AdminProducts() {
               alignItems: "center",
               gap: "8px",
               padding: "12px 28px",
-              background: "#2D4A3E",
+              background: "#5F7263",
               color: "white",
               border: "none",
               borderRadius: "10px",
@@ -281,7 +281,7 @@ export default function AdminProducts() {
                     style={{
                       fontSize: "1rem",
                       fontWeight: 700,
-                      color: "#2D4A3E",
+                      color: "#5F7263",
                       fontFamily: "'Manrope', sans-serif",
                       margin: 0,
                       overflow: "hidden",
@@ -312,7 +312,7 @@ export default function AdminProducts() {
                   style={{
                     fontSize: "0.95rem",
                     fontWeight: 700,
-                    color: "#2D4A3E",
+                    color: "#5F7263",
                     margin: "0 0 10px 0",
                   }}
                 >

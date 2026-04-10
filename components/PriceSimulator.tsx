@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Calculator, TrendingDown, Zap } from "lucide-react";
 import { gsap, ScrollTrigger, ease } from "@/lib/motion";
+import type { ConfigurateurSettings, DiscountTier } from "@/lib/types";
 
 interface SimulatorProduct {
   id: string;
@@ -22,17 +23,17 @@ const DEFAULT_PRODUCTS: SimulatorProduct[] = [
   { id: "events", label: "Petite Attention", name: "Petite Attention", basePrice: 8 },
 ];
 
-const TIERS = [
+const DEFAULT_TIERS: DiscountTier[] = [
   { min: 1, max: 19, discount: 0, label: "Base" },
   { min: 20, max: 99, discount: 5, label: "-5%" },
   { min: 100, max: 199, discount: 10, label: "-10%" },
-  { min: 200, max: Infinity, discount: 15, label: "-15%" },
+  { min: 200, max: null, discount: 15, label: "-15%" },
 ];
 
-function getTier(qty: number) { return TIERS.find((t) => qty >= t.min && qty <= t.max)!; }
-function getNextTier(qty: number) {
-  const idx = TIERS.findIndex((t) => qty >= t.min && qty <= t.max);
-  return idx < TIERS.length - 1 ? TIERS[idx + 1] : null;
+function getTier(qty: number, tiers: DiscountTier[]) { return tiers.find((t) => qty >= t.min && qty <= (t.max ?? Infinity))!; }
+function getNextTier(qty: number, tiers: DiscountTier[]) {
+  const idx = tiers.findIndex((t) => qty >= t.min && qty <= (t.max ?? Infinity));
+  return idx < tiers.length - 1 ? tiers[idx + 1] : null;
 }
 
 export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSimulatorProps) {
@@ -40,9 +41,19 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
   const [quantity, setQuantity] = useState(25);
   const [inputQty, setInputQty] = useState("25");
+  const [TIERS, setTiers] = useState<DiscountTier[]>(DEFAULT_TIERS);
 
-  const tier = getTier(quantity);
-  const nextTier = getNextTier(quantity);
+  useEffect(() => {
+    fetch("/api/configurateur-settings")
+      .then(r => r.json())
+      .then((s: ConfigurateurSettings) => {
+        if (s?.discountTiers?.length) setTiers(s.discountTiers);
+      })
+      .catch(() => {});
+  }, []);
+
+  const tier = getTier(quantity, TIERS);
+  const nextTier = getNextTier(quantity, TIERS);
   const unitPrice = selectedProduct.basePrice * (1 - tier.discount / 100);
   const totalPrice = unitPrice * quantity;
   const savings = (selectedProduct.basePrice - unitPrice) * quantity;
@@ -143,7 +154,7 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
             </span>
             <div style={{
               display: "flex", alignItems: "center", gap: "6px",
-              background: "white", borderRadius: "10px", padding: "4px 4px 4px 14px",
+              background: "var(--cream)", borderRadius: "10px", padding: "4px 4px 4px 14px",
               border: "1.5px solid rgba(135,163,141,0.15)",
             }}>
               <input type="number" min={1} max={300} value={inputQty}
@@ -194,7 +205,7 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
                     fontSize: "0.6rem", fontWeight: 600,
                     color: isActive ? "rgba(255,255,255,0.6)" : "var(--text-light)",
                   }}>
-                    {t.max === Infinity ? `${t.min}+` : `${t.min}–${t.max}`}
+                    {t.max === null || t.max === Infinity ? `${t.min}+` : `${t.min}–${t.max}`}
                   </div>
                 </div>
               );
@@ -224,7 +235,7 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
           {/* Unit price */}
           <div style={{
             flex: 1, padding: "20px", borderRadius: "16px",
-            background: "white", border: "1px solid rgba(135,163,141,0.1)",
+            background: "var(--cream)", border: "1px solid rgba(135,163,141,0.1)",
           }}>
             <div style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-light)", marginBottom: "8px" }}>
               Prix unitaire

@@ -18,7 +18,7 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 const COLOR_MAP: Record<string, string> = {
   Heart: "var(--sage)", Smile: "var(--sage)",
   TrendingUp: "var(--green-deep)", Users: "var(--green-deep)",
-  Shield: "#B8744A", Award: "#B8744A",
+  Shield: "var(--accent-terracotta)", Award: "var(--accent-terracotta)",
 };
 
 function Counter({ value, prefix = "", suffix = "" }: { value: number; prefix?: string; suffix?: string }) {
@@ -48,7 +48,7 @@ const stats = [
 const impacts = [
   { icon: <Heart size={20} />, title: "Améliorez la QVT", desc: "Un geste tangible aux moments clés de la vie de vos collaborateurs.", color: "var(--sage)" },
   { icon: <TrendingUp size={20} />, title: "Fidélisez vos talents", desc: "Taux de rétention 40% supérieur pour les entreprises qui célèbrent les moments de vie.", badge: "+40%", color: "var(--green-deep)" },
-  { icon: <Shield size={20} />, title: "Renforcez votre RSE", desc: "Produits naturels, artisans français. Des données concrètes pour vos rapports.", color: "#B8744A" },
+  { icon: <Shield size={20} />, title: "Renforcez votre RSE", desc: "Produits naturels, artisans français. Des données concrètes pour vos rapports.", color: "var(--accent-terracotta)" },
 ];
 
 const images = [
@@ -113,18 +113,6 @@ export default function ImpactSection({ content }: { content?: ImpactContent }) 
 
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
-      // Pin left column while right scrolls
-      ScrollTrigger.create({
-        trigger: ".imp-pinned",
-        start: "top 80px",
-        end: () => {
-          const rightCol = document.querySelector(".imp-right") as HTMLElement;
-          return rightCol ? `+=${rightCol.scrollHeight - window.innerHeight + 160}` : "+=800";
-        },
-        pin: true,
-        pinSpacing: false,
-      });
-
       // Right column elements entrance
       gsap.fromTo(".imp-tag", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: ease.enter,
         scrollTrigger: { trigger: ".imp-tag", start: "top 85%", toggleActions: "play none none none" } });
@@ -162,7 +150,7 @@ export default function ImpactSection({ content }: { content?: ImpactContent }) 
         .imp-impact-card {
           display: flex; gap: 14px; align-items: flex-start;
           padding: 16px 20px; border-radius: 14px;
-          border: 1px solid rgba(135,163,141,0.1); background: white;
+          border: 1px solid rgba(135,163,141,0.1); background: var(--cream);
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .imp-impact-card:hover {
@@ -203,7 +191,7 @@ export default function ImpactSection({ content }: { content?: ImpactContent }) 
           }}>
             {displayStats.map((s, i) => (
               <div key={i} className="imp-stat" style={{
-                flex: 1, background: "white", borderRadius: "16px",
+                flex: 1, background: "var(--cream)", borderRadius: "16px",
                 padding: "18px 14px", textAlign: "center",
                 boxShadow: "0 8px 32px rgba(45,74,62,0.1)",
                 border: "1px solid rgba(135,163,141,0.08)",

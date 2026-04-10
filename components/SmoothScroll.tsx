@@ -34,8 +34,16 @@ export default function SmoothScroll({
 
     rafRef.current = requestAnimationFrame(raf);
 
+    // Listen for modal open/close to stop/start Lenis
+    const handleStop = () => lenis.stop();
+    const handleStart = () => lenis.start();
+    window.addEventListener("lenis:stop", handleStop);
+    window.addEventListener("lenis:start", handleStart);
+
     return () => {
       cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("lenis:stop", handleStop);
+      window.removeEventListener("lenis:start", handleStart);
       lenis.destroy();
     };
   }, []);

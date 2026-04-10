@@ -1,0 +1,75 @@
+{
+  "discountTiers": [
+    {
+      "min": 5,
+      "max": 19,
+      "discount": 0,
+      "label": "5–19"
+    },
+    {
+      "min": 20,
+      "max": 49,
+      "discount": 5,
+      "label": "20–49"
+    },
+    {
+      "min": 50,
+      "max": 99,
+      "discount": 10,
+      "label": "50–99"
+    },
+    {
+      "min": 100,
+      "max": 199,
+      "discount": 15,
+      "label": "100–199"
+    },
+    {
+      "min": 200,
+      "max": null,
+      "discount": 20,
+      "label": "200+"
+    }
+  ],
+  "minQuantity": 5,
+  "quantityStep": 5,
+  "tvaRate": 20,
+  "customOptionMinQty": 50,
+  "categories": [
+    {
+      "value": "soin",
+      "label": "Soins",
+      "icon": "Droplets"
+    },
+    {
+      "value": "accessoire",
+      "label": "Accessoires",
+      "icon": "Gift"
+    },
+    {
+      "value": "gourmandise",
+      "label": "Gourmandises",
+      "icon": "Cookie"
+    },
+    {
+      "value": "custom",
+      "label": "Personnalisation",
+      "icon": "Paintbrush"
+    },
+    {
+      "value": "histoire",
+      "label": "Livre",
+      "icon": "Gift"
+    },
+    {
+      "value": "cat-1775740572108",
+      "label": "Pierre",
+      "icon": "Tag"
+    },
+    {
+      "value": "120",
+      "label": "Feuille",
+      "icon": "Tag"
+    }
+  ]
+}

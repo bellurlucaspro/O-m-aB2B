@@ -16,7 +16,7 @@ export default function FeatureCard({
   title,
   description,
   accentColor = "var(--pink)",
-  iconColor = "#B4707A",
+  iconColor = "var(--accent-mauve)",
 }: FeatureCardProps) {
   const [hovered, setHovered] = useState(false);
 
@@ -25,7 +25,7 @@ export default function FeatureCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: "white",
+        background: "var(--cream)",
         border: "1.5px solid rgba(135,163,141,0.12)",
         borderRadius: "24px",
         padding: "36px",
@@ -95,7 +95,7 @@ export default function FeatureCard({
       <p
         style={{
           fontSize: "0.88rem",
-          color: "#2D2D2D",
+          color: "var(--text-dark)",
           lineHeight: 1.65,
         }}
       >

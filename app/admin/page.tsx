@@ -84,7 +84,7 @@ export default function AdminDashboard() {
         <div style={{ textAlign: "center" }}>
           <div style={{
             width: "40px", height: "40px",
-            border: "3px solid #f1f5f9", borderTop: "3px solid #2D4A3E",
+            border: "3px solid #f1f5f9", borderTop: "3px solid #5F7263",
             borderRadius: "50%", animation: "spin 0.8s linear infinite",
             margin: "0 auto 16px",
           }} />
@@ -138,12 +138,12 @@ export default function AdminDashboard() {
           transform: translateY(-2px);
         }
         .dash-stat--primary {
-          background: #2D4A3E;
-          border-color: #2D4A3E;
+          background: #5F7263;
+          border-color: #5F7263;
           color: white;
         }
         .dash-stat--primary:hover {
-          border-color: #1E3329;
+          border-color: #4A5C4E;
           box-shadow: 0 8px 32px rgba(45,74,62,0.2);
         }
         .dash-link {
@@ -159,7 +159,7 @@ export default function AdminDashboard() {
           transition: all 0.2s ease;
         }
         .dash-link:hover {
-          border-color: #2D4A3E;
+          border-color: #5F7263;
           box-shadow: 0 4px 16px rgba(45,74,62,0.06);
           transform: translateY(-2px);
         }
@@ -240,7 +240,7 @@ export default function AdminDashboard() {
               width: "36px", height: "36px", borderRadius: "10px",
               background: "rgba(45,74,62,0.06)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#2D4A3E",
+              color: "#5F7263",
             }}>
               <ArrowUpRight size={16} />
             </div>
@@ -288,7 +288,7 @@ export default function AdminDashboard() {
               width: "36px", height: "36px", borderRadius: "10px",
               background: "rgba(45,74,62,0.06)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#2D4A3E",
+              color: "#5F7263",
             }}>
               <Clock size={16} />
             </div>
@@ -329,7 +329,7 @@ export default function AdminDashboard() {
               href="/admin/submissions"
               style={{
                 display: "flex", alignItems: "center", gap: "4px",
-                color: "#2D4A3E", fontSize: "0.82rem", fontWeight: 600,
+                color: "#5F7263", fontSize: "0.82rem", fontWeight: 600,
                 textDecoration: "none", padding: "6px 12px",
                 borderRadius: "8px", transition: "all 0.15s ease",
               }}
@@ -366,7 +366,7 @@ export default function AdminDashboard() {
                     background: sub.read ? "#f1f5f9" : "rgba(45,74,62,0.08)",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     fontSize: "0.75rem", fontWeight: 700,
-                    color: sub.read ? "#94a3b8" : "#2D4A3E",
+                    color: sub.read ? "#94a3b8" : "#5F7263",
                     flexShrink: 0,
                   }}>
                     {sub.company.substring(0, 2).toUpperCase()}
@@ -395,7 +395,7 @@ export default function AdminDashboard() {
                       <span style={{
                         display: "inline-flex", alignItems: "center", gap: "4px",
                         fontSize: "0.65rem", fontWeight: 600,
-                        color: "#2D4A3E", marginTop: "4px",
+                        color: "#5F7263", marginTop: "4px",
                       }}>
                         <span style={{
                           width: "6px", height: "6px", borderRadius: "50%",
@@ -433,7 +433,7 @@ export default function AdminDashboard() {
                       width: "40px", height: "40px", borderRadius: "12px",
                       background: "rgba(45,74,62,0.06)",
                       display: "flex", alignItems: "center", justifyContent: "center",
-                      color: "#2D4A3E", flexShrink: 0,
+                      color: "#5F7263", flexShrink: 0,
                     }}>
                       <Icon size={18} />
                     </div>

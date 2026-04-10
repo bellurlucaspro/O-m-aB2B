@@ -57,7 +57,7 @@ export default function Footer() {
           <div>
             <div style={{ marginBottom: "16px" }}>
               <Image
-                src="/O_MEA_TEXTE_-15 (1).png"
+                src="/Omea LOGO B2B.png"
                 alt="O'Méa"
                 width={160}
                 height={56}
@@ -107,7 +107,7 @@ export default function Footer() {
                 <Linkedin size={15} />
               </a>
               <a
-                href="mailto:contact@o-mea.fr"
+                href="mailto:pro@o-mea.fr"
                 style={{
                   width: "36px",
                   height: "36px",
@@ -243,7 +243,7 @@ export default function Footer() {
             </h4>
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               <a
-                href="mailto:contact@o-mea.fr"
+                href="mailto:pro@o-mea.fr"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -260,7 +260,7 @@ export default function Footer() {
                 }
               >
                 <Mail size={13} />
-                contact@o-mea.fr
+                pro@o-mea.fr
               </a>
               <div
                 style={{

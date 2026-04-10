@@ -7,19 +7,39 @@
   },
   "hero": {
     "tagline": "Solution cadeaux pour RH, CSE & Dirigeants",
-    "headline": "Le cadeau d'entreprise qui ",
+    "headline": "Le cadeau d'entreprise qui",
     "highlightedText": "renforce votre marque employeur",
     "headlineEnd": "",
     "subtitle": "Coffrets naturels et personnalisables pour chaque moment clé : maternité, naissance, fêtes, évènements CSE. Conforme URSSAF, livraison multi-sites, zéro logistique côté RH.",
     "keyPoints": [
-      "100% exonéré URSSAF",
+      "Conforme URSSAF",
       "Livraison multi-sites & domicile",
       "Logo & message personnalisés",
       "Devis sous 24h"
     ],
     "ctaPrimary": "Voir nos coffrets",
     "ctaSecondary": "Obtenir un devis en 24h",
-    "socialProofCount": "+50 entreprises partenaires"
+    "socialProofCount": "+50 entreprises partenaires",
+    "carouselBadgeUrssaf": "Conforme URSSAF",
+    "carouselBadgeProducts": "6–10 produits par coffret",
+    "carouselImages": [
+      {
+        "src": "/uploads/1775666842210-ks2x2c.png",
+        "alt": "Coffret grossesse O'Méa — soins naturels"
+      },
+      {
+        "src": "/uploads/1773424302034-6qae7o.JPG",
+        "alt": "Produits artisanaux français O'Méa"
+      },
+      {
+        "src": "/uploads/produits-box-omea.webp",
+        "alt": "Box O'Méa — cadeau entreprise premium"
+      },
+      {
+        "src": "/uploads/1773840094503-gpc2v1.jpeg",
+        "alt": "Coffret personnalisé O'Méa"
+      }
+    ]
   },
   "benefits": {
     "sectionTitle": "Tout ce qu'un DRH attend d'un cadeau d'entreprise",
@@ -128,7 +148,7 @@
   },
   "personalization": {
     "sectionTitle": "Votre coffret, à votre image",
-    "sectionSubtitle": "Vous validez, on déploie. De la sélection produit à la livraison individuelle, un interlocuteur dédié pilote l'ensemble du processus.",
+    "sectionSubtitle": "Vous validez, on déploie. Un interlocuteur dédié pilote tout le processus.",
     "steps": [
       {
         "title": "Message personnalisé",
@@ -145,7 +165,8 @@
         "desc": "Choisissez parmi nos gammes ou composez un coffret unique adapté à votre évènement et à votre budget.",
         "iconName": "Package"
       }
-    ]
+    ],
+    "image": "/uploads/1775651182781-dewgqq.png"
   },
   "cta": {
     "sectionTitle": "Simplifiez vos cadeaux d'entreprise avec O'Méa",
@@ -249,21 +270,21 @@
       {
         "icon": "MessageSquare",
         "title": "Échangez avec nous",
-        "desc": "Décrivez votre besoin : nombre de coffrets, occasion, budget, calendrier. Un interlocuteur dédié vous accompagne. Devis personnalisé sous 24h.",
+        "desc": "Besoin, budget, calendrier. Devis sous 24h.",
         "badge": "Interlocuteur dédié",
         "image": "/RH%20cadeau%20maternit%C3%A9.JPG"
       },
       {
         "icon": "Package",
         "title": "Validez votre sélection",
-        "desc": "Choisissez vos coffrets, ajoutez votre branding et vos messages. On prépare les maquettes pour validation. Maquette offerte.",
+        "desc": "Branding et messages intégrés. Maquette offerte.",
         "badge": "Maquette offerte",
         "image": "/uploads/produits-box-omea.webp"
       },
       {
         "icon": "Truck",
         "title": "On déploie, vous recevez",
-        "desc": "Livraison individuelle multi-sites ou groupée. Bureau, domicile, télétravail. Chaque collaborateur reçoit son coffret à la date prévue.",
+        "desc": "Multi-sites, domicile ou télétravail. À la date prévue.",
         "badge": "Expédition en 48h",
         "image": "/uploads/AUTRE%201.png"
       }
@@ -331,7 +352,7 @@
       },
       {
         "icon": "Mail",
-        "href": "mailto:contact@o-mea.fr"
+        "href": "mailto:pro@o-mea.fr"
       }
     ],
     "navigationTitle": "Navigation",
@@ -371,18 +392,18 @@
     ],
     "servicesHref": "#produits",
     "contactTitle": "Contact",
-    "contactEmail": "contact@o-mea.fr",
+    "contactEmail": "pro@o-mea.fr",
     "contactLocation": "France",
     "contactCtaText": "Demander un devis",
     "contactCtaHref": "#devis",
     "legalLinks": [
       {
         "label": "Mentions légales",
-        "href": "#"
+        "href": "/mentions-legales"
       },
       {
         "label": "Politique de confidentialité",
-        "href": "#"
+        "href": "/mentions-legales#rgpd"
       }
     ]
   },
@@ -396,7 +417,7 @@
       {
         "rank": 1,
         "name": "Coffret Grossesse",
-        "occasion": "Maternite",
+        "occasion": "Maternité",
         "price": "33€ HT",
         "desc": "Le coffret le plus commande par les RH. Soins naturels, artisanaux et 100% francais.",
         "badge": "N°1 des commandes",
@@ -415,7 +436,7 @@
       },
       {
         "rank": 3,
-        "name": "Coffret Fetes",
+        "name": "Coffret Fêtes",
         "occasion": "Noel & Avent",
         "price": "38€ HT",
         "desc": "",

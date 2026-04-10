@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { Redis } from "@upstash/redis";
-import type { SiteContent, Product, Submission } from "./types";
+import type { SiteContent, Product, Submission, CustomProduct, ConfigurateurSettings } from "./types";
 
 // --- Redis (Vercel / production) ---
 const USE_REDIS = !!process.env.KV_REST_API_URL;
@@ -121,4 +121,30 @@ export async function markSubmissionRead(id: string): Promise<void> {
   if (sub) sub.read = true;
   if (USE_REDIS) return writeKV("submissions", submissions);
   writeFile("submissions.json", submissions);
+}
+
+// =====================
+// Custom Products (configurateur)
+// =====================
+export async function getCustomProducts(): Promise<CustomProduct[]> {
+  if (USE_REDIS) return readKV<CustomProduct[]>("custom-products", "custom-products.json");
+  return readFile<CustomProduct[]>("custom-products.json");
+}
+
+export async function updateCustomProducts(products: CustomProduct[]): Promise<void> {
+  if (USE_REDIS) return writeKV("custom-products", products);
+  writeFile("custom-products.json", products);
+}
+
+// =====================
+// Configurateur Settings
+// =====================
+export async function getConfigurateurSettings(): Promise<ConfigurateurSettings> {
+  if (USE_REDIS) return readKV<ConfigurateurSettings>("configurateur-settings", "configurateur-settings.json");
+  return readFile<ConfigurateurSettings>("configurateur-settings.json");
+}
+
+export async function updateConfigurateurSettings(settings: ConfigurateurSettings): Promise<void> {
+  if (USE_REDIS) return writeKV("configurateur-settings", settings);
+  writeFile("configurateur-settings.json", settings);
 }

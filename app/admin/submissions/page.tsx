@@ -17,7 +17,7 @@ interface Submission {
   read: boolean;
 }
 
-const ACCENT = "#2D4A3E";
+const ACCENT = "#5F7263";
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr);

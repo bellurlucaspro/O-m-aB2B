@@ -8,6 +8,10 @@ interface ProductDetail {
   name: string;
   image: string;
   description: string;
+  price?: string;
+  nbProduits?: string;
+  composition?: string[];
+  tvaRate?: number;
 }
 
 interface Product {
@@ -28,7 +32,11 @@ interface Product {
   iconEmoji: string;
   featured: boolean;
   detailProducts: ProductDetail[];
+  tvaRate?: number;
 }
+
+const TVA_OPTIONS = [5.5, 10, 20];
+const DEFAULT_TVA = 20;
 
 const EMPTY_PRODUCT: Omit<Product, "id"> = {
   name: "",
@@ -47,9 +55,10 @@ const EMPTY_PRODUCT: Omit<Product, "id"> = {
   iconEmoji: "",
   featured: false,
   detailProducts: [],
+  tvaRate: DEFAULT_TVA,
 };
 
-const ACCENT = "#2D4A3E";
+const ACCENT = "#5F7263";
 const SAGE = "#87A38D";
 
 const labelStyle: React.CSSProperties = {
@@ -182,7 +191,7 @@ export default function AdminProductEdit() {
     fetchProduct();
   }, [id]);
 
-  const updateField = (field: keyof Omit<Product, "id">, value: string | boolean | string[] | ProductDetail[]) => {
+  const updateField = (field: keyof Omit<Product, "id">, value: string | boolean | number | string[] | ProductDetail[]) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -256,10 +265,10 @@ export default function AdminProductEdit() {
   };
 
   const addDetailProduct = () => {
-    updateField("detailProducts", [...(form.detailProducts || []), { name: "", image: "", description: "" }]);
+    updateField("detailProducts", [...(form.detailProducts || []), { name: "", image: "", description: "", price: "", nbProduits: "", composition: [] }]);
   };
 
-  const updateDetailProduct = (index: number, field: keyof ProductDetail, value: string) => {
+  const updateDetailProduct = (index: number, field: keyof ProductDetail, value: string | number | string[]) => {
     const updated = [...(form.detailProducts || [])];
     updated[index] = { ...updated[index], [field]: value };
     updateField("detailProducts", updated);
@@ -485,10 +494,25 @@ export default function AdminProductEdit() {
                   <input style={inputStyle} value={form.nbProduits} onChange={(e) => updateField("nbProduits", e.target.value)} placeholder="5 produits" onFocus={focusInput} onBlur={blurInput} />
                   <p style={{ fontSize: "0.68rem", color: "#9ca3af", margin: "4px 0 0" }}>Texte affiché sous le prix</p>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1.3fr 100px 1fr", gap: "12px" }}>
                   <div style={fieldGroup}>
-                    <label style={labelStyle}>Prix</label>
-                    <input style={inputStyle} value={form.price} onChange={(e) => updateField("price", e.target.value)} placeholder="89 €" onFocus={focusInput} onBlur={blurInput} />
+                    <label style={labelStyle}>Prix TTC</label>
+                    <input style={inputStyle} value={form.price} onChange={(e) => updateField("price", e.target.value)} placeholder="40€ TTC" onFocus={focusInput} onBlur={blurInput} />
+                    {(() => {
+                      const num = parseInt(form.price.replace(/[^\d]/g, ""), 10);
+                      const rate = (form.tvaRate ?? DEFAULT_TVA) / 100;
+                      return num ? <p style={{ fontSize: "0.72rem", color: SAGE, fontWeight: 700, margin: "4px 0 0" }}>= {Math.round(num / (1 + rate))}€ HT (auto, TVA {form.tvaRate ?? DEFAULT_TVA}%)</p> : null;
+                    })()}
+                  </div>
+                  <div style={fieldGroup}>
+                    <label style={labelStyle}>TVA</label>
+                    <select
+                      style={{ ...inputStyle, cursor: "pointer" }}
+                      value={form.tvaRate ?? DEFAULT_TVA}
+                      onChange={(e) => updateField("tvaRate", parseFloat(e.target.value))}
+                    >
+                      {TVA_OPTIONS.map(t => <option key={t} value={t}>{t}%</option>)}
+                    </select>
                   </div>
                   <div style={fieldGroup}>
                     <label style={labelStyle}>Note prix</label>
@@ -554,93 +578,166 @@ export default function AdminProductEdit() {
             </div>
           )}
 
-          {/* Tab: Detail Products */}
+          {/* Tab: Detail Products (Variants) */}
           {activeTab === "details" && (
             <div style={cardStyle}>
               <div style={sectionHeaderStyle}>
                 <div style={{ width: "4px", height: "20px", borderRadius: "2px", background: "#FFEFDA" }} />
-                <h2 style={sectionTitleStyle}>Produits du coffret</h2>
+                <h2 style={sectionTitleStyle}>Gammes / variantes du coffret</h2>
                 <span style={{ marginLeft: "auto", fontSize: "0.7rem", color: "#9ca3af", fontWeight: 500 }}>
-                  Affichés dans le popup &quot;En savoir plus&quot;
+                  Ex : Vahine · Eeva · Tama — chaque variante a son prix, ses produits, son image
                 </span>
               </div>
-              {(form.detailProducts || []).length === 0 ? (
+
+              {(form.detailProducts || []).length === 0 && (
                 <div style={{ textAlign: "center", padding: "32px 16px", background: "#f9fafb", borderRadius: "10px", marginBottom: "12px" }}>
-                  <p style={{ fontSize: "1.5rem", margin: "0 0 8px" }}>📦</p>
-                  <p style={{ fontSize: "0.82rem", color: "#9ca3af", margin: "0 0 4px" }}>Aucun produit ajouté</p>
-                  <p style={{ fontSize: "0.72rem", color: "#c4c9d1", margin: 0 }}>Ajoutez les produits qui composent visuellement ce coffret</p>
+                  <p style={{ fontSize: "0.82rem", color: "#9ca3af", margin: "0 0 4px" }}>Aucune variante ajoutée</p>
+                  <p style={{ fontSize: "0.72rem", color: "#c4c9d1", margin: 0 }}>Ajoutez les gammes qui composent ce coffret (avec prix, composition, image)</p>
                 </div>
-              ) : null}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
-                {(form.detailProducts || []).map((dp, i) => (
-                  <div key={i} style={{ background: "#f9fafb", borderRadius: "10px", border: "1px solid #eef0f2", overflow: "hidden" }}>
-                    <div
-                      style={{
-                        height: "100px", background: dp.image ? "none" : "#e5e7eb",
-                        position: "relative", cursor: "pointer",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        overflow: "hidden",
-                      }}
-                      onClick={() => {
-                        const input = document.createElement("input");
-                        input.type = "file";
-                        input.accept = "image/*";
-                        input.onchange = (e) => {
-                          const file = (e.target as HTMLInputElement).files?.[0];
-                          if (file) handleDetailImageUpload(i, file);
-                        };
-                        input.click();
-                      }}
-                    >
-                      {dp.image ? (
-                        <img src={dp.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                      ) : (
-                        <span style={{ fontSize: "0.72rem", color: "#9ca3af" }}>Cliquez pour ajouter une image</span>
-                      )}
+              )}
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                {(form.detailProducts || []).map((dp, i) => {
+                  const ttcNum = parseInt((dp.price || "").replace(/[^\d]/g, ""), 10) || 0;
+                  const effectiveTva = dp.tvaRate ?? form.tvaRate ?? DEFAULT_TVA;
+                  const htNum = Math.round(ttcNum / (1 + effectiveTva / 100));
+                  return (
+                    <div key={i} style={{ background: "#f9fafb", borderRadius: "14px", border: "1px solid #eef0f2", overflow: "hidden" }}>
+                      {/* Variant header */}
+                      <div style={{ padding: "14px 16px", borderBottom: "1px solid #eef0f2", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.88rem", color: ACCENT }}>
+                            {dp.name || `Variante ${i + 1}`}
+                          </span>
+                          {ttcNum > 0 && (
+                            <span style={{ fontSize: "0.7rem", fontWeight: 700, color: SAGE, background: "rgba(135,163,141,0.12)", padding: "2px 8px", borderRadius: "6px" }}>
+                              {htNum}€ HT · {ttcNum}€ TTC
+                            </span>
+                          )}
+                        </div>
+                        <button type="button" onClick={() => removeDetailProduct(i)} style={{
+                          padding: "5px 10px", background: "#fef2f2", color: "#dc2626",
+                          border: "none", borderRadius: "6px", fontSize: "0.72rem", cursor: "pointer", fontWeight: 600,
+                        }}>Supprimer</button>
+                      </div>
+
+                      <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: "16px", padding: "16px" }}>
+                        {/* Image */}
+                        <div
+                          style={{
+                            height: "140px", background: dp.image ? "none" : "#e5e7eb",
+                            borderRadius: "10px", position: "relative", cursor: "pointer",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            overflow: "hidden", border: "1px solid #eef0f2",
+                          }}
+                          onClick={() => {
+                            const input = document.createElement("input");
+                            input.type = "file"; input.accept = "image/*";
+                            input.onchange = (e) => { const file = (e.target as HTMLInputElement).files?.[0]; if (file) handleDetailImageUpload(i, file); };
+                            input.click();
+                          }}
+                        >
+                          {dp.image ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={dp.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                          ) : (
+                            <span style={{ fontSize: "0.72rem", color: "#9ca3af", textAlign: "center", padding: "8px" }}>Cliquez pour ajouter une image</span>
+                          )}
+                        </div>
+
+                        {/* Fields */}
+                        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                            <div>
+                              <label style={{ ...labelStyle, fontSize: "0.68rem", marginBottom: "3px" }}>Nom de la variante *</label>
+                              <input style={{ ...inputStyle, fontSize: "0.82rem", padding: "7px 10px" }} value={dp.name} onChange={(e) => updateDetailProduct(i, "name", e.target.value)} placeholder="Ex: Vahine" onFocus={focusInput} onBlur={blurInput} />
+                            </div>
+                            <div>
+                              <label style={{ ...labelStyle, fontSize: "0.68rem", marginBottom: "3px" }}>Nb produits</label>
+                              <input style={{ ...inputStyle, fontSize: "0.82rem", padding: "7px 10px" }} value={dp.nbProduits || ""} onChange={(e) => updateDetailProduct(i, "nbProduits", e.target.value)} placeholder="5 produits" onFocus={focusInput} onBlur={blurInput} />
+                            </div>
+                          </div>
+                          <div>
+                            <label style={{ ...labelStyle, fontSize: "0.68rem", marginBottom: "3px" }}>Description</label>
+                            <input style={{ ...inputStyle, fontSize: "0.78rem", padding: "6px 10px" }} value={dp.description} onChange={(e) => updateDetailProduct(i, "description", e.target.value)} placeholder="Description courte de la variante" onFocus={focusInput} onBlur={blurInput} />
+                          </div>
+                          <div style={{ display: "grid", gridTemplateColumns: "140px 100px 1fr", gap: "8px", alignItems: "end" }}>
+                            <div>
+                              <label style={{ ...labelStyle, fontSize: "0.68rem", marginBottom: "3px" }}>Prix TTC</label>
+                              <input style={{ ...inputStyle, fontSize: "0.82rem", padding: "7px 10px" }} value={dp.price || ""} onChange={(e) => updateDetailProduct(i, "price", e.target.value)} placeholder="40€ TTC" onFocus={focusInput} onBlur={blurInput} />
+                            </div>
+                            <div>
+                              <label style={{ ...labelStyle, fontSize: "0.68rem", marginBottom: "3px" }}>TVA</label>
+                              <select
+                                style={{ ...inputStyle, fontSize: "0.82rem", padding: "7px 10px", cursor: "pointer" }}
+                                value={dp.tvaRate ?? form.tvaRate ?? DEFAULT_TVA}
+                                onChange={(e) => updateDetailProduct(i, "tvaRate", parseFloat(e.target.value))}
+                              >
+                                {TVA_OPTIONS.map(t => <option key={t} value={t}>{t}%</option>)}
+                              </select>
+                            </div>
+                            {ttcNum > 0 && (
+                              <span style={{ fontSize: "0.72rem", color: SAGE, fontWeight: 700, whiteSpace: "nowrap", paddingBottom: "8px" }}>
+                                = {htNum}€ HT (auto, TVA {effectiveTva}%)
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Composition */}
+                      <div style={{ padding: "0 16px 16px" }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
+                          <label style={{ ...labelStyle, fontSize: "0.68rem", marginBottom: 0 }}>Composition de la variante</label>
+                          <button type="button" onClick={() => {
+                            const updated = [...(form.detailProducts || [])];
+                            updated[i] = { ...updated[i], composition: [...(updated[i].composition || []), ""] };
+                            updateField("detailProducts", updated);
+                          }} style={{
+                            padding: "3px 10px", background: "transparent", color: SAGE, border: `1px dashed ${SAGE}`,
+                            borderRadius: "6px", fontSize: "0.68rem", fontWeight: 600, cursor: "pointer",
+                          }}>+ Ajouter</button>
+                        </div>
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}>
+                          {(dp.composition || []).map((comp, ci) => (
+                            <div key={ci} style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+                              <input style={{ ...inputStyle, flex: 1, fontSize: "0.75rem", padding: "5px 8px" }} value={comp} onChange={(e) => {
+                                const updated = [...(form.detailProducts || [])];
+                                const comps = [...(updated[i].composition || [])];
+                                comps[ci] = e.target.value;
+                                updated[i] = { ...updated[i], composition: comps };
+                                updateField("detailProducts", updated);
+                              }} placeholder={`Produit ${ci + 1}`} onFocus={focusInput} onBlur={blurInput} />
+                              <button type="button" onClick={() => {
+                                const updated = [...(form.detailProducts || [])];
+                                updated[i] = { ...updated[i], composition: (updated[i].composition || []).filter((_, k) => k !== ci) };
+                                updateField("detailProducts", updated);
+                              }} style={{ padding: "4px 6px", background: "#fef2f2", color: "#dc2626", border: "none", borderRadius: "4px", fontSize: "0.7rem", cursor: "pointer" }}>&times;</button>
+                            </div>
+                          ))}
+                        </div>
+                        {(!dp.composition || dp.composition.length === 0) && (
+                          <p style={{ fontSize: "0.7rem", color: "#c4c9d1", margin: "4px 0 0" }}>Aucun produit — ajoutez la composition de cette variante</p>
+                        )}
+                      </div>
                     </div>
-                    <div style={{ padding: "10px 12px" }}>
-                      <input
-                        style={{ ...inputStyle, fontSize: "0.82rem", padding: "7px 10px", marginBottom: "6px" }}
-                        value={dp.name}
-                        onChange={(e) => updateDetailProduct(i, "name", e.target.value)}
-                        placeholder="Nom du produit"
-                        onFocus={focusInput}
-                        onBlur={blurInput}
-                      />
-                      <input
-                        style={{ ...inputStyle, fontSize: "0.78rem", padding: "6px 10px", marginBottom: "8px" }}
-                        value={dp.description}
-                        onChange={(e) => updateDetailProduct(i, "description", e.target.value)}
-                        placeholder="Description courte"
-                        onFocus={focusInput}
-                        onBlur={blurInput}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => removeDetailProduct(i)}
-                        style={{
-                          width: "100%", padding: "5px", background: "#fef2f2",
-                          color: "#dc2626", border: "none", borderRadius: "6px",
-                          fontSize: "0.72rem", cursor: "pointer", fontWeight: 500,
-                        }}
-                      >
-                        Supprimer
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
-              <button
-                type="button"
-                onClick={addDetailProduct}
-                style={{
-                  padding: "8px 16px", background: "transparent", color: ACCENT,
-                  border: `1.5px dashed ${SAGE}`, borderRadius: "8px",
-                  fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", marginTop: "12px",
-                }}
-              >
-                + Ajouter un produit
+
+              <button type="button" onClick={addDetailProduct} style={{
+                padding: "10px 18px", background: "transparent", color: ACCENT,
+                border: `1.5px dashed ${SAGE}`, borderRadius: "10px",
+                fontSize: "0.82rem", fontWeight: 700, cursor: "pointer", marginTop: "14px",
+                width: "100%", fontFamily: "'Manrope', sans-serif",
+              }}>
+                + Ajouter une variante
               </button>
+
+              {/* Auto-calc info */}
+              <div style={{ marginTop: "14px", padding: "12px 14px", borderRadius: "10px", background: "#F0FDF4", border: "1px solid #86EFAC", fontSize: "0.75rem", color: "#166534", lineHeight: 1.6 }}>
+                <strong>Calcul automatique :</strong> Le prix HT est calculé automatiquement (TTC ÷ 1.2). Les prix saisis ici sont directement affichés sur la landing page et dans le popup produit.
+              </div>
             </div>
           )}
         </div>
@@ -755,9 +852,39 @@ export default function AdminProductEdit() {
                 <p style={{ fontSize: "0.78rem", color: "#6b7280", margin: "0 0 6px" }}>{form.subtitle}</p>
               ) : null}
               <p style={{ fontSize: "0.95rem", fontWeight: 700, color: ACCENT, margin: 0 }}>
-                {form.price || "--"}
-                {form.priceNote ? <span style={{ fontSize: "0.75rem", fontWeight: 400, color: "#6b7280", marginLeft: "4px" }}>{form.priceNote}</span> : null}
+                {(() => {
+                  const num = parseInt((form.price || "").replace(/[^\d]/g, ""), 10);
+                  const rate = (form.tvaRate ?? DEFAULT_TVA) / 100;
+                  return num ? `${Math.round(num / (1 + rate))}€ HT` : form.price || "--";
+                })()}
+                {form.priceNote ? <span style={{ fontSize: "0.75rem", fontWeight: 400, color: "#6b7280", marginLeft: "4px" }}>{form.price}</span> : null}
               </p>
+
+              {/* Variants preview */}
+              {(form.detailProducts || []).length > 0 && (
+                <div style={{ marginTop: "10px", paddingTop: "10px", borderTop: "1px solid #eef0f2" }}>
+                  <p style={{ fontSize: "0.68rem", fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.05em", margin: "0 0 6px" }}>
+                    Variantes ({(form.detailProducts || []).length})
+                  </p>
+                  <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+                    {(form.detailProducts || []).map((v, vi) => {
+                      const vttc = parseInt((v.price || "").replace(/[^\d]/g, ""), 10) || 0;
+                      const vRate = (v.tvaRate ?? form.tvaRate ?? DEFAULT_TVA) / 100;
+                      return (
+                        <div key={vi} style={{
+                          padding: "6px 10px", borderRadius: "8px", fontSize: "0.72rem",
+                          background: vi === 0 ? "rgba(135,163,141,0.12)" : "#f3f4f6",
+                          border: vi === 0 ? `1px solid ${SAGE}` : "1px solid #eef0f2",
+                        }}>
+                          <span style={{ fontWeight: 700, color: ACCENT }}>{v.name || "..."}</span>
+                          {vttc > 0 && <span style={{ color: SAGE, marginLeft: "6px", fontWeight: 600 }}>{Math.round(vttc / (1 + vRate))}€ HT</span>}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               {form.composition.length > 0 ? (
                 <div style={{ marginTop: "10px", paddingTop: "10px", borderTop: "1px solid #eef0f2" }}>
                   <p style={{ fontSize: "0.68rem", fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.05em", margin: "0 0 6px" }}>

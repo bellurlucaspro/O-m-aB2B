@@ -60,7 +60,7 @@ interface SectionDef { key: string; label: string; icon: LucideIcon; color: stri
 
 const SECTIONS: SectionDef[] = [
   { key: "hero", label: "Hero", icon: Sparkles, color: "#87A38D" },
-  { key: "origin", label: "Notre Histoire", icon: BookOpen, color: "#2D4A3E" },
+  { key: "origin", label: "Notre Histoire", icon: BookOpen, color: "#5F7263" },
   { key: "values", label: "Nos Valeurs", icon: Heart, color: "#E8A87C" },
   { key: "chiffres", label: "Chiffres", icon: BarChart3, color: "#6366f1" },
   { key: "benefits", label: "Bénéfices", icon: TrendingUp, color: "#0ea5e9" },
@@ -184,7 +184,7 @@ function ImageField({ label, hint, value, onChange }: {
         />
         <label style={{
           padding: "8px 14px", borderRadius: "8px", fontSize: "0.78rem", fontWeight: 600,
-          background: "#2D4A3E", color: "white", cursor: "pointer", whiteSpace: "nowrap",
+          background: "#5F7263", color: "white", cursor: "pointer", whiteSpace: "nowrap",
           flexShrink: 0, display: "inline-flex", alignItems: "center", gap: "6px",
         }}>
           Choisir
@@ -765,8 +765,8 @@ export default function AdminAboutPage() {
         .ce-sidebar__item:hover { background: rgba(135,163,141,0.06); color: #374151; }
         .ce-sidebar__item--active {
           background: rgba(135,163,141,0.1);
-          border-left-color: #2D4A3E;
-          color: #2D4A3E; font-weight: 600;
+          border-left-color: #5F7263;
+          color: #5F7263; font-weight: 600;
         }
         .ce-sidebar__icon {
           width: 30px; height: 30px; border-radius: 8px;
@@ -806,7 +806,7 @@ export default function AdminAboutPage() {
           color: #6b7280; cursor: pointer; transition: all 0.15s ease;
           font-family: inherit;
         }
-        .ce-section-nav-btn:hover { border-color: #87A38D; color: #2D4A3E; background: #f0fdf4; }
+        .ce-section-nav-btn:hover { border-color: #87A38D; color: #5F7263; background: #f0fdf4; }
         .ce-section-nav-btn:disabled { opacity: 0.3; cursor: default; }
 
         .ce-editor__body { animation: fadeIn 0.25s ease; }
@@ -884,7 +884,7 @@ export default function AdminAboutPage() {
           color: #6b7280; cursor: pointer; margin-top: 10px;
           transition: all 0.15s ease; font-family: inherit;
         }
-        .ce-btn-add:hover { border-color: #87A38D; color: #2D4A3E; background: #f0fdf4; }
+        .ce-btn-add:hover { border-color: #87A38D; color: #5F7263; background: #f0fdf4; }
 
         .ce-btn-icon {
           display: flex; align-items: center; justify-content: center;
@@ -909,8 +909,8 @@ export default function AdminAboutPage() {
           font-weight: 700; font-size: 0.8rem; cursor: pointer;
           transition: all 0.15s ease;
         }
-        .ce-save--default { background: #2D4A3E; color: white; }
-        .ce-save--default:hover { background: #1E3329; }
+        .ce-save--default { background: #5F7263; color: white; }
+        .ce-save--default:hover { background: #4A5C4E; }
         .ce-save--saving { background: #6b7280; color: white; cursor: wait; opacity: 0.8; }
         .ce-save--saved { background: #10b981; color: white; }
 
@@ -939,7 +939,7 @@ export default function AdminAboutPage() {
         }
         .ce-spinner {
           width: 28px; height: 28px;
-          border: 2.5px solid #eef0f2; border-top-color: #2D4A3E;
+          border: 2.5px solid #eef0f2; border-top-color: #5F7263;
           border-radius: 50%; animation: spin 0.7s linear infinite;
         }
       `}</style>
@@ -1067,12 +1067,12 @@ export default function AdminAboutPage() {
                         display: "flex", alignItems: "center", gap: "8px",
                         padding: "10px 20px", borderRadius: "10px",
                         border: "1.5px solid #e5e7eb", background: "white",
-                        color: "#2D4A3E", fontSize: "0.82rem", fontWeight: 600,
+                        color: "#5F7263", fontSize: "0.82rem", fontWeight: 600,
                         cursor: "pointer", transition: "all 0.15s ease",
                         fontFamily: "inherit",
                       }}
                       onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.borderColor = "#2D4A3E";
+                        (e.currentTarget as HTMLElement).style.borderColor = "#5F7263";
                         (e.currentTarget as HTMLElement).style.background = "rgba(45,74,62,0.04)";
                       }}
                       onMouseLeave={(e) => {

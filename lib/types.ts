@@ -5,6 +5,11 @@ export interface BannerContent {
   textColor: string;
 }
 
+export interface HeroCarouselImage {
+  src: string;
+  alt: string;
+}
+
 export interface HeroContent {
   tagline: string;
   headline: string;
@@ -15,6 +20,9 @@ export interface HeroContent {
   ctaPrimary: string;
   ctaSecondary: string;
   socialProofCount: string;
+  carouselImages?: HeroCarouselImage[];
+  carouselBadgeUrssaf?: string;
+  carouselBadgeProducts?: string;
 }
 
 export interface BenefitItem {
@@ -70,6 +78,7 @@ export interface PersonalizationStep {
 export interface PersonalizationContent {
   sectionTitle: string;
   sectionSubtitle: string;
+  image?: string;
   steps: PersonalizationStep[];
 }
 
@@ -344,6 +353,10 @@ export interface ProductDetail {
   name: string;
   image: string;
   description: string;
+  price?: string;
+  nbProduits?: string;
+  composition?: string[];
+  tvaRate?: number; // 5.5 | 10 | 20 — overrides parent product TVA
 }
 
 export interface Product {
@@ -364,6 +377,7 @@ export interface Product {
   iconEmoji: string;
   featured: boolean;
   detailProducts: ProductDetail[];
+  tvaRate?: number; // default TVA for this coffret — 5.5 | 10 | 20
 }
 
 export interface Submission {
@@ -379,4 +393,45 @@ export interface Submission {
   quantity: string;
   message: string;
   read: boolean;
+  customCoffret?: CustomCoffretSubmission;
+}
+
+export interface CustomProduct {
+  id: string;
+  name: string;
+  category: string; // now free-form, managed via ConfigurateurSettings
+  price: number; // HT in cents
+  image?: string;
+  description?: string;
+  isCustomOption?: boolean; // true = supplément (branding, message, etc.)
+  tvaRate?: number; // 5.5 | 10 | 20 — defaults to settings.tvaRate
+}
+
+export interface CustomCoffretSubmission {
+  products: { id: string; name: string; price: number; qty: number }[];
+  totalHT: number;
+  totalTTC: number;
+  quantity: number; // nombre de coffrets
+}
+
+export interface DiscountTier {
+  min: number;
+  max: number | null; // null = infinity (200+)
+  discount: number; // percentage (0, 5, 10, 15, 20...)
+  label: string;
+}
+
+export interface ProductCategory {
+  value: string;
+  label: string;
+  icon?: string; // lucide icon name
+}
+
+export interface ConfigurateurSettings {
+  discountTiers: DiscountTier[];
+  minQuantity: number;
+  quantityStep: number;
+  tvaRate: number; // 20 = 20% — default TVA
+  categories?: ProductCategory[];
+  customOptionMinQty?: number; // min coffrets to unlock personalization options
 }

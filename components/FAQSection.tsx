@@ -58,7 +58,7 @@ function FAQItem({ q, a, index, highlighted }: { q: string; a: string; index: nu
         duration: 0.35, ease: "back.out(1.7)",
       });
       gsap.to(itemRef.current, {
-        background: "white",
+        background: "#F3F0E8",
         boxShadow: "0 8px 32px rgba(45,74,62,0.06)",
         duration: 0.3,
       });
@@ -405,7 +405,7 @@ export default function FAQSection({ content }: { content?: FAQContent }) {
                 {ctaText}
                 <ArrowRight size={14} />
               </a>
-              <a href="mailto:contact@o-mea.fr" style={{
+              <a href="mailto:pro@o-mea.fr" style={{
                 fontSize: "0.82rem", color: "var(--text-mid)", fontWeight: 600,
                 textDecoration: "none", transition: "color 0.2s ease",
                 borderBottom: "1px solid rgba(135,163,141,0.3)",

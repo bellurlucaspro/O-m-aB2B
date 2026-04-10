@@ -210,7 +210,7 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
         {/* Logo */}
         <a href="#" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
           <Image
-            src={isDark ? "/O_MEA_TEXTE_-15 (1).png" : "/O_MEA_TEXTE_-20 (1).png"}
+            src="/Omea LOGO B2B.png"
             alt="O'M\éa"
             width={160}
             height={56}

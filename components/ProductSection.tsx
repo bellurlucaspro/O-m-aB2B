@@ -2,13 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowRight, Leaf, X, Package } from "lucide-react";
+import { ArrowRight, Leaf, X, Package, Check } from "lucide-react";
 import { gsap, ScrollTrigger } from "@/lib/motion";
 
 interface ProductDetail {
   name: string;
   image: string;
   description: string;
+  price?: string;
+  nbProduits?: string;
+  composition?: string[];
+  tvaRate?: number;
 }
 
 interface Product {
@@ -29,6 +33,7 @@ interface Product {
   iconEmoji: string;
   featured: boolean;
   detailProducts?: ProductDetail[];
+  tvaRate?: number;
 }
 
 interface ProductSectionProps {
@@ -47,18 +52,40 @@ function ProductModal({
   onClose: () => void;
 }) {
   const details = product.detailProducts || [];
+  const [activeVariant, setActiveVariant] = useState(0);
+  const current = details[activeVariant];
+
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    window.dispatchEvent(new Event("lenis:stop"));
     document.body.style.overflow = "hidden";
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
+    document.documentElement.style.overflow = "hidden";
+
+    const handleEsc = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", handleEsc);
+
+    const modal = modalRef.current;
+    const handleWheel = (e: WheelEvent) => { e.stopPropagation(); };
+    modal?.addEventListener("wheel", handleWheel, { passive: true });
+
     return () => {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      window.dispatchEvent(new Event("lenis:start"));
       window.removeEventListener("keydown", handleEsc);
+      modal?.removeEventListener("wheel", handleWheel);
     };
   }, [onClose]);
+
+  const getHT = (priceStr: string, rate: number = 20) => {
+    const num = parseInt(priceStr.replace(/[^\d]/g, ""), 10);
+    return num ? Math.round(num / (1 + rate / 100)) : 0;
+  };
+
+  const currentRate = current?.tvaRate ?? product.tvaRate ?? 20;
+  const currentHT = getHT(current?.price || product.price, currentRate);
+  const currentTTC = current?.price || product.price;
 
   return (
     <div
@@ -66,113 +93,277 @@ function ProductModal({
       role="dialog"
       aria-modal="true"
       aria-label={product.name}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <style>{`
         @keyframes pmFadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes pmSlideUp { from { opacity: 0; transform: translateY(40px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @keyframes pmItemIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pmSlideUp { from { opacity: 0; transform: translateY(24px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
         .pm-overlay {
           position: fixed; inset: 0; z-index: 9999;
-          background: rgba(0,0,0,0.55); backdrop-filter: blur(6px);
+          background: rgba(0,0,0,0.45); backdrop-filter: blur(10px);
           display: flex; align-items: center; justify-content: center;
-          padding: 24px; animation: pmFadeIn 0.25s ease;
+          padding: 20px; animation: pmFadeIn 0.2s ease;
         }
         .pm-modal {
-          background: var(--cream); border-radius: 24px;
-          max-width: 880px; width: 100%; max-height: 90vh; overflow-y: auto;
+          background: #F5F2EA; border-radius: 24px;
+          max-width: 920px; width: 100%;
+          max-height: 90vh;
+          display: flex; flex-direction: column;
           animation: pmSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-          box-shadow: 0 40px 120px rgba(0,0,0,0.25); position: relative;
+          box-shadow: 0 32px 80px rgba(0,0,0,0.22); position: relative;
+          overflow: hidden;
         }
-        .pm-modal::-webkit-scrollbar { width: 6px; }
-        .pm-modal::-webkit-scrollbar-track { background: transparent; }
-        .pm-modal::-webkit-scrollbar-thumb { background: rgba(135,163,141,0.3); border-radius: 6px; }
         .pm-close {
-          position: absolute; top: 20px; right: 20px; z-index: 10;
-          width: 40px; height: 40px; border-radius: 50%;
-          background: white; border: 1px solid rgba(135,163,141,0.15);
+          position: absolute; top: 16px; right: 16px; z-index: 10;
+          width: 36px; height: 36px; border-radius: 10px;
+          background: rgba(255,255,255,0.9); border: none;
           display: flex; align-items: center; justify-content: center;
           cursor: pointer; color: var(--text-mid); transition: all 0.2s ease;
-          box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+          backdrop-filter: blur(8px);
+          box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
-        .pm-close:hover { background: var(--green-deep); color: white; transform: rotate(90deg); }
-        .pm-hero { position: relative; height: 240px; overflow: hidden; border-radius: 24px 24px 0 0; }
-        .pm-hero__gradient { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 20%, rgba(0,0,0,0.5) 100%); }
-        .pm-hero__content { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px; }
-        .pm-hero__tag { display: inline-block; font-size: 0.65rem; font-weight: 700; padding: 4px 12px; border-radius: 999px; margin-bottom: 10px; backdrop-filter: blur(8px); }
-        .pm-hero__title { font-family: 'Manrope', sans-serif; font-weight: 900; font-size: 1.8rem; color: white; letter-spacing: -0.03em; line-height: 1.15; margin: 0 0 6px; }
-        .pm-hero__desc { font-size: 0.88rem; color: rgba(255,255,255,0.8); line-height: 1.6; max-width: 540px; }
-        .pm-body { padding: 36px 32px 40px; }
-        .pm-section-label { display: flex; align-items: center; gap: 10px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-light); margin-bottom: 20px; }
-        .pm-section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(135,163,141,0.2), transparent); }
-        .pm-products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
-        @media (max-width: 720px) { .pm-products-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 480px) { .pm-products-grid { grid-template-columns: 1fr; } }
-        .pm-product-card { background: white; border-radius: 16px; overflow: hidden; border: 1px solid rgba(135,163,141,0.1); transition: all 0.25s ease; animation: pmItemIn 0.4s ease backwards; }
-        .pm-product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(45,74,62,0.1); border-color: rgba(135,163,141,0.25); }
-        .pm-product-card__img { position: relative; height: 160px; overflow: hidden; background: var(--cream-dark); }
-        .pm-product-card__body { padding: 14px 16px 16px; }
-        .pm-product-card__name { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--text-dark); margin-bottom: 4px; }
-        .pm-product-card__desc { font-size: 0.76rem; color: var(--text-mid); line-height: 1.5; }
-        .pm-empty { text-align: center; padding: 48px 24px; color: var(--text-light); }
-        .pm-empty__icon { width: 56px; height: 56px; border-radius: 16px; background: rgba(135,163,141,0.08); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
-        .pm-composition { display: flex; flex-wrap: wrap; gap: 8px; }
-        .pm-composition__item { display: flex; align-items: center; gap: 8px; background: white; padding: 8px 14px; border-radius: 10px; font-size: 0.8rem; color: var(--text-mid); border: 1px solid rgba(135,163,141,0.1); }
-        .pm-composition__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); flex-shrink: 0; }
-        .pm-footer { display: flex; align-items: center; justify-content: space-between; padding: 20px 32px; border-top: 1px solid rgba(135,163,141,0.1); background: white; border-radius: 0 0 24px 24px; }
-        .pm-footer__price { font-family: 'Manrope', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--text-dark); letter-spacing: -0.03em; }
-        .pm-footer__note { font-size: 0.72rem; color: var(--text-light); font-weight: 500; }
-        .pm-footer__cta { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--green-deep); color: white; border-radius: 12px; font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 0.88rem; text-decoration: none; border: 2px solid var(--green-deep); transition: all 0.2s ease; cursor: pointer; }
-        .pm-footer__cta:hover { background: transparent; color: var(--green-deep); }
+        .pm-close:hover { background: var(--green-deep); color: white; }
+        .pm-header {
+          padding: 22px 28px 18px;
+          background: white;
+          border-bottom: 1px solid rgba(135,163,141,0.08);
+          flex-shrink: 0;
+        }
+        .pm-tabs {
+          display: flex; gap: 0; border-radius: 14px; overflow: hidden;
+          border: 1.5px solid rgba(135,163,141,0.12);
+          background: #F5F2EA;
+        }
+        .pm-tab {
+          display: flex; flex-direction: column; align-items: center;
+          padding: 12px 24px; flex: 1; min-width: 0;
+          border: none; border-right: 1px solid rgba(135,163,141,0.08);
+          background: transparent; cursor: pointer;
+          font-family: 'Manrope', sans-serif;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          position: relative;
+        }
+        .pm-tab:last-child { border-right: none; }
+        .pm-tab:hover { background: rgba(135,163,141,0.06); }
+        .pm-tab--active {
+          background: var(--green-deep) !important;
+          box-shadow: 0 4px 16px rgba(45,74,62,0.2);
+        }
+        .pm-body {
+          flex: 1; overflow-y: auto; min-height: 0;
+          overscroll-behavior: contain;
+        }
+        .pm-body::-webkit-scrollbar { width: 4px; }
+        .pm-body::-webkit-scrollbar-thumb { background: rgba(135,163,141,0.25); border-radius: 2px; }
+        .pm-split {
+          display: grid; grid-template-columns: 0.85fr 1.15fr;
+        }
+        .pm-img {
+          position: relative; overflow: hidden;
+          background: var(--cream-dark); min-height: 320px;
+        }
+        .pm-detail {
+          padding: 28px 32px;
+          display: flex; flex-direction: column;
+        }
+        .pm-section-label {
+          font-size: 0.58rem; font-weight: 800; letter-spacing: 0.12em;
+          text-transform: uppercase; color: var(--sage);
+          margin-bottom: 10px;
+          font-family: 'Manrope', sans-serif;
+        }
+        .pm-compo-grid {
+          display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+        }
+        .pm-compo-item {
+          display: flex; align-items: flex-start; gap: 8px;
+          padding: 7px 0; border-radius: 8px;
+          font-size: 0.73rem; color: var(--text-mid);
+          line-height: 1.4;
+        }
+        .pm-compo-dot {
+          width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+          background: rgba(135,163,141,0.08);
+          display: flex; align-items: center; justify-content: center;
+          margin-top: 1px;
+        }
+        .pm-footer {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 18px 28px;
+          border-top: 1px solid rgba(135,163,141,0.1);
+          flex-shrink: 0;
+          background: white;
+        }
+        @media (max-width: 720px) {
+          .pm-split { grid-template-columns: 1fr !important; }
+          .pm-img { min-height: 220px; }
+          .pm-compo-grid { grid-template-columns: 1fr !important; }
+          .pm-tab { padding: 10px 14px; }
+          .pm-detail { padding: 20px 24px; }
+        }
       `}</style>
 
-      <div className="pm-modal">
-        <button className="pm-close" onClick={onClose} aria-label="Fermer"><X size={18} strokeWidth={2.5} /></button>
-        <div className="pm-hero">
-          <Image src={product.photo} alt={product.photoAlt} fill style={{ objectFit: "cover" }} sizes="(max-width: 720px) 100vw, 50vw" />
-          <div className="pm-hero__gradient" />
-          <div className="pm-hero__content">
-            <div className="pm-hero__tag" style={{ background: product.tagBg, color: product.tagColor }}>{product.tag}</div>
-            <h2 className="pm-hero__title">{product.name}</h2>
-            <p className="pm-hero__desc">{product.description}</p>
+      <div ref={modalRef} className="pm-modal" data-lenis-prevent>
+        <button className="pm-close" onClick={onClose} aria-label="Fermer"><X size={15} strokeWidth={2.5} /></button>
+
+        {/* Header */}
+        <div className="pm-header">
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: details.length > 0 ? "16px" : "0" }}>
+            {product.tag && (
+              <span style={{
+                fontSize: "0.58rem", fontWeight: 700, padding: "3px 10px",
+                borderRadius: "999px", background: product.tagBg, color: product.tagColor,
+                letterSpacing: "0.02em",
+              }}>
+                {product.tag}
+              </span>
+            )}
+            <h2 style={{
+              fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+              fontSize: "1.25rem", color: "var(--green-deep)",
+              letterSpacing: "-0.02em", margin: 0,
+            }}>
+              {product.name}
+            </h2>
           </div>
-        </div>
-        <div className="pm-body">
           {details.length > 0 && (
-            <>
-              <div className="pm-section-label">Ce qui compose ce coffret</div>
-              <div className="pm-products-grid">
-                {details.map((dp, i) => (
-                  <div key={i} className="pm-product-card" style={{ animationDelay: `${i * 60}ms` }}>
-                    {dp.image ? (
-                      <div className="pm-product-card__img"><Image src={dp.image} alt={dp.name} fill style={{ objectFit: "cover" }} sizes="(max-width: 480px) 100vw, (max-width: 720px) 50vw, 33vw" /></div>
-                    ) : (
-                      <div className="pm-product-card__img" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}><Package size={32} style={{ color: "var(--text-light)" }} /></div>
-                    )}
-                    <div className="pm-product-card__body">
-                      <div className="pm-product-card__name">{dp.name}</div>
-                      {dp.description && <div className="pm-product-card__desc">{dp.description}</div>}
+            <div className="pm-tabs">
+              {details.map((d, i) => {
+                const isActive = activeVariant === i;
+                const htPrice = getHT(d.price || "0", d.tvaRate ?? product.tvaRate ?? 20);
+                return (
+                  <button key={i} className={`pm-tab ${isActive ? "pm-tab--active" : ""}`} onClick={() => setActiveVariant(i)}>
+                    <span style={{
+                      fontWeight: 800, fontSize: "0.8rem", letterSpacing: "-0.01em",
+                      color: isActive ? "white" : "var(--text-dark)",
+                      transition: "color 0.25s ease",
+                    }}>
+                      {d.name}
+                    </span>
+                    <span style={{
+                      fontWeight: 900, fontSize: "0.92rem", letterSpacing: "-0.02em",
+                      color: isActive ? "rgba(255,255,255,0.8)" : "var(--green-deep)",
+                      transition: "color 0.25s ease",
+                    }}>
+                      {htPrice}€ <span style={{ fontSize: "0.65rem", fontWeight: 700 }}>HT</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Scrollable body */}
+        <div className="pm-body">
+          {details.length > 0 && current ? (
+            <div className="pm-split">
+              <div className="pm-img">
+                {current.image ? (
+                  <Image src={current.image} alt={current.name} fill style={{ objectFit: "cover" }} sizes="(max-width: 720px) 100vw, 40vw" />
+                ) : (
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+                    <Package size={40} style={{ color: "var(--text-light)", opacity: 0.4 }} />
+                  </div>
+                )}
+              </div>
+
+              <div className="pm-detail">
+                {/* Variant title + badge */}
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
+                  <h3 style={{
+                    fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                    fontSize: "1.15rem", color: "var(--text-dark)", margin: 0,
+                    letterSpacing: "-0.02em",
+                  }}>
+                    {current.name}
+                  </h3>
+                  {current.nbProduits && (
+                    <span style={{
+                      fontSize: "0.6rem", fontWeight: 700, color: "var(--green-deep)",
+                      background: "rgba(45,74,62,0.08)", padding: "3px 10px", borderRadius: "999px",
+                      letterSpacing: "0.01em",
+                    }}>
+                      {current.nbProduits}
+                    </span>
+                  )}
+                </div>
+
+                {/* Description */}
+                <p style={{
+                  fontSize: "0.82rem", color: "var(--text-mid)", margin: "0 0 24px",
+                  lineHeight: 1.6, maxWidth: "440px",
+                }}>
+                  {current.description}
+                </p>
+
+                {/* Composition */}
+                {current.composition && current.composition.length > 0 && (
+                  <div style={{ flex: 1 }}>
+                    <div className="pm-section-label">Contenu du coffret</div>
+                    <div className="pm-compo-grid">
+                      {current.composition.map((item, i) => (
+                        <div key={i} className="pm-compo-item">
+                          <span className="pm-compo-dot">
+                            <Check size={9} strokeWidth={3} style={{ color: "var(--sage)" }} />
+                          </span>
+                          {item}
+                        </div>
+                      ))}
                     </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div style={{ padding: "28px 32px" }}>
+              <p style={{ fontSize: "0.88rem", color: "var(--text-mid)", lineHeight: 1.7, marginBottom: "24px", maxWidth: "520px" }}>
+                {product.description}
+              </p>
+              <div className="pm-section-label">Contenu du coffret</div>
+              <div className="pm-compo-grid">
+                {product.composition.map((item, i) => (
+                  <div key={i} className="pm-compo-item">
+                    <span className="pm-compo-dot">
+                      <Check size={9} strokeWidth={3} style={{ color: "var(--sage)" }} />
+                    </span>
+                    {item}
                   </div>
                 ))}
               </div>
-            </>
+            </div>
           )}
-          <div className="pm-section-label">{details.length > 0 ? "Liste complète" : "Composition du coffret"}</div>
-          <div className="pm-composition">
-            {product.composition.map((item, i) => (
-              <div key={i} className="pm-composition__item"><span className="pm-composition__dot" />{item}</div>
-            ))}
-          </div>
         </div>
+
+        {/* Footer */}
         <div className="pm-footer">
           <div>
-            <div className="pm-footer__price">{product.price}</div>
-            <div className="pm-footer__note">{product.priceNote}</div>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+              <span style={{
+                fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                fontSize: "1.4rem", color: "var(--green-deep)", letterSpacing: "-0.03em",
+              }}>
+                {currentHT}€ HT
+              </span>
+              <span style={{ fontSize: "0.75rem", color: "var(--text-light)", fontWeight: 600 }}>
+                {currentTTC}
+              </span>
+            </div>
+            <span style={{ fontSize: "0.65rem", color: "var(--text-light)", fontWeight: 500 }}>par coffret</span>
           </div>
-          <a href="#devis" className="pm-footer__cta" onClick={onClose}>Demander un devis <ArrowRight size={15} /></a>
+          <a href="#devis" onClick={onClose} style={{
+            display: "inline-flex", alignItems: "center", gap: "8px",
+            padding: "14px 28px", background: "var(--green-deep)", color: "white",
+            borderRadius: "14px", fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+            fontSize: "0.85rem", textDecoration: "none",
+            transition: "all 0.25s ease",
+            boxShadow: "0 4px 16px rgba(45,74,62,0.18)",
+          }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--green-darker)"; e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 6px 20px rgba(45,74,62,0.25)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "var(--green-deep)"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(45,74,62,0.18)"; }}
+          >
+            Demander un devis <ArrowRight size={14} />
+          </a>
         </div>
       </div>
     </div>
@@ -216,7 +407,7 @@ const defaultProducts: Product[] = [
     description: "F\ête des m\ères, team building, s\éminaire\… Des coffrets personnalis\és \à votre image pour chaque temps fort de votre calendrier CSE.",
     composition: ["Sélection produits naturels & artisanaux", "Packaging 100% personnalisable", "Logo entreprise intégré", "Message sur mesure inclus", "Livraison flexible & planifiée"],
     nbProduits: "5–12 produits", price: "49€ TTC", priceNote: "À partir de · TTC par coffret",
-    tag: "Toutes occasions", tagBg: "rgba(232,168,124,0.18)", tagColor: "#B8744A",
+    tag: "Toutes occasions", tagBg: "rgba(232,168,124,0.18)", tagColor: "var(--accent-terracotta)",
     accentColor: "var(--green-deep)", photo: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800&q=80",
     photoAlt: "Coffret événements entreprise", iconEmoji: "🎁", featured: false, detailProducts: [],
   },
@@ -236,11 +427,11 @@ export default function ProductSection({
   const [activeIdx, setActiveIdx] = useState(0);
   const [showHT, setShowHT] = useState(true);
 
-  const formatPrice = (ttcStr: string) => {
+  const formatPrice = (ttcStr: string, tvaRate: number = 20) => {
     const num = parseInt(ttcStr.replace(/[^\d]/g, ""), 10);
     if (!num) return ttcStr;
     if (showHT) {
-      const ht = Math.round(num / 1.2);
+      const ht = Math.round(num / (1 + tvaRate / 100));
       return `${ht}€ HT`;
     }
     return ttcStr;
@@ -307,7 +498,7 @@ export default function ProductSection({
         .px-pill:hover {
           border-color: var(--sage);
           color: var(--text-dark);
-          background: white;
+          background: var(--cream);
         }
         .px-pill--active {
           background: var(--sage) !important;
@@ -355,7 +546,7 @@ export default function ProductSection({
               display: "flex", alignItems: "center", gap: "8px",
               padding: "10px 22px", borderRadius: "999px",
               fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.82rem",
-              cursor: "pointer", background: "white", color: "var(--text-mid)",
+              cursor: "pointer", background: "var(--cream)", color: "var(--text-mid)",
               border: "1.5px solid rgba(135,163,141,0.15)",
               transition: "all 0.3s ease",
             }}>
@@ -418,7 +609,7 @@ export default function ProductSection({
               className={`px-pill ${activeIdx === i ? "px-pill--active" : ""}`}
               onClick={() => switchTo(i)}
             >
-              {p.name} · {formatPrice(p.price)}
+              {p.name} · {formatPrice(p.price, p.tvaRate ?? 20)}
             </button>
           ))}
         </div>
@@ -439,7 +630,7 @@ export default function ProductSection({
             z-index: 10;
             width: 48px; height: 48px;
             border-radius: 50%;
-            background: white;
+            background: var(--cream);
             border: 1.5px solid rgba(135,163,141,0.15);
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
@@ -538,12 +729,80 @@ export default function ProductSection({
               )}
             </div>
 
+            {/* Variantes — sélecteur de gamme */}
+            {current.detailProducts && current.detailProducts.length > 0 && (
+              <div style={{ marginBottom: "20px" }}>
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: `repeat(${current.detailProducts.length}, 1fr)`,
+                  gap: "10px",
+                }}>
+                  {current.detailProducts.map((v, vi) => {
+                    const vRate = (v.tvaRate ?? current.tvaRate ?? 20) / 100;
+                    const htPrice = v.price ? Math.round(parseInt(v.price.replace(/[^\d]/g, ""), 10) / (1 + vRate)) : 0;
+                    return (
+                      <button
+                        key={vi}
+                        type="button"
+                        onClick={() => {
+                          setModalProduct(current);
+                          setTimeout(() => {
+                            document.querySelector<HTMLButtonElement>(`.pm-tab:nth-child(${vi + 1})`)?.click();
+                          }, 100);
+                        }}
+                        style={{
+                          display: "flex", flexDirection: "column",
+                          padding: "16px 14px", borderRadius: "16px",
+                          background: vi === 0 ? "var(--pink)" : "var(--cream-dark)",
+                          border: vi === 0 ? "2px solid var(--pink-dark)" : "2px solid rgba(135,163,141,0.1)",
+                          cursor: "pointer",
+                          fontFamily: "'Manrope', sans-serif",
+                          transition: "all 0.3s ease",
+                          position: "relative",
+                          overflow: "hidden",
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--green-deep)"; e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(45,74,62,0.12)"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.borderColor = vi === 0 ? "var(--pink-dark)" : "rgba(135,163,141,0.1)"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
+                      >
+                        {vi === 0 && (
+                          <span style={{
+                            position: "absolute", top: "0", right: "0",
+                            fontSize: "0.55rem", fontWeight: 800, letterSpacing: "0.06em",
+                            textTransform: "uppercase",
+                            background: "var(--green-deep)", color: "white",
+                            padding: "3px 10px", borderRadius: "0 14px 0 10px",
+                          }}>
+                            Populaire
+                          </span>
+                        )}
+                        <span style={{ fontWeight: 800, fontSize: "0.9rem", color: "var(--text-dark)", marginBottom: "2px" }}>
+                          {v.name}
+                        </span>
+                        <span style={{ fontSize: "0.62rem", fontWeight: 600, color: "var(--text-light)", marginBottom: "8px" }}>
+                          {v.nbProduits}
+                        </span>
+                        <span style={{
+                          fontWeight: 900, fontSize: "1.15rem", color: "var(--green-deep)",
+                          letterSpacing: "-0.03em", lineHeight: 1,
+                        }}>
+                          {htPrice}€ <span style={{ fontSize: "0.7rem", fontWeight: 700 }}>HT</span>
+                        </span>
+                        <span style={{ fontSize: "0.6rem", color: "var(--text-light)", marginTop: "2px" }}>
+                          {v.price}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             <div style={{
               display: "inline-flex", alignItems: "center", gap: "8px",
               padding: "9px 16px", background: "rgba(45,74,62,0.06)",
               borderRadius: "10px", border: "1.5px solid rgba(45,74,62,0.2)",
               fontSize: "0.76rem", fontWeight: 700, color: "var(--green-deep)",
-              marginBottom: "28px", width: "fit-content",
+              marginBottom: "24px", width: "fit-content",
               fontFamily: "'Manrope', sans-serif",
             }}>
               <Leaf size={13} /> 100% exonéré de charges URSSAF
@@ -558,7 +817,7 @@ export default function ProductSection({
                     textDecoration: "underline", textDecorationColor: "rgba(135,163,141,0.3)",
                     textUnderlineOffset: "6px", textDecorationThickness: "3px",
                   }}>
-                    {formatPrice(current.price)}
+                    {formatPrice(current.price, current.tvaRate ?? 20)}
                   </span>
                   <div style={{
                     display: "inline-flex", background: "var(--cream-dark)", borderRadius: "999px",

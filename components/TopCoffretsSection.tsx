@@ -131,8 +131,8 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
           position: relative;
           border-radius: 20px;
           overflow: hidden;
-          background: white;
-          border: 1.5px solid rgba(135,163,141,0.1);
+          background: var(--cream);
+          border: 1.5px solid rgba(135,163,141,0.12);
           cursor: pointer;
           transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -257,7 +257,7 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                   <div className="tc-pop" style={{
                     position: "absolute", top: "20px", left: "20px", zIndex: 2,
                     width: "44px", height: "44px", borderRadius: "14px",
-                    background: "white",
+                    background: "var(--cream)",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
                   }}>
@@ -266,7 +266,7 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                   {/* Stats badge */}
                   <div className="tc-pop" style={{
                     position: "absolute", bottom: "20px", left: "20px", zIndex: 2,
-                    background: "rgba(255,255,255,0.95)", backdropFilter: "blur(12px)",
+                    background: "rgba(243,240,232,0.95)", backdropFilter: "blur(12px)",
                     borderRadius: "12px", padding: "10px 16px",
                     display: "flex", alignItems: "center", gap: "8px",
                     boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
@@ -347,7 +347,7 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                     <div style={{
                       display: "inline-flex", alignItems: "center", gap: "6px",
                       padding: "10px 20px", borderRadius: "999px",
-                      background: "white", color: "var(--green-deep)",
+                      background: "var(--cream)", color: "var(--green-deep)",
                       fontFamily: "'Manrope', sans-serif", fontWeight: 700,
                       fontSize: "0.82rem",
                       transition: "all 0.3s ease",
@@ -393,7 +393,7 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                     {/* Badge */}
                     <div style={{
                       position: "absolute", bottom: "12px", left: "12px", zIndex: 2,
-                      background: "rgba(255,255,255,0.92)", backdropFilter: "blur(8px)",
+                      background: "rgba(243,240,232,0.92)", backdropFilter: "blur(8px)",
                       borderRadius: "999px", padding: "4px 12px",
                       fontSize: "0.65rem", fontWeight: 700,
                       color: "var(--green-deep)", fontFamily: "'Manrope', sans-serif",
@@ -422,6 +422,15 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                       }}>
                         {c.name}
                       </h3>
+                    </div>
+                    <div style={{
+                      display: "flex", alignItems: "center", gap: "6px",
+                      marginBottom: "10px",
+                    }}>
+                      <ShieldCheck size={12} style={{ color: "var(--sage)" }} />
+                      <span style={{ fontSize: "0.65rem", fontWeight: 600, color: "var(--sage-dark)" }}>
+                        100% exonéré URSSAF
+                      </span>
                     </div>
                     <div style={{
                       display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -460,7 +469,7 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
               gap: "12px", padding: "12px 0",
             }}>
               <div style={{ display: "flex", gap: "2px" }}>
-                {[1,2,3,4,5].map(s => <Star key={s} size={11} fill="#E8A87C" style={{ color: "#E8A87C" }} />)}
+                {[1,2,3,4,5].map(s => <Star key={s} size={11} fill="var(--accent-gold)" style={{ color: "var(--accent-gold)" }} />)}
               </div>
               <span style={{
                 fontSize: "0.75rem", fontWeight: 700,
