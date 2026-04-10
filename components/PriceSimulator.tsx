@@ -187,7 +187,7 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
           {/* Tier steps visual */}
           <div style={{ display: "flex", gap: "4px", marginTop: "12px" }}>
             {TIERS.map((t, i) => {
-              const isActive = getTier(quantity) === t;
+              const isActive = getTier(quantity, TIERS) === t;
               return (
                 <div key={i} className="sim-tier-step" style={{
                   background: isActive ? "var(--green-deep)" : "rgba(135,163,141,0.12)",

@@ -815,8 +815,9 @@ export default function AdminContentPage() {
         {/* Image de la section */}
         <div className="ce-field">
           <label className="ce-label"><ImageIcon size={13} style={{ opacity: 0.5 }} /> Image principale</label>
-          {(p as Record<string, unknown>).image && (
+          {Boolean((p as Record<string, unknown>).image) && (
             <div style={{ width: "100%", height: "120px", borderRadius: "12px", overflow: "hidden", marginBottom: "8px", border: "1.5px solid #e5e7eb" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={String((p as Record<string, unknown>).image)} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
           )}
