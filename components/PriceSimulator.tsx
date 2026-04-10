@@ -30,10 +30,21 @@ const DEFAULT_TIERS: DiscountTier[] = [
   { min: 200, max: null, discount: 15, label: "-15%" },
 ];
 
-function getTier(qty: number, tiers: DiscountTier[]) { return tiers.find((t) => qty >= t.min && qty <= (t.max ?? Infinity))!; }
-function getNextTier(qty: number, tiers: DiscountTier[]) {
-  const idx = tiers.findIndex((t) => qty >= t.min && qty <= (t.max ?? Infinity));
-  return idx < tiers.length - 1 ? tiers[idx + 1] : null;
+function getTier(qty: number, tiers: DiscountTier[]): DiscountTier {
+  if (!tiers.length) return { min: 1, max: null, discount: 0, label: "Base" };
+  const found = tiers.find((t) => qty >= t.min && qty <= (t.max ?? Infinity));
+  if (found) return found;
+  // Fallback: qty < min of first tier → return first (base); qty > max of last → return last
+  const sorted = [...tiers].sort((a, b) => a.min - b.min);
+  if (qty < sorted[0].min) return sorted[0];
+  return sorted[sorted.length - 1];
+}
+function getNextTier(qty: number, tiers: DiscountTier[]): DiscountTier | null {
+  if (!tiers.length) return null;
+  const sorted = [...tiers].sort((a, b) => a.min - b.min);
+  const current = getTier(qty, sorted);
+  const idx = sorted.indexOf(current);
+  return idx >= 0 && idx < sorted.length - 1 ? sorted[idx + 1] : null;
 }
 
 export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSimulatorProps) {
@@ -47,7 +58,16 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
     fetch("/api/configurateur-settings")
       .then(r => r.json())
       .then((s: ConfigurateurSettings) => {
-        if (s?.discountTiers?.length) setTiers(s.discountTiers);
+        if (s?.discountTiers?.length) {
+          setTiers(s.discountTiers);
+          // Clamp current quantity to first tier min if below
+          const firstMin = s.discountTiers[0]?.min ?? 1;
+          setQuantity(q => (q < firstMin ? firstMin : q));
+          setInputQty(v => {
+            const n = parseInt(v, 10);
+            return !isNaN(n) && n < firstMin ? String(firstMin) : v;
+          });
+        }
       })
       .catch(() => {});
   }, []);
