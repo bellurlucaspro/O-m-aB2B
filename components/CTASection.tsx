@@ -35,7 +35,7 @@ function CustomSelect({
   const isEmpty = !value;
 
   return (
-    <div ref={wrapRef} style={{ position: "relative", width: "100%" }}>
+    <div ref={wrapRef} style={{ position: "relative", width: "100%", zIndex: open ? 100 : "auto" }}>
       <button
         type="button"
         onClick={() => {
@@ -89,7 +89,7 @@ function CustomSelect({
             border: "1.5px solid rgba(135,163,141,0.18)",
             borderRadius: "14px",
             boxShadow: "0 16px 48px rgba(45,74,62,0.15), 0 4px 12px rgba(45,74,62,0.08)",
-            zIndex: 20,
+            zIndex: 1000,
             overflow: "hidden",
             animation: "csFade 0.22s cubic-bezier(0.16, 1, 0.3, 1)",
           }}
@@ -201,7 +201,7 @@ export default function CTASection({
 
     // On mobile, show everything instantly — no scroll animations
     if (window.innerWidth < 900) {
-      gsap.set(sectionRef.current.querySelectorAll(".cta2-el, .cta2-left-el, .cta2-guarantee, .cta2-field, .cta2-submit"), { opacity: 1, y: 0, x: 0, scale: 1 });
+      gsap.set(sectionRef.current.querySelectorAll(".cta2-el, .cta2-left-el, .cta2-guarantee, .cta2-field, .cta2-submit"), { opacity: 1, clearProps: "transform" });
       gsap.set(formCardRef.current, { opacity: 1, y: 0, scale: 1 });
       return;
     }
@@ -248,6 +248,7 @@ export default function CTASection({
       }, {
         opacity: 1, x: 0,
         duration: 0.35, ease: ease.enter, stagger: 0.05, delay: 0.5,
+        clearProps: "transform",
         scrollTrigger: { trigger: formCardRef.current, start: "top 85%", toggleActions: "play none none none" },
       });
 
