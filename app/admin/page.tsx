@@ -10,6 +10,8 @@ import {
   TrendingUp,
   ArrowUpRight,
   ChevronRight,
+  RefreshCw,
+  AlertTriangle,
 } from "lucide-react";
 
 interface DashboardData {
@@ -23,6 +25,38 @@ interface DashboardData {
 export default function AdminDashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [reseeding, setReseeding] = useState(false);
+  const [reseedMsg, setReseedMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const handleReseed = async () => {
+    if (!confirm(
+      "⚠️ Action destructive !\n\n" +
+      "Cette action va ÉCRASER toutes les données en production (Redis) avec le contenu actuel du dépôt Git.\n\n" +
+      "Toutes les modifications faites directement via l'admin seront PERDUES.\n\n" +
+      "Continuer ?"
+    )) return;
+
+    setReseeding(true);
+    setReseedMsg(null);
+    try {
+      const res = await fetch("/api/admin/reseed", { method: "POST" });
+      const json = await res.json();
+      if (json.ok) {
+        setReseedMsg({
+          type: "success",
+          text: json.mode === "redis"
+            ? `✅ Re-seed OK — ${json.seeded.length} clés synchronisées : ${json.seeded.join(", ")}`
+            : "ℹ️ Mode local : aucune action (les fichiers JSON sont la source de vérité).",
+        });
+      } else {
+        setReseedMsg({ type: "error", text: "❌ Erreur lors du re-seed" });
+      }
+    } catch {
+      setReseedMsg({ type: "error", text: "❌ Erreur réseau" });
+    }
+    setReseeding(false);
+    setTimeout(() => setReseedMsg(null), 8000);
+  };
 
   useEffect(() => {
     async function load() {
@@ -173,24 +207,66 @@ export default function AdminDashboard() {
       `}</style>
 
       {/* ---- Header ---- */}
-      <div style={{ marginBottom: "32px" }}>
-        <h1 style={{
-          fontFamily: "var(--font-manrope)",
-          fontWeight: 800,
-          fontSize: "1.75rem",
-          color: "#0f172a",
-          margin: 0,
-          letterSpacing: "-0.03em",
-        }}>
-          {greeting} 👋
-        </h1>
-        <p style={{ color: "#64748b", fontSize: "0.92rem", marginTop: "6px" }}>
-          {data.unreadCount > 0
-            ? `Vous avez ${data.unreadCount} demande${data.unreadCount > 1 ? "s" : ""} non lue${data.unreadCount > 1 ? "s" : ""} à traiter.`
-            : "Tout est à jour. Voici un aperçu de votre activité."
-          }
-        </p>
+      <div style={{ marginBottom: "32px", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "20px", flexWrap: "wrap" }}>
+        <div>
+          <h1 style={{
+            fontFamily: "var(--font-manrope)",
+            fontWeight: 800,
+            fontSize: "1.75rem",
+            color: "#0f172a",
+            margin: 0,
+            letterSpacing: "-0.03em",
+          }}>
+            {greeting} 👋
+          </h1>
+          <p style={{ color: "#64748b", fontSize: "0.92rem", marginTop: "6px" }}>
+            {data.unreadCount > 0
+              ? `Vous avez ${data.unreadCount} demande${data.unreadCount > 1 ? "s" : ""} non lue${data.unreadCount > 1 ? "s" : ""} à traiter.`
+              : "Tout est à jour. Voici un aperçu de votre activité."
+            }
+          </p>
+        </div>
+
+        {/* Re-seed button */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "6px", alignItems: "flex-end" }}>
+          <button
+            onClick={handleReseed}
+            disabled={reseeding}
+            style={{
+              display: "flex", alignItems: "center", gap: "8px",
+              padding: "10px 18px", borderRadius: "10px",
+              background: "white", border: "1.5px solid #FCA5A5",
+              color: "#DC2626", fontFamily: "var(--font-manrope)",
+              fontWeight: 700, fontSize: "0.78rem",
+              cursor: reseeding ? "wait" : "pointer",
+              opacity: reseeding ? 0.6 : 1,
+              transition: "all 0.2s ease",
+            }}
+            title="Réécrase Redis (production) avec le contenu Git"
+          >
+            <RefreshCw size={14} className={reseeding ? "dash-spin" : ""} />
+            {reseeding ? "Synchronisation..." : "Re-seed depuis Git"}
+          </button>
+          <p style={{ fontSize: "0.65rem", color: "#94a3b8", margin: 0, display: "flex", alignItems: "center", gap: "4px" }}>
+            <AlertTriangle size={10} /> Action destructive
+          </p>
+          {reseedMsg && (
+            <div style={{
+              padding: "8px 12px", borderRadius: "8px",
+              background: reseedMsg.type === "success" ? "#ecfdf5" : "#fef2f2",
+              color: reseedMsg.type === "success" ? "#10b981" : "#dc2626",
+              fontSize: "0.72rem", fontWeight: 600,
+              maxWidth: "320px", marginTop: "4px",
+            }}>
+              {reseedMsg.text}
+            </div>
+          )}
+        </div>
       </div>
+      <style>{`
+        @keyframes dashSpin { to { transform: rotate(360deg); } }
+        .dash-spin { animation: dashSpin 0.8s linear infinite; }
+      `}</style>
 
       {/* ---- Stat cards (bento row) ---- */}
       <div style={{

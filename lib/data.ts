@@ -47,6 +47,40 @@ async function writeKV<T>(key: string, data: T): Promise<void> {
 }
 
 // =====================
+// Admin: force re-seed KV from bundled JSON files
+// =====================
+export async function reseedFromFiles(): Promise<{
+  ok: boolean;
+  seeded: string[];
+  mode: "redis" | "file";
+}> {
+  const seeded: string[] = [];
+  const mapping: { key: string; file: string }[] = [
+    { key: "content", file: "content.json" },
+    { key: "products", file: "products.json" },
+    { key: "custom-products", file: "custom-products.json" },
+    { key: "configurateur-settings", file: "configurateur-settings.json" },
+  ];
+
+  if (!USE_REDIS) {
+    // Local dev: nothing to do — files are the source of truth
+    return { ok: true, seeded: [], mode: "file" };
+  }
+
+  const r = getRedis();
+  for (const { key, file } of mapping) {
+    try {
+      const data = readFile<unknown>(file);
+      await r.set(key, data);
+      seeded.push(key);
+    } catch (err) {
+      console.error(`[reseed] Failed to seed ${key} from ${file}:`, err);
+    }
+  }
+  return { ok: true, seeded, mode: "redis" };
+}
+
+// =====================
 // Content
 // =====================
 export async function getContent(): Promise<SiteContent> {
