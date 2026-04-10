@@ -19,8 +19,8 @@ const scenes = [
     image: "/uploads/2.2.png",
     title: "Produits certifiés & tracés",
     desc: "100% naturels, sans composants controversés. Traçabilité pour votre CSE.",
-    metric: "0",
-    metricLabel: "controversé",
+    metric: "100%",
+    metricLabel: "non-toxique",
   },
   {
     image: "/uploads/1.2.png",
@@ -137,7 +137,7 @@ export default function WhyOmea({ content }: { content?: WhyOmeaContent }) {
               display: "inline-flex", alignItems: "center", gap: "8px",
               fontSize: "0.65rem", fontWeight: 800, letterSpacing: "0.2em",
               textTransform: "uppercase", color: "var(--sage)",
-              fontFamily: "'Manrope', sans-serif", marginBottom: "18px",
+              fontFamily: "var(--font-manrope)", marginBottom: "18px",
               padding: "6px 16px",
               background: "rgba(135,163,141,0.08)",
               borderRadius: "999px",
@@ -196,7 +196,7 @@ export default function WhyOmea({ content }: { content?: WhyOmeaContent }) {
                       border: "1px solid rgba(255,255,255,0.15)",
                     }}>
                       <span style={{
-                        fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                        fontFamily: "var(--font-manrope)", fontWeight: 900,
                         fontSize: "1.4rem", color: "white", lineHeight: 1,
                         letterSpacing: "-0.03em",
                       }}>
@@ -214,7 +214,7 @@ export default function WhyOmea({ content }: { content?: WhyOmeaContent }) {
                   {/* Content */}
                   <div style={{ padding: "22px 22px 26px" }}>
                     <h3 style={{
-                      fontFamily: "'Manrope', sans-serif", fontWeight: 800,
+                      fontFamily: "var(--font-manrope)", fontWeight: 800,
                       fontSize: "1rem", color: "var(--green-deep)",
                       lineHeight: 1.25, marginBottom: "8px",
                       letterSpacing: "-0.02em",
@@ -308,7 +308,7 @@ export default function WhyOmea({ content }: { content?: WhyOmeaContent }) {
                 <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "var(--sage-light)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Nos engagements RSE</span>
               </div>
               <h3 style={{
-                fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                fontFamily: "var(--font-manrope)", fontWeight: 900,
                 fontSize: "1.5rem", color: "white", letterSpacing: "-0.03em", lineHeight: 1.15,
               }}>
                 Une démarche responsable à chaque étape
@@ -336,7 +336,7 @@ export default function WhyOmea({ content }: { content?: WhyOmeaContent }) {
                     {item.icon}
                   </div>
                   <div>
-                    <h4 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.9rem", color: "var(--text-dark)", marginBottom: "4px" }}>{item.title}</h4>
+                    <h4 style={{ fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.9rem", color: "var(--text-dark)", marginBottom: "4px" }}>{item.title}</h4>
                     <p style={{ fontSize: "0.82rem", color: "var(--text-mid)", lineHeight: 1.7 }}>{item.text}</p>
                   </div>
                 </div>

@@ -1,22 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Inter } from "next/font/google";
 import "./globals.css";
 import SocialSidebar from "@/components/layout/SocialSidebar";
 import SmoothScroll from "@/components/SmoothScroll";
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["700", "800"],
-  display: "swap",
-  variable: "--font-manrope",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  display: "swap",
-  variable: "--font-inter",
-});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -111,7 +96,7 @@ export default function RootLayout({
           />
         </noscript>
       </head>
-      <body className={`${manrope.variable} ${inter.variable} antialiased`}>
+      <body className="antialiased">
         <SmoothScroll>
           {children}
           <SocialSidebar />

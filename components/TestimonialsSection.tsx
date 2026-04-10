@@ -257,7 +257,7 @@ export default function TestimonialsSection({ content }: { content?: Testimonial
                 className="testi-quote-text"
                 style={{
                   fontSize: "clamp(1rem, 1.8vw, 1.15rem)",
-                  fontFamily: "'Manrope', sans-serif",
+                  fontFamily: "var(--font-manrope)",
                   fontWeight: 500,
                   color: "var(--text-dark)",
                   lineHeight: 1.65,
@@ -285,7 +285,7 @@ export default function TestimonialsSection({ content }: { content?: Testimonial
                 width: "28px", height: "28px", borderRadius: "50%",
                 background: "linear-gradient(135deg, var(--sage), var(--sage-dark))",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontFamily: "'Manrope', sans-serif",
+                fontFamily: "var(--font-manrope)",
                 fontWeight: 800, fontSize: "0.55rem", color: "white",
                 flexShrink: 0,
               }}>
@@ -293,7 +293,7 @@ export default function TestimonialsSection({ content }: { content?: Testimonial
               </div>
               <span style={{
                 fontSize: "0.75rem", color: "var(--text-mid)", fontWeight: 600,
-                fontFamily: "'Manrope', sans-serif",
+                fontFamily: "var(--font-manrope)",
               }}>
                 <strong style={{ color: "var(--text-dark)", fontWeight: 800 }}>{t.name}</strong>
                 <span style={{ margin: "0 6px", opacity: 0.3 }}>·</span>

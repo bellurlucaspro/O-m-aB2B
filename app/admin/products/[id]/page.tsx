@@ -69,7 +69,7 @@ const labelStyle: React.CSSProperties = {
   marginBottom: "6px",
   textTransform: "uppercase",
   letterSpacing: "0.04em",
-  fontFamily: "'Inter', sans-serif",
+  fontFamily: "var(--font-inter)",
 };
 
 const inputStyle: React.CSSProperties = {
@@ -80,7 +80,7 @@ const inputStyle: React.CSSProperties = {
   fontSize: "0.88rem",
   outline: "none",
   boxSizing: "border-box",
-  fontFamily: "'Inter', sans-serif",
+  fontFamily: "var(--font-inter)",
   transition: "all 0.2s ease",
 };
 
@@ -98,7 +98,7 @@ const sectionHeaderStyle: React.CSSProperties = {
 };
 
 const sectionTitleStyle: React.CSSProperties = {
-  fontFamily: "'Manrope', sans-serif",
+  fontFamily: "var(--font-manrope)",
   fontWeight: 700,
   fontSize: "1.1rem",
   color: ACCENT,
@@ -342,7 +342,7 @@ export default function AdminProductEdit() {
           fontSize: "1.5rem",
           fontWeight: 800,
           color: ACCENT,
-          fontFamily: "'Manrope', sans-serif",
+          fontFamily: "var(--font-manrope)",
           marginBottom: "24px",
         }}
       >
@@ -385,7 +385,7 @@ export default function AdminProductEdit() {
               padding: "10px 16px", borderRadius: "8px",
               border: "none", cursor: "pointer",
               fontSize: "0.82rem", fontWeight: activeTab === tab.key ? 650 : 450,
-              fontFamily: "'Inter', sans-serif",
+              fontFamily: "var(--font-inter)",
               background: activeTab === tab.key ? ACCENT : "transparent",
               color: activeTab === tab.key ? "white" : "#6b7280",
               transition: "all 0.2s ease",
@@ -606,7 +606,7 @@ export default function AdminProductEdit() {
                       {/* Variant header */}
                       <div style={{ padding: "14px 16px", borderBottom: "1px solid #eef0f2", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                          <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.88rem", color: ACCENT }}>
+                          <span style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "0.88rem", color: ACCENT }}>
                             {dp.name || `Variante ${i + 1}`}
                           </span>
                           {ttcNum > 0 && (
@@ -729,7 +729,7 @@ export default function AdminProductEdit() {
                 padding: "10px 18px", background: "transparent", color: ACCENT,
                 border: `1.5px dashed ${SAGE}`, borderRadius: "10px",
                 fontSize: "0.82rem", fontWeight: 700, cursor: "pointer", marginTop: "14px",
-                width: "100%", fontFamily: "'Manrope', sans-serif",
+                width: "100%", fontFamily: "var(--font-manrope)",
               }}>
                 + Ajouter une variante
               </button>
@@ -832,7 +832,7 @@ export default function AdminProductEdit() {
                 )}
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px", flexWrap: "wrap" }}>
-                <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.95rem", color: ACCENT }}>
+                <span style={{ fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.95rem", color: ACCENT }}>
                   {form.name || "Nom du coffret"}
                 </span>
                 {form.tag ? (
@@ -919,7 +919,7 @@ export default function AdminProductEdit() {
                 opacity: saving ? 0.7 : 1,
                 transition: "all 0.2s ease",
                 boxShadow: "0 2px 8px rgba(45,74,62,0.2)",
-                fontFamily: "'Manrope', sans-serif",
+                fontFamily: "var(--font-manrope)",
               }}
             >
               {saving ? "Enregistrement..." : "Enregistrer"}

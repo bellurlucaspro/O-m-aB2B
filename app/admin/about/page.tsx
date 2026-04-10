@@ -717,7 +717,7 @@ export default function AdminAboutPage() {
           to { opacity: 1; transform: translateY(0); }
         }
 
-        .ce-root { font-family: 'Inter', sans-serif; position: relative; }
+        .ce-root { font-family: var(--font-inter); position: relative; }
 
         /* ---- top bar ---- */
         .ce-topbar {
@@ -728,7 +728,7 @@ export default function AdminAboutPage() {
           z-index: 40;
         }
         .ce-topbar__title {
-          font-family: 'Manrope', sans-serif; font-weight: 750;
+          font-family: var(--font-manrope); font-weight: 750;
           font-size: 0.95rem; color: #1a1f25; margin: 0;
         }
         .ce-topbar__actions {
@@ -788,7 +788,7 @@ export default function AdminAboutPage() {
           flex-shrink: 0;
         }
         .ce-section-title {
-          font-family: 'Manrope', sans-serif; font-weight: 800;
+          font-family: var(--font-manrope); font-weight: 800;
           font-size: 1.3rem; color: #1a1f25; letter-spacing: -0.02em;
           margin: 0;
         }
@@ -905,7 +905,7 @@ export default function AdminAboutPage() {
         .ce-save {
           display: flex; align-items: center; gap: 6px;
           padding: 8px 18px; border-radius: 10px;
-          border: none; font-family: 'Manrope', sans-serif;
+          border: none; font-family: var(--font-manrope);
           font-weight: 700; font-size: 0.8rem; cursor: pointer;
           transition: all 0.15s ease;
         }

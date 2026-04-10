@@ -156,7 +156,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "12px 14px", borderRadius: "12px",
     border: "1.5px solid rgba(135,163,141,0.12)", background: "white",
-    fontSize: "0.85rem", outline: "none", fontFamily: "'Inter', sans-serif",
+    fontSize: "0.85rem", outline: "none", fontFamily: "var(--font-inter)",
     transition: "border-color 0.2s ease",
   };
 
@@ -172,7 +172,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
         .cfg-body::-webkit-scrollbar-thumb { background: rgba(135,163,141,0.25); border-radius: 2px; }
         .cfg-cat-btn {
           padding: 9px 20px; border-radius: 999px; border: 1.5px solid rgba(135,163,141,0.15);
-          background: white; cursor: pointer; font-family: 'Manrope', sans-serif;
+          background: white; cursor: pointer; font-family: var(--font-manrope);
           font-weight: 700; font-size: 0.78rem; color: var(--text-mid);
           transition: all 0.25s ease; display: flex; align-items: center; gap: 7px;
           box-shadow: 0 1px 3px rgba(0,0,0,0.03);
@@ -205,7 +205,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
               <div style={{ width: "32px", height: "32px", borderRadius: "10px", background: "rgba(45,74,62,0.08)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Package size={16} strokeWidth={2.2} style={{ color: "var(--green-deep)" }} />
               </div>
-              <h2 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.18rem", color: "var(--green-deep)", margin: 0, letterSpacing: "-0.02em" }}>
+              <h2 style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.18rem", color: "var(--green-deep)", margin: 0, letterSpacing: "-0.02em" }}>
                 {step === "build" ? "Composez votre coffret" : sent ? "Demande envoyée !" : "Finalisez votre devis"}
               </h2>
             </div>
@@ -233,7 +233,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
                   <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                     <button onClick={() => setCoffretQty(Math.max(settings.minQuantity, coffretQty - settings.quantityStep))} style={{ width: "34px", height: "34px", borderRadius: "10px", border: "1.5px solid rgba(135,163,141,0.15)", background: "#F5F2EA", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--green-deep)", padding: 0, transition: "all 0.2s ease" }}><Minus size={14} strokeWidth={2.5} /></button>
                     <input type="number" min={settings.minQuantity} value={coffretQty} onChange={e => setCoffretQty(Math.max(settings.minQuantity, parseInt(e.target.value) || settings.minQuantity))} style={{
-                      width: "56px", textAlign: "center", fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.3rem",
+                      width: "56px", textAlign: "center", fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.3rem",
                       color: "var(--green-deep)", border: "none", background: "transparent", outline: "none",
                     }} />
                     <button onClick={() => setCoffretQty(coffretQty + settings.quantityStep)} style={{ width: "34px", height: "34px", borderRadius: "10px", border: "1.5px solid rgba(135,163,141,0.15)", background: "#F5F2EA", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--green-deep)", padding: 0, transition: "all 0.2s ease" }}><Plus size={14} strokeWidth={2.5} /></button>
@@ -252,7 +252,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
                         padding: "4px 9px", borderRadius: "8px", fontSize: "0.62rem", fontWeight: 700,
                         background: t.label === tier.label ? "var(--green-deep)" : "rgba(135,163,141,0.06)",
                         color: t.label === tier.label ? "white" : "var(--text-light)",
-                        fontFamily: "'Manrope', sans-serif",
+                        fontFamily: "var(--font-manrope)",
                         transition: "all 0.25s ease",
                       }}>
                         {t.label} : {t.discount > 0 ? `−${t.discount}%` : "base"}
@@ -287,7 +287,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
                   border: "1px dashed rgba(135,163,141,0.25)",
                 }}>
                   <Package size={28} style={{ color: "var(--text-light)", opacity: 0.4, margin: "0 auto 10px" }} />
-                  <p style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.85rem", color: "var(--text-mid)", margin: "0 0 4px" }}>
+                  <p style={{ fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.85rem", color: "var(--text-mid)", margin: "0 0 4px" }}>
                     Aucun produit dans cette catégorie
                   </p>
                   <p style={{ fontSize: "0.72rem", color: "var(--text-light)", margin: 0 }}>
@@ -321,7 +321,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
                       )}
 
                       <div style={{ padding: "12px 14px" }}>
-                        <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.78rem", color: "var(--text-dark)", marginBottom: "2px", lineHeight: 1.3 }}>
+                        <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.78rem", color: "var(--text-dark)", marginBottom: "2px", lineHeight: 1.3 }}>
                           {p.name}
                         </div>
                         <div style={{ fontSize: "0.65rem", color: "var(--text-light)", marginBottom: "8px" }}>
@@ -334,7 +334,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
                             padding: "4px 8px", borderRadius: "6px", marginBottom: "8px",
                             background: "rgba(232,168,124,0.12)", border: "1px solid rgba(232,168,124,0.25)",
                             fontSize: "0.58rem", fontWeight: 700, color: "var(--accent-terracotta)",
-                            fontFamily: "'Manrope', sans-serif",
+                            fontFamily: "var(--font-manrope)",
                           }}>
                             <Lock size={9} strokeWidth={2.5} />
                             À partir de {customOptionMinQty} coffrets
@@ -342,7 +342,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
                         )}
 
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                          <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "0.88rem", color: "var(--green-deep)" }}>
+                          <span style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "0.88rem", color: "var(--green-deep)" }}>
                             {(p.price / 100).toFixed(2)}€
                             <span style={{ fontSize: "0.6rem", fontWeight: 600, color: "var(--text-light)", marginLeft: "2px" }}>HT</span>
                           </span>
@@ -350,7 +350,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
                           {qty > 0 && !locked ? (
                             <div style={{ display: "flex", alignItems: "center", gap: "4px", background: "#F5F2EA", borderRadius: "10px", padding: "3px" }} onClick={e => e.stopPropagation()}>
                               <button onClick={() => toggle(p, -1)} style={{ width: "26px", height: "26px", borderRadius: "8px", border: "none", background: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--green-deep)", padding: 0, boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}><Minus size={12} strokeWidth={2.5} /></button>
-                              <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "0.82rem", color: "var(--green-deep)", minWidth: "20px", textAlign: "center" }}>{qty}</span>
+                              <span style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "0.82rem", color: "var(--green-deep)", minWidth: "20px", textAlign: "center" }}>{qty}</span>
                               <button onClick={() => toggle(p, 1)} style={{ width: "26px", height: "26px", borderRadius: "8px", border: "none", background: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--green-deep)", padding: 0, boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}><Plus size={12} strokeWidth={2.5} /></button>
                             </div>
                           ) : locked ? (
@@ -374,7 +374,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
               <div style={{ width: "64px", height: "64px", borderRadius: "50%", background: "linear-gradient(135deg, var(--sage), var(--green-deep))", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 8px 32px rgba(135,163,141,0.25)" }}>
                 <CheckCircle2 size={28} style={{ color: "white" }} />
               </div>
-              <h3 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "1.3rem", color: "var(--text-dark)", marginBottom: "8px" }}>Composition envoyée !</h3>
+              <h3 style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "1.3rem", color: "var(--text-dark)", marginBottom: "8px" }}>Composition envoyée !</h3>
               <p style={{ fontSize: "0.88rem", color: "var(--text-mid)", lineHeight: 1.6 }}>Notre équipe revient vers vous sous 24h.</p>
             </div>
           ) : (
@@ -421,9 +421,9 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
                   marginTop: "10px", paddingTop: "10px",
                   display: "flex", justifyContent: "space-between", alignItems: "center",
                 }}>
-                  <span style={{ fontWeight: 900, fontSize: "0.85rem", color: "var(--text-dark)", fontFamily: "'Manrope', sans-serif" }}>Total TTC</span>
+                  <span style={{ fontWeight: 900, fontSize: "0.85rem", color: "var(--text-dark)", fontFamily: "var(--font-manrope)" }}>Total TTC</span>
                   <div style={{ textAlign: "right" }}>
-                    <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.15rem", color: "var(--green-deep)", letterSpacing: "-0.02em" }}>
+                    <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.15rem", color: "var(--green-deep)", letterSpacing: "-0.02em" }}>
                       {(totalTTC / 100).toFixed(2)}€
                     </div>
                     <div style={{ fontSize: "0.62rem", color: "var(--text-light)" }}>
@@ -468,7 +468,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
               <>
                 <div>
                   <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
-                    <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.2rem", color: "var(--green-deep)", letterSpacing: "-0.03em" }}>
+                    <span style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.2rem", color: "var(--green-deep)", letterSpacing: "-0.03em" }}>
                       {items.length > 0 ? `${(discountedUnitHT / 100).toFixed(2)}€` : "0€"}
                     </span>
                     <span style={{ fontSize: "0.72rem", fontWeight: 600, color: "var(--text-light)" }}>HT / coffret</span>
@@ -489,7 +489,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
                   padding: "12px 24px", borderRadius: "14px",
                   background: items.length > 0 ? "var(--green-deep)" : "rgba(135,163,141,0.12)",
                   color: items.length > 0 ? "white" : "var(--text-light)",
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.85rem",
+                  fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.85rem",
                   border: "none", cursor: items.length > 0 ? "pointer" : "default",
                   boxShadow: items.length > 0 ? "0 4px 16px rgba(45,74,62,0.18)" : "none",
                   transition: "all 0.3s ease",
@@ -502,7 +502,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
                 <button onClick={() => setStep("build")} style={{
                   display: "flex", alignItems: "center", gap: "6px",
                   padding: "10px 18px", borderRadius: "10px", border: "1.5px solid rgba(135,163,141,0.15)",
-                  background: "transparent", cursor: "pointer", fontFamily: "'Manrope', sans-serif",
+                  background: "transparent", cursor: "pointer", fontFamily: "var(--font-manrope)",
                   fontWeight: 600, fontSize: "0.8rem", color: "var(--text-mid)",
                 }}>
                   <ArrowLeft size={14} /> Modifier
@@ -510,7 +510,7 @@ export default function CoffretConfigurator({ open, onClose }: { open: boolean; 
                 <button type="submit" form="cfg-form" disabled={sending} style={{
                   display: "inline-flex", alignItems: "center", gap: "8px",
                   padding: "12px 24px", borderRadius: "14px", background: "var(--green-deep)", color: "white",
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.85rem",
+                  fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.85rem",
                   border: "none", cursor: sending ? "wait" : "pointer",
                   boxShadow: "0 4px 16px rgba(45,74,62,0.18)", opacity: sending ? 0.8 : 1,
                 }}>

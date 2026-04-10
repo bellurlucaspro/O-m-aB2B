@@ -27,7 +27,7 @@ export default function ButtonPrimary({
     background: "var(--green-deep)",
     color: "white",
     borderRadius: "999px",
-    fontFamily: "'Manrope', sans-serif",
+    fontFamily: "var(--font-manrope)",
     fontWeight: 700,
     fontSize: "0.9rem",
     textDecoration: "none",

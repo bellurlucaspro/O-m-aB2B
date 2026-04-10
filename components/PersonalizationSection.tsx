@@ -67,7 +67,7 @@ export default function PersonalizationSection({
           boxShadow: "0 48px 120px rgba(0,0,0,0.6)", background: "var(--green-deep)",
         }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 24px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-            <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.88rem", color: "white" }}>Découvrez nos coffrets</span>
+            <span style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "0.88rem", color: "white" }}>Découvrez nos coffrets</span>
             <button onClick={() => setVideoOpen(false)} aria-label="Fermer" style={{
               width: "36px", height: "36px", borderRadius: "50%", background: "rgba(255,255,255,0.08)",
               border: "none", color: "rgba(255,255,255,0.7)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
@@ -130,6 +130,21 @@ export default function PersonalizationSection({
         .ps-step-card:hover::before {
           opacity: 1;
         }
+        .ps-accent {
+          position: relative;
+          font-style: italic;
+          color: var(--green-deep);
+          display: inline-block;
+        }
+        .ps-accent::after {
+          content: '';
+          position: absolute;
+          bottom: 2px; left: -4px; right: -4px;
+          height: 12px;
+          background: rgba(135,163,141,0.12);
+          border-radius: 6px;
+          z-index: -1;
+        }
         @media (max-width: 900px) {
           .ps-layout { grid-template-columns: 1fr !important; gap: 32px !important; }
           .ps-img-card { aspect-ratio: 16 / 10; }
@@ -162,7 +177,7 @@ export default function PersonalizationSection({
               <span style={{ width: "28px", height: "28px", borderRadius: "50%", background: "var(--green-deep)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Play size={10} fill="white" style={{ color: "white", marginLeft: "1px" }} />
               </span>
-              <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.72rem", color: "var(--text-dark)" }}>
+              <span style={{ fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.72rem", color: "var(--text-dark)" }}>
                 Voir la vidéo
               </span>
             </button>
@@ -174,19 +189,25 @@ export default function PersonalizationSection({
               display: "inline-block", fontSize: "0.65rem", fontWeight: 800,
               letterSpacing: "0.2em", textTransform: "uppercase",
               color: "var(--sage)", marginBottom: "14px",
-              fontFamily: "'Manrope', sans-serif",
+              fontFamily: "var(--font-manrope)",
             }}>
               Sur mesure
             </span>
             <h2 className="ps-a" style={{
-              fontFamily: "'Manrope', sans-serif", fontWeight: 900,
-              fontSize: "clamp(1.8rem, 3vw, 2.6rem)",
+              fontFamily: "var(--font-manrope)", fontWeight: 900,
+              fontSize: "clamp(2.6rem, 5vw, 3.8rem)",
               color: "var(--text-dark)", letterSpacing: "-0.04em",
               lineHeight: 1.1, marginBottom: "16px",
             }}>
-              {sectionTitle.split("\n").map((line, i, arr) => (
-                <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
-              ))}
+              {sectionTitle.split("\n").map((line, i, arr) => {
+                const isAccent = i === arr.length - 1 && arr.length > 1;
+                return (
+                  <span key={i}>
+                    {isAccent ? <span className="ps-accent">{line}</span> : line}
+                    {i < arr.length - 1 && <br />}
+                  </span>
+                );
+              })}
             </h2>
             <p className="ps-a" style={{
               fontSize: "0.95rem", color: "var(--text-mid)",
@@ -219,7 +240,7 @@ export default function PersonalizationSection({
               display: "inline-flex", alignItems: "center", gap: "9px",
               padding: "14px 28px", background: "var(--green-deep)",
               color: "white", borderRadius: "999px",
-              fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+              fontFamily: "var(--font-manrope)", fontWeight: 700,
               fontSize: "0.88rem", border: "none", cursor: "pointer",
               boxShadow: "0 8px 28px rgba(45,74,62,0.2)",
               transition: "all 0.3s ease",
@@ -232,44 +253,78 @@ export default function PersonalizationSection({
           </div>
         </div>
 
-        {/* 3 Steps below */}
+        {/* 3 Steps below — colors matching hero stats cards */}
         <div className="ps-steps">
           {steps.map((step, i) => {
             const IconComponent = ICON_MAP[step.iconName] || Package;
-            const colors = [
-              { bg: "var(--pink)", iconBg: "var(--green-deep)", iconColor: "white" },
-              { bg: "var(--cream-dark)", iconBg: "var(--sage)", iconColor: "white" },
-              { bg: "var(--cream-dark)", iconBg: "var(--sage-dark)", iconColor: "white" },
+            const variants = [
+              {
+                bg: "var(--pink)",
+                border: "none",
+                boxShadow: "none",
+                iconBg: "var(--green-deep)",
+                iconColor: "white",
+                numberColor: "rgba(95,114,99,0.1)",
+                titleColor: "var(--text-dark)",
+                descColor: "var(--text-mid)",
+              },
+              {
+                bg: "var(--cream)",
+                border: "1px solid rgba(135,163,141,0.12)",
+                boxShadow: "0 4px 20px rgba(45,74,62,0.05)",
+                iconBg: "var(--green-deep)",
+                iconColor: "white",
+                numberColor: "rgba(95,114,99,0.1)",
+                titleColor: "var(--text-dark)",
+                descColor: "var(--text-mid)",
+              },
+              {
+                bg: "var(--green-deep)",
+                border: "none",
+                boxShadow: "none",
+                iconBg: "rgba(255,255,255,0.12)",
+                iconColor: "white",
+                numberColor: "rgba(255,255,255,0.08)",
+                titleColor: "white",
+                descColor: "var(--sage-light)",
+              },
             ][i];
             return (
-              <div key={step.title} className="ps-step ps-step-card" style={{ background: colors.bg }}>
+              <div
+                key={step.title}
+                className="ps-step ps-step-card"
+                style={{
+                  background: variants.bg,
+                  border: variants.border,
+                  boxShadow: variants.boxShadow,
+                }}
+              >
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
                   <div style={{
                     width: "48px", height: "48px", borderRadius: "14px",
-                    background: colors.iconBg,
+                    background: variants.iconBg,
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    color: colors.iconColor,
-                    boxShadow: `0 6px 16px ${colors.iconBg}33`,
+                    color: variants.iconColor,
                   }}>
                     <IconComponent size={22} />
                   </div>
                   <span style={{
-                    fontFamily: "'Manrope', sans-serif", fontWeight: 900,
-                    fontSize: "3.2rem", color: "rgba(135,163,141,0.07)",
+                    fontFamily: "var(--font-manrope)", fontWeight: 900,
+                    fontSize: "3.2rem", color: variants.numberColor,
                     lineHeight: 1, letterSpacing: "-0.05em",
                   }}>
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
                 <h3 style={{
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 800,
-                  fontSize: "1.1rem", color: "var(--text-dark)",
+                  fontFamily: "var(--font-manrope)", fontWeight: 800,
+                  fontSize: "1.1rem", color: variants.titleColor,
                   marginBottom: "8px", letterSpacing: "-0.02em",
                 }}>
                   {step.title}
                 </h3>
                 <p style={{
-                  fontSize: "0.82rem", color: "var(--text-mid)",
+                  fontSize: "0.82rem", color: variants.descColor,
                   lineHeight: 1.6, margin: 0,
                 }}>
                   {step.desc}

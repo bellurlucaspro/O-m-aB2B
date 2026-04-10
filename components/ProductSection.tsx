@@ -139,7 +139,7 @@ function ProductModal({
           padding: 12px 24px; flex: 1; min-width: 0;
           border: none; border-right: 1px solid rgba(135,163,141,0.08);
           background: transparent; cursor: pointer;
-          font-family: 'Manrope', sans-serif;
+          font-family: var(--font-manrope);
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           position: relative;
         }
@@ -170,7 +170,7 @@ function ProductModal({
           font-size: 0.58rem; font-weight: 800; letter-spacing: 0.12em;
           text-transform: uppercase; color: var(--sage);
           margin-bottom: 10px;
-          font-family: 'Manrope', sans-serif;
+          font-family: var(--font-manrope);
         }
         .pm-compo-grid {
           display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
@@ -219,7 +219,7 @@ function ProductModal({
               </span>
             )}
             <h2 style={{
-              fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+              fontFamily: "var(--font-manrope)", fontWeight: 900,
               fontSize: "1.25rem", color: "var(--green-deep)",
               letterSpacing: "-0.02em", margin: 0,
             }}>
@@ -272,7 +272,7 @@ function ProductModal({
                 {/* Variant title + badge */}
                 <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
                   <h3 style={{
-                    fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                    fontFamily: "var(--font-manrope)", fontWeight: 900,
                     fontSize: "1.15rem", color: "var(--text-dark)", margin: 0,
                     letterSpacing: "-0.02em",
                   }}>
@@ -340,7 +340,7 @@ function ProductModal({
           <div>
             <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
               <span style={{
-                fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                fontFamily: "var(--font-manrope)", fontWeight: 900,
                 fontSize: "1.4rem", color: "var(--green-deep)", letterSpacing: "-0.03em",
               }}>
                 {currentHT}€ HT
@@ -354,7 +354,7 @@ function ProductModal({
           <a href="#devis" onClick={onClose} style={{
             display: "inline-flex", alignItems: "center", gap: "8px",
             padding: "14px 28px", background: "var(--green-deep)", color: "white",
-            borderRadius: "14px", fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+            borderRadius: "14px", fontFamily: "var(--font-manrope)", fontWeight: 700,
             fontSize: "0.85rem", textDecoration: "none",
             transition: "all 0.25s ease",
             boxShadow: "0 4px 16px rgba(45,74,62,0.18)",
@@ -489,7 +489,7 @@ export default function ProductSection({
       <style>{`
         .px-pill {
           padding: 8px 18px; border-radius: 999px;
-          font-family: 'Manrope', sans-serif; font-weight: 600;
+          font-family: var(--font-manrope); font-weight: 600;
           font-size: 0.73rem; cursor: pointer;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           border: 1.5px solid rgba(200,180,160,0.25);
@@ -535,7 +535,7 @@ export default function ProductSection({
             <button onClick={() => onSwitchTab("coffrets")} style={{
               display: "flex", alignItems: "center", gap: "8px",
               padding: "10px 22px", borderRadius: "999px",
-              fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.82rem",
+              fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.82rem",
               cursor: "pointer", border: "none",
               background: "var(--green-deep)", color: "white",
               boxShadow: "0 6px 20px rgba(45,74,62,0.2)",
@@ -545,7 +545,7 @@ export default function ProductSection({
             <button onClick={() => onSwitchTab("simulateur")} style={{
               display: "flex", alignItems: "center", gap: "8px",
               padding: "10px 22px", borderRadius: "999px",
-              fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.82rem",
+              fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.82rem",
               cursor: "pointer", background: "var(--cream)", color: "var(--text-mid)",
               border: "1.5px solid rgba(135,163,141,0.15)",
               transition: "all 0.3s ease",
@@ -592,7 +592,7 @@ export default function ProductSection({
           }
         `}</style>
         <h2 style={{
-          fontSize: "clamp(2rem, 4vw, 2.8rem)", letterSpacing: "-0.04em",
+          fontSize: "clamp(2.8rem, 5.5vw, 4rem)", letterSpacing: "-0.04em",
           lineHeight: 1.05, color: "var(--text-dark)", marginBottom: "0",
           fontWeight: 900,
         }}>
@@ -704,11 +704,11 @@ export default function ProductSection({
 
           {/* Content */}
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-            <div style={{ fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--sage)", marginBottom: "10px", fontFamily: "'Manrope', sans-serif" }}>
+            <div style={{ fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--sage)", marginBottom: "10px", fontFamily: "var(--font-manrope)" }}>
               {current.subtitle}
             </div>
             <h3 style={{
-              fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+              fontFamily: "var(--font-manrope)", fontWeight: 900,
               fontSize: "clamp(1.6rem, 3vw, 2.2rem)", color: "var(--text-dark)",
               letterSpacing: "-0.03em", lineHeight: 1.15, marginBottom: "16px",
             }}>
@@ -756,7 +756,7 @@ export default function ProductSection({
                           background: vi === 0 ? "var(--pink)" : "var(--cream-dark)",
                           border: vi === 0 ? "2px solid var(--pink-dark)" : "2px solid rgba(135,163,141,0.1)",
                           cursor: "pointer",
-                          fontFamily: "'Manrope', sans-serif",
+                          fontFamily: "var(--font-manrope)",
                           transition: "all 0.3s ease",
                           position: "relative",
                           overflow: "hidden",
@@ -803,7 +803,7 @@ export default function ProductSection({
               borderRadius: "10px", border: "1.5px solid rgba(45,74,62,0.2)",
               fontSize: "0.76rem", fontWeight: 700, color: "var(--green-deep)",
               marginBottom: "24px", width: "fit-content",
-              fontFamily: "'Manrope', sans-serif",
+              fontFamily: "var(--font-manrope)",
             }}>
               <Leaf size={13} /> 100% exonéré de charges URSSAF
             </div>
@@ -812,7 +812,7 @@ export default function ProductSection({
               <div>
                 <div style={{ display: "flex", alignItems: "baseline", gap: "12px" }}>
                   <span style={{
-                    fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                    fontFamily: "var(--font-manrope)", fontWeight: 900,
                     fontSize: "2.2rem", color: "var(--green-deep)", letterSpacing: "-0.03em", lineHeight: 1,
                     textDecoration: "underline", textDecorationColor: "rgba(135,163,141,0.3)",
                     textUnderlineOffset: "6px", textDecorationThickness: "3px",
@@ -826,7 +826,7 @@ export default function ProductSection({
                     {[true, false].map((ht) => (
                       <button key={String(ht)} onClick={() => setShowHT(ht)} style={{
                         padding: "4px 10px", borderRadius: "999px", border: "none",
-                        fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.65rem",
+                        fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.65rem",
                         cursor: "pointer", background: showHT === ht ? "var(--green-deep)" : "transparent",
                         color: showHT === ht ? "white" : "var(--text-light)", transition: "all 0.25s ease",
                       }}>
@@ -845,7 +845,7 @@ export default function ProductSection({
                 style={{
                   display: "inline-flex", alignItems: "center", gap: "8px",
                   padding: "14px 28px", background: "var(--green-deep)", color: "white",
-                  borderRadius: "14px", fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+                  borderRadius: "14px", fontFamily: "var(--font-manrope)", fontWeight: 700,
                   fontSize: "0.88rem", border: "2px solid var(--green-deep)",
                   cursor: "pointer", transition: "all 0.25s ease",
                 }}

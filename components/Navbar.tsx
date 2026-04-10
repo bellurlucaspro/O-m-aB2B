@@ -123,9 +123,9 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
         }
         .nav-link {
           position: relative;
-          font-family: 'Inter', sans-serif;
-          font-size: 0.85rem;
-          font-weight: 500;
+          font-family: var(--font-inter);
+          font-size: 1rem;
+          font-weight: 600;
           color: var(--text-dark);
           text-decoration: none;
           letter-spacing: 0.01em;
@@ -163,7 +163,7 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
           opacity: 1;
         }
         .cta-outline {
-          font-family: 'Manrope', sans-serif;
+          font-family: var(--font-manrope);
           font-size: 0.82rem;
           font-weight: 600;
           color: var(--green-deep);
@@ -179,7 +179,7 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
           border-color: var(--green-deep) !important;
         }
         .cta-solid {
-          font-family: 'Manrope', sans-serif;
+          font-family: var(--font-manrope);
           font-size: 0.82rem;
           font-weight: 700;
           color: white;
@@ -295,7 +295,7 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
               href={l.href}
               onClick={() => setMenuOpen(false)}
               style={{
-                fontFamily: "'Manrope', sans-serif",
+                fontFamily: "var(--font-manrope)",
                 fontSize: "1.1rem",
                 fontWeight: activeSection === l.href ? 700 : 600,
                 color: activeSection === l.href ? "var(--green-deep)" : "var(--text-dark)",
@@ -314,7 +314,7 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
               background: "var(--green-deep)",
               color: "white",
               borderRadius: "12px",
-              fontFamily: "'Manrope', sans-serif",
+              fontFamily: "var(--font-manrope)",
               fontWeight: 700,
               fontSize: "0.95rem",
               textDecoration: "none",

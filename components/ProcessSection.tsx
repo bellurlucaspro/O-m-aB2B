@@ -148,7 +148,7 @@ export default function ProcessSection({ content }: { content?: ProcessContent }
           <p style={{
             fontSize: "0.68rem", fontWeight: 800, letterSpacing: "0.25em",
             textTransform: "uppercase", color: "var(--sage)", marginBottom: "12px",
-            fontFamily: "'Manrope', sans-serif",
+            fontFamily: "var(--font-manrope)",
           }}>
             {label}
           </p>
@@ -197,7 +197,7 @@ export default function ProcessSection({ content }: { content?: ProcessContent }
                       display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px",
                     }}>
                       <span style={{
-                        fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                        fontFamily: "var(--font-manrope)", fontWeight: 900,
                         fontSize: "1rem", color: isActive ? "var(--text-dark)" : "var(--text-mid)",
                         transition: "color 0.3s ease",
                       }}>
@@ -225,7 +225,7 @@ export default function ProcessSection({ content }: { content?: ProcessContent }
                         display: "inline-flex", alignItems: "center", gap: "5px",
                         marginTop: "8px",
                         fontSize: "0.68rem", fontWeight: 700, color: "var(--green-deep)",
-                        fontFamily: "'Manrope', sans-serif",
+                        fontFamily: "var(--font-manrope)",
                       }}>
                         <Clock size={11} /> {step.badge}
                       </div>
@@ -284,7 +284,7 @@ export default function ProcessSection({ content }: { content?: ProcessContent }
           <a href={ctaHref} className="ps-bottom-el" style={{
             display: "inline-flex", alignItems: "center", gap: "7px",
             padding: "10px 22px", background: "var(--green-deep)", color: "white",
-            borderRadius: "999px", fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+            borderRadius: "999px", fontFamily: "var(--font-manrope)", fontWeight: 700,
             fontSize: "0.8rem", textDecoration: "none",
             transition: "all 0.3s ease",
           }}

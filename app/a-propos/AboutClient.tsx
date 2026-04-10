@@ -261,7 +261,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
           }
           .hero-title-line {
             display: block;
-            font-family: 'Manrope', sans-serif;
+            font-family: var(--font-manrope);
             font-weight: 900;
             font-size: clamp(2.2rem, 4.5vw, 3.4rem);
             color: var(--text-dark);
@@ -297,7 +297,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
             border-top: 1px solid rgba(135,163,141,0.15);
           }
           .hero-stat-val {
-            font-family: 'Manrope', sans-serif;
+            font-family: var(--font-manrope);
             font-weight: 900;
             font-size: 1.6rem;
             color: var(--green-deep);
@@ -433,7 +433,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
             box-shadow: 0 20px 60px rgba(45,74,62,0.12);
           }
           .hs-num {
-            font-family: 'Manrope', sans-serif;
+            font-family: var(--font-manrope);
             font-weight: 900;
             font-size: 7rem;
             line-height: 1;
@@ -468,7 +468,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
             gap: 48px;
           }
           .chiffre-value {
-            font-family: 'Manrope', sans-serif;
+            font-family: var(--font-manrope);
             font-weight: 900;
             font-size: clamp(2.4rem, 5vw, 4rem);
             color: var(--sage-light);
@@ -592,7 +592,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
                   <a href={data.hero.ctaPrimaryHref} style={{
                     display: "inline-flex", alignItems: "center", gap: "10px",
                     padding: "15px 30px", background: "var(--green-deep)", color: "white",
-                    borderRadius: "999px", fontFamily: "'Manrope', sans-serif",
+                    borderRadius: "999px", fontFamily: "var(--font-manrope)",
                     fontWeight: 700, fontSize: "0.9rem", textDecoration: "none",
                     boxShadow: "0 8px 32px rgba(45,74,62,0.25)",
                     transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -605,7 +605,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
                   <a href={data.hero.ctaSecondaryHref} style={{
                     display: "inline-flex", alignItems: "center", gap: "9px",
                     padding: "15px 30px", background: "transparent", color: "var(--text-dark)",
-                    borderRadius: "999px", fontFamily: "'Manrope', sans-serif",
+                    borderRadius: "999px", fontFamily: "var(--font-manrope)",
                     fontWeight: 700, fontSize: "0.9rem", textDecoration: "none",
                     border: "2px solid rgba(135,163,141,0.2)",
                     transition: "all 0.3s ease",
@@ -678,7 +678,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
                         <CheckCircle2 size={16} style={{ color: isDark ? "var(--sage-light)" : "var(--green-deep)" }} />
                       </div>
                       <div>
-                        <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.78rem", color: isDark ? "white" : "var(--text-dark)" }}>{badge.title}</div>
+                        <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.78rem", color: isDark ? "white" : "var(--text-dark)" }}>{badge.title}</div>
                         <div style={{ fontSize: "0.62rem", color: isDark ? "rgba(255,255,255,0.5)" : "var(--text-light)" }}>{badge.subtitle}</div>
                       </div>
                     </div>
@@ -705,7 +705,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
                   borderRadius: "14px", padding: "14px 20px",
                   boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
                 }}>
-                  <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.85rem", color: "var(--text-dark)" }}>{data.origin.badgeTitle}</div>
+                  <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "0.85rem", color: "var(--text-dark)" }}>{data.origin.badgeTitle}</div>
                   <div style={{ fontSize: "0.7rem", color: "var(--text-light)", marginTop: "2px" }}>{data.origin.badgeSubtitle}</div>
                 </div>
               </div>
@@ -790,7 +790,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
                           borderRadius: "2px", marginBottom: "24px",
                         }} />
                         <h3 style={{
-                          fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                          fontFamily: "var(--font-manrope)", fontWeight: 900,
                           fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
                           color: "var(--text-dark)", letterSpacing: "-0.03em",
                           lineHeight: 1.1, marginBottom: "20px",
@@ -822,10 +822,10 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
                     <Image src={v.image} alt={v.title} fill style={{ objectFit: "cover" }} />
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "10px" }}>
-                    <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "0.75rem", color: v.accent, letterSpacing: "0.06em" }}>{v.num}</span>
+                    <span style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "0.75rem", color: v.accent, letterSpacing: "0.06em" }}>{v.num}</span>
                     <div style={{ width: "24px", height: "2px", background: v.accent }} />
                   </div>
-                  <h3 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.3rem", color: "var(--text-dark)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "10px", whiteSpace: "pre-line" }}>{v.title}</h3>
+                  <h3 style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.3rem", color: "var(--text-dark)", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: "10px", whiteSpace: "pre-line" }}>{v.title}</h3>
                   <p style={{ fontSize: "0.9rem", color: "var(--text-mid)", lineHeight: 1.7 }}>{v.text}</p>
                 </div>
               ))}
@@ -899,7 +899,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
                 <div className="ben-row-img">
                   <Image src={b.image} alt={b.title} fill style={{ objectFit: "cover" }} />
                   <div className="ben-metric-badge">
-                    <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.5rem", color: "var(--sage-light)", letterSpacing: "-0.03em", lineHeight: 1 }}>
+                    <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.5rem", color: "var(--sage-light)", letterSpacing: "-0.03em", lineHeight: 1 }}>
                       {b.metric}
                     </div>
                     <div style={{ fontSize: "0.62rem", color: "rgba(255,255,255,0.5)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", marginTop: "4px" }}>
@@ -916,7 +916,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
                     padding: "8px 16px", borderRadius: "10px",
                     background: "rgba(45,74,62,0.04)", border: "1px solid rgba(135,163,141,0.1)",
                   }}>
-                    <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.4rem", color: "var(--green-deep)", letterSpacing: "-0.02em" }}>
+                    <span style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.4rem", color: "var(--green-deep)", letterSpacing: "-0.02em" }}>
                       {b.metric}
                     </span>
                     <span style={{ fontSize: "0.68rem", color: "var(--text-light)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>
@@ -924,7 +924,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
                     </span>
                   </div>
                   <h3 style={{
-                    fontFamily: "'Manrope', sans-serif", fontWeight: 800,
+                    fontFamily: "var(--font-manrope)", fontWeight: 800,
                     fontSize: "clamp(1.2rem, 2vw, 1.5rem)", color: "var(--text-dark)",
                     marginBottom: "14px", lineHeight: 1.2,
                   }}>
@@ -950,7 +950,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
               {/* Top: Big headline centered */}
               <div className="cta-testimonial" style={{ textAlign: "center", marginBottom: "56px" }}>
                 <h2 style={{
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                  fontFamily: "var(--font-manrope)", fontWeight: 900,
                   fontSize: "clamp(2rem, 4.5vw, 3.2rem)",
                   color: "var(--green-deep)", letterSpacing: "-0.04em", lineHeight: 1.05,
                   marginBottom: "18px",
@@ -966,7 +966,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
                   <a href={data.cta.ctaPrimaryHref} style={{
                     display: "inline-flex", alignItems: "center", gap: "10px",
                     padding: "16px 36px", background: "var(--green-deep)", color: "white",
-                    borderRadius: "999px", fontFamily: "'Manrope', sans-serif",
+                    borderRadius: "999px", fontFamily: "var(--font-manrope)",
                     fontWeight: 700, fontSize: "0.92rem", textDecoration: "none",
                     boxShadow: "0 10px 44px rgba(45,74,62,0.3)",
                     transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -979,7 +979,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
                   <a href={data.cta.ctaSecondaryHref} style={{
                     display: "inline-flex", alignItems: "center", gap: "10px",
                     padding: "16px 36px", background: "white", color: "var(--green-deep)",
-                    borderRadius: "999px", fontFamily: "'Manrope', sans-serif",
+                    borderRadius: "999px", fontFamily: "var(--font-manrope)",
                     fontWeight: 700, fontSize: "0.92rem", textDecoration: "none",
                     border: "1.5px solid rgba(45,74,62,0.1)",
                     transition: "all 0.3s ease",
@@ -1090,13 +1090,13 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
                         width: "48px", height: "48px", borderRadius: "50%",
                         background: "linear-gradient(135deg, var(--pink) 0%, var(--pink-dark) 100%)",
                         display: "flex", alignItems: "center", justifyContent: "center",
-                        fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.85rem", color: "var(--green-deep)",
+                        fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "0.85rem", color: "var(--green-deep)",
                         boxShadow: "0 4px 16px rgba(255,239,218,0.3)",
                       }}>
                         {data.cta.testimonial.initials}
                       </div>
                       <div>
-                        <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.88rem", color: "white" }}>{data.cta.testimonial.name}</div>
+                        <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.88rem", color: "white" }}>{data.cta.testimonial.name}</div>
                         <div style={{ fontSize: "0.72rem", color: "var(--sage-light)" }}>{data.cta.testimonial.role}</div>
                       </div>
                     </div>
@@ -1114,7 +1114,7 @@ export default function AboutClient({ data, footer }: { data: AboutPageContent; 
 
                     {data.cta.metrics.map((m, i) => (
                       <div key={i} className="cta-metric">
-                        <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.8rem", color: "var(--green-deep)", letterSpacing: "-0.03em", lineHeight: 1 }}>{m.value}</span>
+                        <span style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.8rem", color: "var(--green-deep)", letterSpacing: "-0.03em", lineHeight: 1 }}>{m.value}</span>
                         <span style={{ fontSize: "0.72rem", color: "var(--text-mid)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em" }}>{m.label}</span>
                       </div>
                     ))}

@@ -426,7 +426,7 @@ export default function AdminContentPage() {
               fontSize: "0.82rem",
               fontWeight: 500,
               textAlign: "center",
-              fontFamily: "'Inter', sans-serif",
+              fontFamily: "var(--font-inter)",
             }}>
               {b.text}
             </div>
@@ -1428,7 +1428,7 @@ export default function AdminContentPage() {
         /*  3-COLUMN BUILDER LAYOUT                                      */
         /* ============================================================ */
         .ce-root {
-          font-family: 'Inter', sans-serif;
+          font-family: var(--font-inter);
           position: relative;
         }
 
@@ -1441,7 +1441,7 @@ export default function AdminContentPage() {
           z-index: 40;
         }
         .ce-topbar__title {
-          font-family: 'Manrope', sans-serif; font-weight: 750;
+          font-family: var(--font-manrope); font-weight: 750;
           font-size: 0.95rem; color: #1a1f25; margin: 0;
         }
         .ce-topbar__progress {
@@ -1568,7 +1568,7 @@ export default function AdminContentPage() {
           flex-shrink: 0;
         }
         .ce-section-title {
-          font-family: 'Manrope', sans-serif; font-weight: 800;
+          font-family: var(--font-manrope); font-weight: 800;
           font-size: 1.3rem; color: #1a1f25; letter-spacing: -0.02em;
           margin: 0;
         }
@@ -1695,7 +1695,7 @@ export default function AdminContentPage() {
         .ce-save {
           display: flex; align-items: center; gap: 6px;
           padding: 8px 18px; border-radius: 10px;
-          border: none; font-family: 'Manrope', sans-serif;
+          border: none; font-family: var(--font-manrope);
           font-weight: 700; font-size: 0.8rem; cursor: pointer;
           transition: all 0.15s ease;
         }

@@ -80,7 +80,7 @@ export default function FeatureCard({
       {/* Title */}
       <h3
         style={{
-          fontFamily: "'Manrope', sans-serif",
+          fontFamily: "var(--font-manrope)",
           fontWeight: 800,
           fontSize: "1.1rem",
           color: "var(--text-dark)",

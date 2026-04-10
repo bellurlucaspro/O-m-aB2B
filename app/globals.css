@@ -1,9 +1,90 @@
 @import "lenis/dist/lenis.css";
 @import "tailwindcss";
 @import "../styles/responsive-mobile-tablet-fixes.css";
+@import "../styles/responsive-laptop-fixes.css";
 @import "../styles/animations.css";
 
+/* ─── Fonts ──────────────────────────────────────────────── */
+/* Mavel — titres */
+@font-face {
+  font-family: "Mavel";
+  src: url("/fonts/Mavel-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mavel";
+  src: url("/fonts/Mavel-ExtraBold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mavel";
+  src: url("/fonts/MavelPoster-Black.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mavel Text";
+  src: url("/fonts/MavelText-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mavel Text";
+  src: url("/fonts/MavelText-MediumItalic.otf") format("opentype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Mr Eaves XL Mod — corps de texte
+   Note : Thin est illisible en petit → on le mappe uniquement à 100.
+   Tout ce qui est < 600 tombe sur Regular, ≥ 600 sur Bold. */
+@font-face {
+  font-family: "Mr Eaves";
+  src: url("/fonts/FontsFree-Net-MrEavesXLModOT-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mr Eaves";
+  src: url("/fonts/FontsFree-Net-MrEavesXLModOT-Reg.ttf") format("truetype");
+  font-weight: 200 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mr Eaves";
+  src: url("/fonts/MrEavesXLModOT-Bold.ttf") format("truetype");
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Modernline — accent manuscrit (usage très ponctuel) */
+@font-face {
+  font-family: "Modernline";
+  src: url("/fonts/modernline.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
+  /* Typographie */
+  /* --font-manrope : alias conservé → Mavel (titres) */
+  --font-manrope: "Mavel", "Manrope", sans-serif;
+  /* --font-inter : alias conservé → Mr Eaves (corps de texte) */
+  --font-inter: "Mr Eaves", "Inter", sans-serif;
+  /* --font-script : Modernline — à utiliser avec parcimonie (1–2 accents max) */
+  --font-script: "Modernline", cursive;
+
   --sage: #87A38D;
   --sage-light: #ABBFAF;
   --sage-dark: #5F7263;
@@ -53,7 +134,7 @@ body {
 body {
   background-color: var(--cream);
   color: var(--text-dark);
-  font-family: var(--font-inter), 'Inter', sans-serif;
+  font-family: var(--font-inter);
   font-weight: 400;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -67,7 +148,7 @@ main > div {
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: var(--font-manrope), 'Manrope', sans-serif;
+  font-family: var(--font-manrope);
   line-height: 1.15;
   color: var(--text-dark);
 }
@@ -135,7 +216,7 @@ a, button {
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  font-family: var(--font-inter), 'Inter', sans-serif;
+  font-family: var(--font-inter);
 }
 
 /* Section padding helper */

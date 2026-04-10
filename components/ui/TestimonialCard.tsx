@@ -54,7 +54,7 @@ export default function TestimonialCard({
         <div>
           <div
             style={{
-              fontFamily: "'Manrope', sans-serif",
+              fontFamily: "var(--font-manrope)",
               fontWeight: 700,
               fontSize: "0.85rem",
               color: "var(--text-dark)",

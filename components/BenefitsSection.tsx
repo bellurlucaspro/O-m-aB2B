@@ -162,7 +162,7 @@ export default function BenefitsSection({
             display: "inline-block",
             fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.2em",
             textTransform: "uppercase", color: "var(--sage)",
-            fontFamily: "'Manrope', sans-serif", marginBottom: "18px",
+            fontFamily: "var(--font-manrope)", marginBottom: "18px",
             padding: "6px 16px", background: "rgba(135,163,141,0.08)", borderRadius: "999px",
           }}>
             Vos avantages
@@ -196,7 +196,7 @@ export default function BenefitsSection({
                 </div>
 
                 <h3 style={{
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 800,
+                  fontFamily: "var(--font-manrope)", fontWeight: 800,
                   fontSize: "1.05rem", color: "var(--text-dark)",
                   lineHeight: 1.25, letterSpacing: "-0.02em", marginBottom: "10px",
                 }}>

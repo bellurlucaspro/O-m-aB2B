@@ -15,7 +15,7 @@ export default function StatCard({ value, label, dark = false }: StatCardProps) 
     <div>
       <div
         style={{
-          fontFamily: "'Manrope', sans-serif",
+          fontFamily: "var(--font-manrope)",
           fontWeight: 900,
           fontSize: "2.2rem",
           color: dark ? "var(--sage-light)" : "var(--green-deep)",

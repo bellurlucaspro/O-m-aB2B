@@ -1866,3 +1866,408 @@
     height: 100px !important;
   }
 }
+
+
+/* ════════════════════════════════════════════════════════════════
+   NEW COMPONENTS — Responsive Fixes (AUDIT 2026-04-10)
+   Components added after previous audit:
+   - TopCoffretsSection (hero + 2 side cards layout)
+   - CoffretConfigurator (modal with product picker + form)
+   - CoffretHub (tab switcher wrapping ProductSection / PriceSimulator)
+   - mentions-legales / LegalContent
+   ════════════════════════════════════════════════════════════════ */
+
+
+/* ────────────────────────────────────────────────────────────────
+   MOBILE — max-width: 767px
+   ──────────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+
+  /* ============================================================
+     TOP COFFRETS SECTION (.tc-*)
+     Component already stacks .tc-layout at 900px.
+     Tighten container padding, section padding, hero card details.
+     ============================================================ */
+
+  /* Section vertical padding: reduce on mobile */
+  section:has(> div > .tc-layout) {
+    padding: 44px 0 52px !important;
+  }
+
+  /* Container horizontal padding: 32px → 16px */
+  section:has(> div > .tc-layout) > div {
+    padding: 0 16px !important;
+  }
+
+  /* Header: section title + CTA row should stack with tighter gap */
+  section:has(> .tc-layout) > div > div:first-child,
+  section:has(> div > .tc-layout) > div > div:first-child {
+    margin-bottom: 24px !important;
+  }
+
+  /* Hero card image: shorter (240px set by component is acceptable but can be reduced) */
+  .tc-hero-img {
+    height: 200px !important;
+    min-height: 200px !important;
+  }
+
+  /* Hero card text padding: tighter on mobile */
+  .tc-hero-text {
+    padding: 22px 18px !important;
+  }
+
+  /* Hero card description: smaller */
+  .tc-hero-text p {
+    font-size: 0.82rem !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Hero card bottom row: ensure price + CTA don't collide */
+  .tc-hero-text > div:last-child {
+    gap: 12px !important;
+    padding-top: 14px !important;
+  }
+
+  /* Hero card price: slightly smaller to leave room for CTA pill */
+  .tc-hero-text > div:last-child > div:first-child > span:first-child {
+    font-size: 1.5rem !important;
+  }
+
+  /* Hero card "Découvrir" CTA pill: compact */
+  .tc-hero-text > div:last-child > div:last-child {
+    padding: 8px 16px !important;
+    font-size: 0.78rem !important;
+  }
+
+  /* Crown badge + stats badge inside hero image: smaller */
+  .tc-hero-img > .tc-pop:first-of-type {
+    top: 12px !important;
+    left: 12px !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 12px !important;
+  }
+  .tc-hero-img > .tc-pop:last-of-type {
+    bottom: 12px !important;
+    left: 12px !important;
+    padding: 8px 12px !important;
+  }
+
+  /* Side cards: keep vertical stack (already flex-column), reduce gap */
+  .tc-sides {
+    gap: 12px !important;
+  }
+
+  /* Side card image: shorter */
+  .tc-side-img {
+    height: 120px !important;
+  }
+
+  /* Side card content padding: tighter */
+  .tc-side-card > div:last-child {
+    padding: 14px 16px !important;
+  }
+
+  /* Side card title: smaller */
+  .tc-side-card h3 {
+    font-size: 1rem !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Mini trust bar: tighter */
+  .tc-sides > .tc-pop {
+    padding: 10px 0 !important;
+  }
+
+
+  /* ============================================================
+     COFFRET HUB — Tab switcher bar
+     (displayed only in simulator mode)
+     ============================================================ */
+
+  /* The tab row <div> wraps "Nos coffrets" + "Calculer mon prix" */
+  #produits > div > div:first-child[style*="justify-content: center"] {
+    padding: 14px 16px !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+  }
+
+  /* Tab buttons (inline styled): tighten padding + font */
+  #produits > div > div:first-child[style*="justify-content: center"] > button {
+    padding: 10px 16px !important;
+    font-size: 0.78rem !important;
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    min-height: 42px !important;
+  }
+
+
+  /* ============================================================
+     COFFRET CONFIGURATOR — Modal (.cfg)
+     Component handles 2-col products at 600px.
+     Additional tightening needed for header/body/footer paddings,
+     and forms (1fr 1fr) should stack on small screens.
+     ============================================================ */
+
+  /* Outer backdrop padding: flush on mobile */
+  div[style*="z-index: 9999"][style*="background: rgba(0, 0, 0, 0.5)"],
+  div[style*="z-index: 9999"][style*="background: rgba(0,0,0,0.5)"] {
+    padding: 0 !important;
+    align-items: flex-end !important;
+  }
+
+  /* Modal container: full screen on mobile */
+  .cfg {
+    max-height: 100vh !important;
+    max-width: 100% !important;
+    border-radius: 20px 20px 0 0 !important;
+    height: 100vh !important;
+  }
+
+  /* Header: reduce padding */
+  .cfg > div:first-child {
+    padding: 16px 18px 14px !important;
+  }
+
+  /* Header title: smaller */
+  .cfg > div:first-child h2 {
+    font-size: 1.02rem !important;
+  }
+
+  /* Body: tighter padding */
+  .cfg-body {
+    padding: 16px 18px !important;
+  }
+
+  /* Quantity + discount tier block: keep 2-col but tighten padding */
+  .cfg-body > div:first-child[style*="grid-template-columns: 1fr 1fr"] {
+    gap: 8px !important;
+    margin-bottom: 16px !important;
+  }
+  .cfg-body > div:first-child[style*="grid-template-columns: 1fr 1fr"] > div {
+    padding: 14px 14px !important;
+    border-radius: 14px !important;
+  }
+
+  /* Quantity input: keep usable */
+  .cfg-body > div:first-child input[type="number"] {
+    font-size: 1.15rem !important;
+    width: 46px !important;
+  }
+
+  /* Discount tier pills: smaller */
+  .cfg-body > div:first-child > div:nth-child(2) > div:last-child > div {
+    padding: 3px 7px !important;
+    font-size: 0.58rem !important;
+  }
+
+  /* Category tab buttons (.cfg-cat-btn): compact */
+  .cfg-cat-btn {
+    padding: 8px 14px !important;
+    font-size: 0.72rem !important;
+  }
+
+  /* Products grid: already 2-col at 600px via component.
+     Override to stay safe for 600–767 range too. */
+  .cfg-products {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  /* Card image: smaller height */
+  .cfg-card-img {
+    height: 90px !important;
+  }
+
+  /* Card text: tighter */
+  .cfg-card > div:last-child {
+    padding: 10px 12px !important;
+  }
+
+  /* Contact form grids (1fr 1fr) → stack */
+  #cfg-form > div[style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* Form inputs: touch-friendly */
+  #cfg-form input,
+  #cfg-form textarea {
+    min-height: 44px !important;
+    font-size: 0.92rem !important;
+  }
+  #cfg-form textarea {
+    min-height: 72px !important;
+  }
+
+  /* Recap card: tighter padding */
+  #cfg-form > div:first-child {
+    padding: 14px 16px !important;
+  }
+
+  /* Footer: stack price summary and CTA button */
+  .cfg > div:last-child[style*="border-top"] {
+    padding: 14px 18px !important;
+    gap: 12px !important;
+  }
+
+  /* Footer CTA button: full width */
+  .cfg > div:last-child button[type="submit"],
+  .cfg > div:last-child > button:last-child {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 14px 20px !important;
+    min-height: 48px !important;
+  }
+  .cfg > div:last-child > div:first-child {
+    width: 100% !important;
+  }
+
+  /* "Modifier" back button in contact step: keep compact but visible */
+  .cfg > div:last-child > button:first-child {
+    flex: 0 0 auto !important;
+  }
+
+
+  /* ============================================================
+     MENTIONS LÉGALES (/mentions-legales)
+     Container: 140px 32px 80px → reduce on mobile.
+     TOC already handled by component at 768px.
+     ============================================================ */
+
+  /* Container padding: reduce */
+  div[style*="max-width: 920px"][style*="140px 32px 80px"] {
+    padding: 96px 16px 56px !important;
+  }
+
+  /* Hero title */
+  div[style*="max-width: 920px"] h1 {
+    font-size: clamp(1.6rem, 6vw, 2rem) !important;
+  }
+
+  /* Hero subtitle */
+  div[style*="max-width: 920px"] > div:first-of-type {
+    margin-bottom: 36px !important;
+  }
+
+  /* Section spacing: tighter */
+  .ml-section {
+    scroll-margin-top: 80px !important;
+  }
+
+  /* TOC: already static at 768px — add padding adjustments */
+  .ml-toc {
+    padding: 20px 16px !important;
+    border-radius: 16px !important;
+  }
+
+  /* TOC grid: force single column on narrow screens */
+  .ml-toc > div:last-child {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* TOC items: touch-friendly */
+  .ml-toc a {
+    min-height: 48px !important;
+  }
+
+  /* Back-to-top button: ensure doesn't overlap footer content */
+  .ml-back-top {
+    bottom: 80px !important;
+    right: 16px !important;
+    width: 42px !important;
+    height: 42px !important;
+  }
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   TABLET — min-width: 768px and max-width: 1024px
+   ──────────────────────────────────────────────────────────────── */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  /* ============================================================
+     TOP COFFRETS SECTION — Stacks at 900px via component.
+     For 900–1024px, tighten the 1.3fr 1fr layout.
+     ============================================================ */
+
+  /* Container padding: 32px → 24px */
+  section:has(> div > .tc-layout) > div {
+    padding: 0 24px !important;
+  }
+
+  /* Section vertical padding */
+  section:has(> div > .tc-layout) {
+    padding: 52px 0 64px !important;
+  }
+
+  /* Hero card text padding: slightly tighter */
+  .tc-hero-text {
+    padding: 30px 26px !important;
+  }
+
+  /* Layout gap: tighter */
+  .tc-layout {
+    gap: 18px !important;
+  }
+
+
+  /* ============================================================
+     COFFRET HUB — Tab switcher bar
+     ============================================================ */
+  #produits > div > div:first-child[style*="justify-content: center"] {
+    padding: 18px 24px !important;
+  }
+
+
+  /* ============================================================
+     COFFRET CONFIGURATOR — Modal
+     Products grid: 3-col → 2-col on tablet, more breathing room.
+     ============================================================ */
+
+  /* Modal width: comfortable on tablet */
+  .cfg {
+    max-width: 92vw !important;
+  }
+
+  /* Header padding */
+  .cfg > div:first-child {
+    padding: 20px 24px 16px !important;
+  }
+
+  /* Body padding */
+  .cfg-body {
+    padding: 20px 24px !important;
+  }
+
+  /* Products grid → 2-col on tablet (3-col too cramped) */
+  .cfg-products {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .cfg-card-img {
+    height: 130px !important;
+  }
+
+  /* Footer padding */
+  .cfg > div:last-child[style*="border-top"] {
+    padding: 16px 24px !important;
+  }
+
+
+  /* ============================================================
+     MENTIONS LÉGALES — Tablet
+     ============================================================ */
+
+  /* Container padding: reduce top from 140px */
+  div[style*="max-width: 920px"][style*="140px 32px 80px"] {
+    padding: 120px 32px 72px !important;
+  }
+
+  /* TOC: ensure not squeezed */
+  .ml-toc {
+    padding: 24px 28px !important;
+  }
+}
+

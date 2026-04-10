@@ -189,7 +189,7 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                 <span style={{
                   fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.16em",
                   textTransform: "uppercase", color: "var(--green-deep)",
-                  fontFamily: "'Manrope', sans-serif",
+                  fontFamily: "var(--font-manrope)",
                 }}>
                   {sectionLabel}
                 </span>
@@ -213,7 +213,7 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
               padding: "11px 22px", borderRadius: "999px",
               border: "1.5px solid rgba(45,74,62,0.2)",
               fontSize: "0.82rem", fontWeight: 700, color: "var(--green-deep)",
-              textDecoration: "none", fontFamily: "'Manrope', sans-serif",
+              textDecoration: "none", fontFamily: "var(--font-manrope)",
               transition: "all 0.3s ease",
             }}
               onMouseEnter={(e) => {
@@ -279,7 +279,7 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                       <Flame size={14} style={{ color: "white" }} />
                     </div>
                     <div>
-                      <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.78rem", color: "var(--green-deep)" }}>
+                      <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "0.78rem", color: "var(--green-deep)" }}>
                         {hero.badge}
                       </div>
                       <div style={{ fontSize: "0.62rem", color: "var(--text-mid)", fontWeight: 500 }}>
@@ -297,12 +297,12 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                   <div style={{
                     fontSize: "0.7rem", fontWeight: 800, letterSpacing: "0.14em",
                     textTransform: "uppercase", color: "var(--sage-light)",
-                    marginBottom: "10px", fontFamily: "'Manrope', sans-serif",
+                    marginBottom: "10px", fontFamily: "var(--font-manrope)",
                   }}>
                     {hero.occasion}
                   </div>
                   <h3 style={{
-                    fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                    fontFamily: "var(--font-manrope)", fontWeight: 900,
                     fontSize: "clamp(1.4rem, 2.5vw, 1.8rem)",
                     color: "white", letterSpacing: "-0.03em",
                     lineHeight: 1.15, marginBottom: "14px",
@@ -326,12 +326,13 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                   </div>
                   <div style={{
                     display: "flex", alignItems: "center", justifyContent: "space-between",
+                    gap: "16px", flexWrap: "wrap",
                     paddingTop: "20px",
                     borderTop: "1px solid rgba(255,255,255,0.1)",
                   }}>
-                    <div>
+                    <div style={{ whiteSpace: "nowrap", display: "flex", alignItems: "baseline", gap: "6px" }}>
                       <span style={{
-                        fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                        fontFamily: "var(--font-manrope)", fontWeight: 900,
                         fontSize: "1.8rem", color: "white",
                         letterSpacing: "-0.03em",
                       }}>
@@ -339,7 +340,6 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                       </span>
                       <span style={{
                         fontSize: "0.72rem", color: "rgba(255,255,255,0.5)",
-                        marginLeft: "6px",
                       }}>
                         / coffret
                       </span>
@@ -348,8 +348,9 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                       display: "inline-flex", alignItems: "center", gap: "6px",
                       padding: "10px 20px", borderRadius: "999px",
                       background: "var(--cream)", color: "var(--green-deep)",
-                      fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+                      fontFamily: "var(--font-manrope)", fontWeight: 700,
                       fontSize: "0.82rem",
+                      flexShrink: 0, whiteSpace: "nowrap",
                       transition: "all 0.3s ease",
                     }}>
                       D&eacute;couvrir <ArrowRight size={13} />
@@ -384,7 +385,7 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                       width: "32px", height: "32px", borderRadius: "10px",
                       background: c.rank === 2 ? "var(--sage)" : "rgba(135,163,141,0.25)",
                       display: "flex", alignItems: "center", justifyContent: "center",
-                      fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                      fontFamily: "var(--font-manrope)", fontWeight: 900,
                       fontSize: "0.82rem", color: "white",
                       boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
                     }}>
@@ -396,7 +397,7 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                       background: "rgba(243,240,232,0.92)", backdropFilter: "blur(8px)",
                       borderRadius: "999px", padding: "4px 12px",
                       fontSize: "0.65rem", fontWeight: 700,
-                      color: "var(--green-deep)", fontFamily: "'Manrope', sans-serif",
+                      color: "var(--green-deep)", fontFamily: "var(--font-manrope)",
                     }}>
                       {c.badge}
                     </div>
@@ -411,12 +412,12 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                       <div style={{
                         fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.1em",
                         textTransform: "uppercase", color: "var(--sage)",
-                        marginBottom: "5px", fontFamily: "'Manrope', sans-serif",
+                        marginBottom: "5px", fontFamily: "var(--font-manrope)",
                       }}>
                         {c.occasion}
                       </div>
                       <h3 style={{
-                        fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                        fontFamily: "var(--font-manrope)", fontWeight: 900,
                         fontSize: "1.1rem", color: "var(--text-dark)",
                         letterSpacing: "-0.02em", marginBottom: "10px",
                       }}>
@@ -437,7 +438,7 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
                     }}>
                       <div>
                         <span style={{
-                          fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                          fontFamily: "var(--font-manrope)", fontWeight: 900,
                           fontSize: "1.3rem", color: "var(--green-deep)",
                           letterSpacing: "-0.03em",
                         }}>
@@ -473,7 +474,7 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
               </div>
               <span style={{
                 fontSize: "0.75rem", fontWeight: 700,
-                color: "var(--text-mid)", fontFamily: "'Manrope', sans-serif",
+                color: "var(--text-mid)", fontFamily: "var(--font-manrope)",
               }}>
                 {trustText}
               </span>

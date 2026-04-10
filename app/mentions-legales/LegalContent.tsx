@@ -69,7 +69,7 @@ export default function LegalContent() {
           letterSpacing: "0.2em",
           textTransform: "uppercase",
           color: "var(--sage)",
-          fontFamily: "'Manrope', sans-serif",
+          fontFamily: "var(--font-manrope)",
           marginBottom: "18px",
           padding: "6px 16px",
           background: "rgba(135,163,141,0.08)",
@@ -84,7 +84,7 @@ export default function LegalContent() {
           color: "var(--text-dark)",
           marginBottom: "14px",
           lineHeight: 1.1,
-          fontFamily: "'Manrope', sans-serif",
+          fontFamily: "var(--font-manrope)",
         }}>
           Mentions légales
         </h1>
@@ -114,7 +114,7 @@ export default function LegalContent() {
           letterSpacing: "0.18em",
           textTransform: "uppercase",
           color: "var(--sage-dark)",
-          fontFamily: "'Manrope', sans-serif",
+          fontFamily: "var(--font-manrope)",
           margin: "0 0 14px",
         }}>
           Sommaire
@@ -135,7 +135,7 @@ export default function LegalContent() {
                   fontSize: "0.85rem",
                   color: "var(--text-mid)",
                   textDecoration: "none",
-                  fontFamily: "'Manrope', sans-serif",
+                  fontFamily: "var(--font-manrope)",
                   fontWeight: 600,
                   transition: "all 0.2s ease",
                   background: "transparent",
@@ -198,7 +198,7 @@ export default function LegalContent() {
                     fontWeight: 700,
                     color: "var(--green-deep)",
                     textDecoration: "none",
-                    fontFamily: "'Manrope', sans-serif",
+                    fontFamily: "var(--font-manrope)",
                     borderBottom: "1.5px solid var(--sage)",
                     transition: "all 0.2s ease",
                   }}
@@ -208,7 +208,7 @@ export default function LegalContent() {
               </div>
               <div>
                 <p style={metaLabelStyle}>Hébergement</p>
-                <p style={{ fontSize: "0.9rem", fontWeight: 700, color: "var(--green-deep)", margin: 0, fontFamily: "'Manrope', sans-serif" }}>
+                <p style={{ fontSize: "0.9rem", fontWeight: 700, color: "var(--green-deep)", margin: 0, fontFamily: "var(--font-manrope)" }}>
                   O2Switch
                 </p>
                 <p style={{ fontSize: "0.72rem", color: "var(--text-light)", margin: "2px 0 0" }}>
@@ -294,7 +294,7 @@ export default function LegalContent() {
                   fontSize: "0.68rem",
                   flexShrink: 0,
                   marginTop: "2px",
-                  fontFamily: "'Manrope', sans-serif",
+                  fontFamily: "var(--font-manrope)",
                 }}>
                   {i + 1}
                 </div>
@@ -323,7 +323,7 @@ export default function LegalContent() {
                 textTransform: "uppercase",
                 color: "var(--green-deep)",
                 margin: 0,
-                fontFamily: "'Manrope', sans-serif",
+                fontFamily: "var(--font-manrope)",
               }}>
                 Exercice de vos droits
               </p>
@@ -400,7 +400,7 @@ function SectionHeader({ icon: Icon, number, title }: { icon: typeof Globe; numb
           color: "var(--sage)",
           textTransform: "uppercase",
           margin: "0 0 2px",
-          fontFamily: "'Manrope', sans-serif",
+          fontFamily: "var(--font-manrope)",
         }}>
           Article {number}
         </p>
@@ -410,7 +410,7 @@ function SectionHeader({ icon: Icon, number, title }: { icon: typeof Globe; numb
           letterSpacing: "-0.02em",
           color: "var(--text-dark)",
           margin: 0,
-          fontFamily: "'Manrope', sans-serif",
+          fontFamily: "var(--font-manrope)",
           lineHeight: 1.2,
         }}>
           {title}
@@ -438,7 +438,7 @@ function InfoBlock({ label, value, sub, icon: Icon, isLink = false }: {
             fontWeight: 700,
             color: "var(--green-deep)",
             textDecoration: "none",
-            fontFamily: "'Manrope', sans-serif",
+            fontFamily: "var(--font-manrope)",
             borderBottom: "1.5px solid var(--sage)",
           }}>
             {value}
@@ -449,7 +449,7 @@ function InfoBlock({ label, value, sub, icon: Icon, isLink = false }: {
             fontWeight: 700,
             color: "var(--text-dark)",
             margin: 0,
-            fontFamily: "'Manrope', sans-serif",
+            fontFamily: "var(--font-manrope)",
           }}>
             {value}
           </p>
@@ -492,5 +492,5 @@ const metaLabelStyle: React.CSSProperties = {
   textTransform: "uppercase",
   color: "var(--text-light)",
   margin: "0 0 6px",
-  fontFamily: "'Manrope', sans-serif",
+  fontFamily: "var(--font-manrope)",
 };

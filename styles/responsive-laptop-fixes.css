@@ -1,0 +1,92 @@
+/* ================================================================
+   O'Méa B2B — Responsive Laptop Fixes
+   File: styles/responsive-laptop-fixes.css
+
+   SCOPE — STRICT:
+   - Applies ONLY at (min-width: 1025px) and (max-width: 1440px).
+   - Mobile (<=1024px), large desktop (>1440px): NEVER touched.
+   - No component, class, inline style, layout or global CSS modified.
+   - All fixes live inside laptop media queries only.
+
+   CASCADE NOTE:
+   Components use in-JSX <style> blocks rendered in <body>, after head
+   stylesheets. To override them from an external file, every selector
+   here is intentionally written with ONE extra level of specificity
+   (e.g. `section .h-split` instead of `.h-split`). No !important.
+
+   AUDIT DATE: 2026-04-10
+   ================================================================ */
+
+
+/* ────────────────────────────────────────────────────────────────
+   SMALL LAPTOPS — 1025px → 1279px
+   (13" / 14" MacBook Air, 1280x800 scaled, 1366x768, etc.)
+   ──────────────────────────────────────────────────────────────── */
+@media (min-width: 1025px) and (max-width: 1279px) {
+
+  /* ── Hero ─────────────────────────────────────────────────────
+     Issue: .h-split uses `padding: 40px 48px 0` + `gap: 48px` +
+     `grid-template-columns: 1fr 1.15fr`. At 1025–1199px, 48px
+     side padding + 48px gap leaves ~410px/475px for the two
+     columns — text column cramped, carousel pushed edge-to-edge.
+     Fix: tighten inline padding and gap for small laptops. */
+  section .h-split {
+    padding: 36px 36px 0;
+    gap: 32px;
+  }
+
+  /* ── Benefits row ─────────────────────────────────────────────
+     Issue: .ba-list keeps 4 columns from 1025px upwards with
+     `.ba-item { padding: 0 32px; }`. At 1025–1199 the 4 inner
+     items get ~240px × (−64px padding) = ~176px of content each
+     — icons + divider + title + text are visibly squeezed.
+     Fix: reduce inner item padding so each card gains ~28px
+     of usable content width. `:first-child` / `:last-child`
+     rules in the component keep outer edges flush (1-prop
+     overrides shorthand). */
+  section .ba-list .ba-item {
+    padding: 0 18px;
+  }
+
+  /* ── Why O'Méa grid ───────────────────────────────────────────
+     Issue: .why-grid is 4 cols with gap 16px + fixed image
+     height 180px inside a 1200px container. At 1025–1199,
+     cards are ~230px wide with a 180px image → visual ratio
+     feels heavy and labels/metrics get tight.
+     Fix: slightly increase gap for breathing room and trim
+     image height to restore balance. */
+  section .why-grid {
+    gap: 20px;
+  }
+  section .why-grid .why-card-img {
+    height: 164px;
+  }
+
+  /* ── /a-propos hero ───────────────────────────────────────────
+     Issue: .hero-grid uses `padding: 140px 48px 80px` with a
+     1400px max-width. On 1025–1199 laptops the 48px side
+     padding eats horizontal space and the 140px top pushes
+     the content visibly below the fold.
+     Fix: trim side + top padding on small laptops only. */
+  section .hero-grid {
+    padding: 116px 32px 64px;
+  }
+
+}
+
+
+/* ────────────────────────────────────────────────────────────────
+   STANDARD LAPTOPS — 1280px → 1440px
+   (most 14"/15" MacBooks, 1536x864 @125%, FHD @100%)
+   ──────────────────────────────────────────────────────────────── */
+@media (min-width: 1280px) and (max-width: 1440px) {
+
+  /* ── Why O'Méa grid ───────────────────────────────────────────
+     At 1280–1440, 4 cols fit comfortably but the 16px gap is
+     visually tight against the card border-radius (24px).
+     Fix: tiny bump for rhythm. */
+  section .why-grid {
+    gap: 22px;
+  }
+
+}

@@ -95,7 +95,7 @@ export default function AdminLayout({
     <div style={{
       display: "flex",
       minHeight: "100vh",
-      fontFamily: "'Inter', sans-serif",
+      fontFamily: "var(--font-inter)",
       background: "#f4f5f7",
     }}>
       <style>{`
@@ -320,7 +320,7 @@ export default function AdminLayout({
           </div>
           <div style={{ whiteSpace: "nowrap" }}>
             <p style={{
-              fontFamily: "'Manrope', sans-serif",
+              fontFamily: "var(--font-manrope)",
               fontWeight: 800,
               fontSize: "1.05rem",
               color: "#1e293b",

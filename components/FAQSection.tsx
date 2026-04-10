@@ -109,7 +109,7 @@ function FAQItem({ q, a, index, highlighted }: { q: string; a: string; index: nu
       >
         {/* Number */}
         <span style={{
-          fontFamily: "'Manrope', sans-serif",
+          fontFamily: "var(--font-manrope)",
           fontWeight: 800,
           fontSize: "0.75rem",
           color: "var(--sage)",
@@ -122,7 +122,7 @@ function FAQItem({ q, a, index, highlighted }: { q: string; a: string; index: nu
 
         <span style={{
           flex: 1,
-          fontFamily: "'Manrope', sans-serif",
+          fontFamily: "var(--font-manrope)",
           fontWeight: 700,
           fontSize: "0.95rem",
           color: "var(--text-dark)",
@@ -333,7 +333,7 @@ export default function FAQSection({ content }: { content?: FAQContent }) {
                 <span style={{
                   fontSize: "0.7rem", fontWeight: 700,
                   letterSpacing: "0.14em", textTransform: "uppercase",
-                  color: "var(--text-light)", fontFamily: "'Manrope', sans-serif",
+                  color: "var(--text-light)", fontFamily: "var(--font-manrope)",
                 }}>
                   {sectionLabel}
                 </span>
@@ -386,7 +386,7 @@ export default function FAQSection({ content }: { content?: FAQContent }) {
                   padding: "13px 24px",
                   background: "var(--green-deep)", color: "white",
                   borderRadius: "999px",
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+                  fontFamily: "var(--font-manrope)", fontWeight: 700,
                   fontSize: "0.85rem", textDecoration: "none",
                   boxShadow: "0 8px 24px rgba(45,74,62,0.15)",
                   transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",

@@ -135,9 +135,9 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
 
         .nav-a {
           position: relative;
-          font-family: 'Inter', sans-serif;
-          font-size: 0.78rem;
-          font-weight: 500;
+          font-family: var(--font-inter);
+          font-size: 0.95rem;
+          font-weight: 600;
           color: rgba(250, 247, 242, 0.55);
           text-decoration: none;
           letter-spacing: 0.01em;
@@ -191,7 +191,7 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
           display: inline-flex;
           align-items: center;
           gap: 7px;
-          font-family: 'Manrope', sans-serif;
+          font-family: var(--font-manrope);
           font-size: 0.78rem;
           font-weight: 700;
           color: var(--green-deep);
@@ -252,7 +252,7 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
           display: flex;
           align-items: center;
           justify-content: space-between;
-          font-family: 'Manrope', sans-serif;
+          font-family: var(--font-manrope);
           font-size: 0.95rem;
           font-weight: 600;
           color: rgba(250, 247, 242, 0.7);
@@ -275,7 +275,7 @@ export default function Navbar({ bannerOffset = 0 }: { bannerOffset?: number }) 
           background: var(--pink);
           color: var(--green-deep);
           border-radius: 14px;
-          font-family: 'Manrope', sans-serif;
+          font-family: var(--font-manrope);
           font-weight: 700;
           font-size: 0.95rem;
           text-decoration: none;

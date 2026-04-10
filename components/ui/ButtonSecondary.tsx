@@ -29,7 +29,7 @@ export default function ButtonSecondary({
     background: isOutline ? "transparent" : "white",
     color: "var(--green-deep)",
     borderRadius: "999px",
-    fontFamily: "'Manrope', sans-serif",
+    fontFamily: "var(--font-manrope)",
     fontWeight: 700,
     fontSize: "0.88rem",
     textDecoration: "none",

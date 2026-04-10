@@ -49,7 +49,7 @@ export default function AnnouncementBanner({ text, bgColor, textColor }: Props) 
           align-items: center;
           gap: 24px;
           padding: 0 32px;
-          font-family: 'Inter', sans-serif;
+          font-family: var(--font-inter);
           font-size: 0.78rem;
           font-weight: 600;
           letter-spacing: 0.02em;

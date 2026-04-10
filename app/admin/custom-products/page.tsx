@@ -207,7 +207,7 @@ export default function CustomProductsAdmin() {
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "28px" }}>
         <div>
-          <h1 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.5rem", color: "#5F7263", margin: 0, letterSpacing: "-0.02em" }}>
+          <h1 style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.5rem", color: "#5F7263", margin: 0, letterSpacing: "-0.02em" }}>
             Configurateur de coffrets
           </h1>
           <p style={{ fontSize: "0.82rem", color: "#888", margin: "4px 0 0" }}>
@@ -218,7 +218,7 @@ export default function CustomProductsAdmin() {
           display: "flex", alignItems: "center", gap: "8px",
           padding: "12px 28px", borderRadius: "12px",
           background: saved ? "#16a34a" : "#5F7263", color: "white",
-          fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.85rem",
+          fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.85rem",
           border: "none", cursor: "pointer", transition: "all 0.3s ease",
           boxShadow: "0 2px 8px rgba(45,74,62,0.2)",
         }}>
@@ -233,7 +233,7 @@ export default function CustomProductsAdmin() {
             flex: 1, padding: "10px 16px", borderRadius: "10px", border: "none",
             background: activeTab === tab ? "white" : "transparent",
             color: activeTab === tab ? "#5F7263" : "#6B7280",
-            fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.82rem",
+            fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.82rem",
             cursor: "pointer", transition: "all 0.2s",
             boxShadow: activeTab === tab ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
             display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
@@ -252,7 +252,7 @@ export default function CustomProductsAdmin() {
               borderColor: filterCat === "all" ? "#5F7263" : "#E5E7EB",
               background: filterCat === "all" ? "#5F7263" : "white",
               color: filterCat === "all" ? "white" : "#6B7280",
-              fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.75rem",
+              fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.75rem",
               cursor: "pointer", transition: "all 0.2s",
             }}>
               Tous ({products.length})
@@ -265,7 +265,7 @@ export default function CustomProductsAdmin() {
                   borderColor: filterCat === c.value ? c.color : "#E5E7EB",
                   background: filterCat === c.value ? c.color : "white",
                   color: filterCat === c.value ? "white" : "#6B7280",
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.75rem",
+                  fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.75rem",
                   cursor: "pointer", transition: "all 0.2s",
                   display: "flex", alignItems: "center", gap: "6px",
                 }}>
@@ -311,7 +311,7 @@ export default function CustomProductsAdmin() {
 
                     {/* Name + category */}
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.88rem", color: "#1F2937", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.88rem", color: "#1F2937", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                         {p.name || <span style={{ color: "#F59E0B", fontStyle: "italic" }}>Nouveau produit</span>}
                       </div>
                       <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "2px" }}>
@@ -331,7 +331,7 @@ export default function CustomProductsAdmin() {
                     </div>
 
                     {/* Price */}
-                    <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "0.95rem", color: "#5F7263", flexShrink: 0 }}>
+                    <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "0.95rem", color: "#5F7263", flexShrink: 0 }}>
                       {(p.price / 100).toFixed(2)}€
                       <span style={{ fontSize: "0.6rem", fontWeight: 600, color: "#9CA3AF", marginLeft: "2px" }}>HT</span>
                     </div>
@@ -391,7 +391,7 @@ export default function CustomProductsAdmin() {
                             <input value={p.description || ""} onChange={e => update(globalIdx, { description: e.target.value })} placeholder="Description visible sur la carte produit" style={inputStyle} />
                           </div>
                           {/* Auto TTC preview */}
-                          <div style={{ fontSize: "0.72rem", color: "#87A38D", fontWeight: 600, fontFamily: "'Manrope', sans-serif" }}>
+                          <div style={{ fontSize: "0.72rem", color: "#87A38D", fontWeight: 600, fontFamily: "var(--font-manrope)" }}>
                             Auto-calcul TTC : {((p.price / 100) * (1 + (p.tvaRate ?? settings.tvaRate) / 100)).toFixed(2)}€
                           </div>
                         </div>
@@ -426,7 +426,7 @@ export default function CustomProductsAdmin() {
             padding: "14px 20px", borderRadius: "14px",
             background: "white", border: "2px dashed #D1D5DB",
             color: "#6B7280", cursor: "pointer", width: "100%", justifyContent: "center",
-            marginTop: "12px", fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.82rem",
+            marginTop: "12px", fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.82rem",
             transition: "all 0.2s",
           }}>
             <Plus size={16} /> Ajouter un produit
@@ -438,7 +438,7 @@ export default function CustomProductsAdmin() {
 
           {/* General settings */}
           <div style={{ background: "white", borderRadius: "16px", border: "1px solid #E5E7EB", padding: "24px" }}>
-            <h3 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "1rem", color: "#5F7263", margin: "0 0 18px", display: "flex", alignItems: "center", gap: "8px" }}>
+            <h3 style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "1rem", color: "#5F7263", margin: "0 0 18px", display: "flex", alignItems: "center", gap: "8px" }}>
               <Settings2 size={16} /> Paramètres généraux
             </h3>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "16px" }}>
@@ -470,7 +470,7 @@ export default function CustomProductsAdmin() {
           {/* Categories management */}
           <div style={{ background: "white", borderRadius: "16px", border: "1px solid #E5E7EB", padding: "24px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "18px" }}>
-              <h3 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "1rem", color: "#5F7263", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+              <h3 style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "1rem", color: "#5F7263", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
                 <Tag size={16} /> Catégories
               </h3>
               <button onClick={() => {
@@ -482,7 +482,7 @@ export default function CustomProductsAdmin() {
                 padding: "7px 14px", borderRadius: "8px",
                 background: "#F0FDF4", border: "1px solid #86EFAC",
                 color: "#166534", fontWeight: 700, fontSize: "0.75rem",
-                cursor: "pointer", fontFamily: "'Manrope', sans-serif",
+                cursor: "pointer", fontFamily: "var(--font-manrope)",
               }}>
                 <Plus size={12} /> Ajouter une catégorie
               </button>
@@ -555,7 +555,7 @@ export default function CustomProductsAdmin() {
           {/* Discount tiers */}
           <div style={{ background: "white", borderRadius: "16px", border: "1px solid #E5E7EB", padding: "24px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "18px" }}>
-              <h3 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "1rem", color: "#5F7263", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+              <h3 style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "1rem", color: "#5F7263", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
                 <Percent size={16} /> Barème dégressif
               </h3>
               <button onClick={addTier} style={{
@@ -563,7 +563,7 @@ export default function CustomProductsAdmin() {
                 padding: "7px 14px", borderRadius: "8px",
                 background: "#F0FDF4", border: "1px solid #86EFAC",
                 color: "#166534", fontWeight: 700, fontSize: "0.75rem",
-                cursor: "pointer", fontFamily: "'Manrope', sans-serif",
+                cursor: "pointer", fontFamily: "var(--font-manrope)",
               }}>
                 <Plus size={12} /> Ajouter un palier
               </button>
@@ -603,7 +603,7 @@ export default function CustomProductsAdmin() {
 
           {/* Live preview */}
           <div style={{ background: "#FFFBEB", borderRadius: "16px", border: "1px solid #FDE68A", padding: "20px 24px" }}>
-            <h3 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.88rem", color: "#92400E", margin: "0 0 12px", display: "flex", alignItems: "center", gap: "8px" }}>
+            <h3 style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "0.88rem", color: "#92400E", margin: "0 0 12px", display: "flex", alignItems: "center", gap: "8px" }}>
               <AlertCircle size={14} /> Aperçu en temps réel
             </h3>
             <p style={{ fontSize: "0.78rem", color: "#78716C", margin: "0 0 12px", lineHeight: 1.6 }}>
@@ -640,14 +640,14 @@ const labelStyle: React.CSSProperties = {
 const inputStyle: React.CSSProperties = {
   width: "100%", padding: "9px 12px", borderRadius: "10px",
   border: "1.5px solid #E5E7EB", background: "#FAFAFA",
-  fontSize: "0.82rem", outline: "none", fontFamily: "'Inter', sans-serif",
+  fontSize: "0.82rem", outline: "none", fontFamily: "var(--font-inter)",
   transition: "border-color 0.2s",
 };
 
 const tierInputStyle: React.CSSProperties = {
   width: "100%", padding: "7px 10px", borderRadius: "8px",
   border: "1.5px solid #E5E7EB", background: "#FAFAFA",
-  fontSize: "0.78rem", outline: "none", fontFamily: "'Manrope', sans-serif",
+  fontSize: "0.78rem", outline: "none", fontFamily: "var(--font-manrope)",
   fontWeight: 600, textAlign: "center",
 };
 
@@ -661,7 +661,7 @@ const smallBtnStyle: React.CSSProperties = {
   padding: "6px 12px", borderRadius: "8px",
   border: "1px solid #E5E7EB", background: "white",
   color: "#6B7280", fontWeight: 600, fontSize: "0.72rem",
-  cursor: "pointer", fontFamily: "'Manrope', sans-serif",
+  cursor: "pointer", fontFamily: "var(--font-manrope)",
 };
 
 const hintStyle: React.CSSProperties = {

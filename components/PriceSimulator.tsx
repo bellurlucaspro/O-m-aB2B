@@ -86,7 +86,7 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
       <style>{`
         .sim-prod-btn {
           flex: 1; padding: 14px 8px; border: none; border-radius: 14px;
-          font-family: 'Manrope', sans-serif; cursor: pointer;
+          font-family: var(--font-manrope); cursor: pointer;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           text-align: center; position: relative; overflow: hidden;
         }
@@ -161,7 +161,7 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
                 onChange={(e) => handleInput(e.target.value)}
                 style={{
                   width: "48px", border: "none", outline: "none",
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 800,
+                  fontFamily: "var(--font-manrope)", fontWeight: 800,
                   fontSize: "1rem", color: "var(--text-dark)", textAlign: "right",
                   background: "transparent",
                 }}
@@ -194,7 +194,7 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
                   border: `1px solid ${isActive ? "var(--green-deep)" : "rgba(135,163,141,0.2)"}`,
                 }}>
                   <div style={{
-                    fontFamily: "'Manrope', sans-serif", fontWeight: 800,
+                    fontFamily: "var(--font-manrope)", fontWeight: 800,
                     fontSize: isActive ? "0.85rem" : "0.75rem",
                     color: isActive ? "white" : "var(--sage-dark)",
                     marginBottom: "2px",
@@ -240,7 +240,7 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
             <div style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--text-light)", marginBottom: "8px" }}>
               Prix unitaire
             </div>
-            <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.5rem", color: "var(--text-dark)", letterSpacing: "-0.03em", lineHeight: 1 }}>
+            <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.5rem", color: "var(--text-dark)", letterSpacing: "-0.03em", lineHeight: 1 }}>
               {unitPrice.toFixed(2)}€
             </div>
             {tier.discount > 0 && (
@@ -260,7 +260,7 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
             <div style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: "8px" }}>
               Total TTC
             </div>
-            <div className="sim-total-num" style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "2rem", color: "white", letterSpacing: "-0.03em", lineHeight: 1 }}>
+            <div className="sim-total-num" style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "2rem", color: "white", letterSpacing: "-0.03em", lineHeight: 1 }}>
               {totalPrice.toFixed(0)}€
             </div>
             <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.5)", marginTop: "6px" }}>
@@ -278,7 +278,7 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
               Économies
             </div>
             <div style={{
-              fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.5rem",
+              fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.5rem",
               color: savings > 0 ? "var(--sage-dark)" : "var(--text-light)",
               letterSpacing: "-0.03em", lineHeight: 1,
             }}>
@@ -298,7 +298,7 @@ export default function PriceSimulator({ products = DEFAULT_PRODUCTS }: PriceSim
           display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
           width: "100%", padding: "16px",
           background: "var(--green-deep)", color: "white",
-          borderRadius: "14px", fontFamily: "'Manrope', sans-serif",
+          borderRadius: "14px", fontFamily: "var(--font-manrope)",
           fontWeight: 700, fontSize: "0.95rem", textDecoration: "none",
           boxShadow: "0 8px 28px rgba(45,74,62,0.22)",
           transition: "all 0.3s ease",

@@ -49,7 +49,7 @@ function CustomSelect({
           background: focused || open ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.5)",
           border: `1.5px solid ${focused || open ? "var(--sage)" : "rgba(135,163,141,0.2)"}`,
           borderRadius: "14px",
-          fontFamily: "'Inter', sans-serif",
+          fontFamily: "var(--font-inter)",
           fontSize: "0.88rem",
           color: isEmpty ? "rgba(90,107,92,0.5)" : "var(--text-dark)",
           textAlign: "left",
@@ -120,7 +120,7 @@ function CustomSelect({
                     background: selected ? "rgba(135,163,141,0.15)" : "transparent",
                     border: "none",
                     borderRadius: "10px",
-                    fontFamily: "'Inter', sans-serif",
+                    fontFamily: "var(--font-inter)",
                     fontSize: "0.82rem",
                     fontWeight: selected ? 700 : 500,
                     color: selected ? "var(--green-deep)" : "var(--text-mid)",
@@ -308,7 +308,7 @@ export default function CTASection({
     borderColor: "rgba(135,163,141,0.15)",
     borderRadius: "12px",
     background: "var(--cream)",
-    fontFamily: "'Inter', sans-serif",
+    fontFamily: "var(--font-inter)",
     fontSize: "0.88rem",
     color: "var(--text-dark)",
     outline: "none",
@@ -333,7 +333,7 @@ export default function CTASection({
     marginBottom: "7px",
     textTransform: "uppercase",
     letterSpacing: "0.08em",
-    fontFamily: "'Manrope', sans-serif",
+    fontFamily: "var(--font-manrope)",
   };
 
   return (
@@ -439,7 +439,7 @@ export default function CTASection({
                       boxShadow: "0 2px 8px rgba(45,74,62,0.04)",
                       fontSize: "0.78rem", fontWeight: isUrssaf ? 700 : 600,
                       color: isUrssaf ? "var(--green-deep)" : "var(--text-mid)",
-                      fontFamily: "'Manrope', sans-serif",
+                      fontFamily: "var(--font-manrope)",
                       transition: "all 0.3s ease",
                       cursor: "default",
                     }}
@@ -510,7 +510,7 @@ export default function CTASection({
                   <CheckCircle2 size={32} style={{ color: "white" }} />
                 </div>
                 <h3 className="cta2-success-text" style={{
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 800,
+                  fontFamily: "var(--font-manrope)", fontWeight: 800,
                   fontSize: "1.4rem", color: "var(--text-dark)",
                   marginBottom: "10px", letterSpacing: "-0.02em",
                 }}>
@@ -526,7 +526,7 @@ export default function CTASection({
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                 <div style={{ marginBottom: "4px" }}>
                   <h3 style={{
-                    fontFamily: "'Manrope', sans-serif", fontWeight: 800,
+                    fontFamily: "var(--font-manrope)", fontWeight: 800,
                     fontSize: "1.05rem", color: "var(--text-dark)",
                     letterSpacing: "-0.02em", marginBottom: "4px",
                   }}>
@@ -632,7 +632,7 @@ export default function CTASection({
                   padding: "15px 24px",
                   background: "var(--green-deep)",
                   color: "white", borderRadius: "14px",
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.92rem",
+                  fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.92rem",
                   border: "none", cursor: sending ? "wait" : "pointer",
                   boxShadow: "0 8px 28px rgba(45,74,62,0.2)",
                   transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",

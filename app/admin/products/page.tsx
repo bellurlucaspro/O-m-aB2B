@@ -100,7 +100,7 @@ export default function AdminProducts() {
               fontSize: "1.75rem",
               fontWeight: 800,
               color: "#0f172a",
-              fontFamily: "'Manrope', sans-serif",
+              fontFamily: "var(--font-manrope)",
               margin: 0,
               letterSpacing: "-0.03em",
             }}
@@ -178,7 +178,7 @@ export default function AdminProducts() {
             fontSize: "1.1rem",
             fontWeight: 700,
             color: "#5F7263",
-            fontFamily: "'Manrope', sans-serif",
+            fontFamily: "var(--font-manrope)",
             marginBottom: "8px",
           }}>
             Aucun coffret pour le moment
@@ -282,7 +282,7 @@ export default function AdminProducts() {
                       fontSize: "1rem",
                       fontWeight: 700,
                       color: "#5F7263",
-                      fontFamily: "'Manrope', sans-serif",
+                      fontFamily: "var(--font-manrope)",
                       margin: 0,
                       overflow: "hidden",
                       textOverflow: "ellipsis",

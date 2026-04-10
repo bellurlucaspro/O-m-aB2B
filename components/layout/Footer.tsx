@@ -77,7 +77,7 @@ export default function Footer({ content }: { content?: FooterContent }) {
               <Image src="/Omea LOGO B2B.png" alt="O'Méa" width={180} height={60}
                 style={{ height: "44px", width: "auto", objectFit: "contain", marginBottom: "20px" }} />
               <h2 className="ft-headline" style={{
-                fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                fontFamily: "var(--font-manrope)", fontWeight: 900,
                 fontSize: "clamp(2rem, 4vw, 3.2rem)", color: "white",
                 letterSpacing: "-0.04em", lineHeight: 1.05, maxWidth: "500px",
               }}>
@@ -89,7 +89,7 @@ export default function Footer({ content }: { content?: FooterContent }) {
             <a href={contactCtaHref} style={{
               display: "inline-flex", alignItems: "center", gap: "10px",
               padding: "16px 32px", background: "var(--pink)", color: "var(--green-deep)",
-              borderRadius: "999px", fontFamily: "'Manrope', sans-serif",
+              borderRadius: "999px", fontFamily: "var(--font-manrope)",
               fontWeight: 700, fontSize: "0.9rem", textDecoration: "none",
               transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
               flexShrink: 0, whiteSpace: "nowrap",
@@ -113,7 +113,7 @@ export default function Footer({ content }: { content?: FooterContent }) {
               { val: "24h", label: "Délai devis" },
             ].map((s) => (
               <div key={s.label}>
-                <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "var(--sage-light)", letterSpacing: "-0.03em", lineHeight: 1 }}>{s.val}</div>
+                <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.6rem", color: "var(--sage-light)", letterSpacing: "-0.03em", lineHeight: 1 }}>{s.val}</div>
                 <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.35)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: "6px" }}>{s.label}</div>
               </div>
             ))}
@@ -144,7 +144,7 @@ export default function Footer({ content }: { content?: FooterContent }) {
 
             {/* Navigation */}
             <div>
-              <h4 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "var(--sage)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "16px" }}>Navigation</h4>
+              <h4 style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "0.68rem", color: "var(--sage)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "16px" }}>Navigation</h4>
               <nav style={{ display: "flex", flexDirection: "column", gap: "9px" }}>
                 {navLinks.map((l) => <a key={l.href} href={l.href} className="ft-link">{l.label}</a>)}
               </nav>
@@ -152,7 +152,7 @@ export default function Footer({ content }: { content?: FooterContent }) {
 
             {/* Coffrets */}
             <div>
-              <h4 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "var(--sage)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "16px" }}>Nos coffrets</h4>
+              <h4 style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "0.68rem", color: "var(--sage)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "16px" }}>Nos coffrets</h4>
               <nav style={{ display: "flex", flexDirection: "column", gap: "9px" }}>
                 {services.map((l) => <a key={l} href={srvHref} className="ft-link">{l}</a>)}
               </nav>
@@ -160,7 +160,7 @@ export default function Footer({ content }: { content?: FooterContent }) {
 
             {/* Contact */}
             <div>
-              <h4 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "var(--sage)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "16px" }}>Contact</h4>
+              <h4 style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "0.68rem", color: "var(--sage)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "16px" }}>Contact</h4>
               <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" }}>
                 <a href={`mailto:${contactEmail}`} className="ft-link" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                   <Mail size={13} style={{ color: "var(--sage)", flexShrink: 0 }} /> {contactEmail}

@@ -140,7 +140,7 @@ export default function Footer() {
           <div>
             <h4
               style={{
-                fontFamily: "'Manrope', sans-serif",
+                fontFamily: "var(--font-manrope)",
                 fontWeight: 700,
                 fontSize: "0.78rem",
                 color: "rgba(255,255,255,0.35)",
@@ -185,7 +185,7 @@ export default function Footer() {
           <div>
             <h4
               style={{
-                fontFamily: "'Manrope', sans-serif",
+                fontFamily: "var(--font-manrope)",
                 fontWeight: 700,
                 fontSize: "0.78rem",
                 color: "rgba(255,255,255,0.35)",
@@ -230,7 +230,7 @@ export default function Footer() {
           <div>
             <h4
               style={{
-                fontFamily: "'Manrope', sans-serif",
+                fontFamily: "var(--font-manrope)",
                 fontWeight: 700,
                 fontSize: "0.78rem",
                 color: "rgba(255,255,255,0.35)",
@@ -287,7 +287,7 @@ export default function Footer() {
                 background: "var(--sage)",
                 color: "white",
                 borderRadius: "999px",
-                fontFamily: "'Manrope', sans-serif",
+                fontFamily: "var(--font-manrope)",
                 fontWeight: 700,
                 fontSize: "0.8rem",
                 textDecoration: "none",

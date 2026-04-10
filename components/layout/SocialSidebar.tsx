@@ -104,7 +104,7 @@ export default function SocialSidebar() {
           pointer-events: none;
           transform: translateX(8px);
           transition: all 0.25s ease;
-          font-family: 'Inter', sans-serif;
+          font-family: var(--font-inter);
         }
         .social-sidebar__link:hover .social-sidebar__tooltip {
           opacity: 1;
@@ -152,7 +152,7 @@ export default function SocialSidebar() {
           right: 0;
           background: var(--cream);
           color: var(--text-dark);
-          font-family: 'Inter', sans-serif;
+          font-family: var(--font-inter);
           font-size: 0.78rem;
           font-weight: 600;
           padding: 10px 16px;
@@ -357,7 +357,7 @@ function WhatsAppChatWidget({ open, onClose }: { open: boolean; onClose: () => v
           flex-direction: column;
           overflow: hidden;
           animation: waSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: var(--font-inter);
         }
         .wa-header {
           background: #075E54;
@@ -373,7 +373,7 @@ function WhatsAppChatWidget({ open, onClose }: { open: boolean; onClose: () => v
           border-radius: 50%;
           background: white;
           display: flex; align-items: center; justify-content: center;
-          font-family: 'Manrope', sans-serif;
+          font-family: var(--font-manrope);
           font-weight: 900; font-size: 0.9rem;
           color: #075E54;
           flex-shrink: 0;
@@ -381,7 +381,7 @@ function WhatsAppChatWidget({ open, onClose }: { open: boolean; onClose: () => v
         }
         .wa-header-info { flex: 1; min-width: 0; }
         .wa-header-name {
-          font-family: 'Manrope', sans-serif;
+          font-family: var(--font-manrope);
           font-weight: 700; font-size: 0.92rem;
           margin: 0;
           line-height: 1.2;

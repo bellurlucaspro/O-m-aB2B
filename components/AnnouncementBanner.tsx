@@ -29,7 +29,7 @@ export default function AnnouncementBanner({ text, bgColor, textColor }: Props) 
         alignItems: "center",
         justifyContent: "center",
         padding: "7px 48px",
-        fontFamily: "'Inter', sans-serif",
+        fontFamily: "var(--font-inter)",
         fontSize: "0.75rem",
         fontWeight: 500,
         letterSpacing: "0.02em",

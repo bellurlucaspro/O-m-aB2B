@@ -95,7 +95,7 @@ export default function SocialSidebar() {
           pointer-events: none;
           transform: translateX(8px);
           transition: all 0.25s ease;
-          font-family: 'Inter', sans-serif;
+          font-family: var(--font-inter);
         }
         .social-sidebar__link:hover .social-sidebar__tooltip {
           opacity: 1;
@@ -143,7 +143,7 @@ export default function SocialSidebar() {
           right: 0;
           background: var(--cream);
           color: var(--text-dark);
-          font-family: 'Inter', sans-serif;
+          font-family: var(--font-inter);
           font-size: 0.78rem;
           font-weight: 600;
           padding: 10px 16px;

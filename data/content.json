@@ -24,20 +24,24 @@
     "carouselBadgeProducts": "6–10 produits par coffret",
     "carouselImages": [
       {
-        "src": "/uploads/1775666842210-ks2x2c.png",
-        "alt": "Coffret grossesse O'Méa — soins naturels"
+        "src": "/uploads/WhatsApp%20Image%202026-04-10%20at%2009.43.25.jpeg",
+        "alt": "Coffret O'Méa — cadeau entreprise premium"
       },
       {
-        "src": "/uploads/1773424302034-6qae7o.JPG",
+        "src": "/uploads/WhatsApp%20Image%202026-04-10%20at%2009.43.25%20%281%29.jpeg",
+        "alt": "Coffret O'Méa personnalisé"
+      },
+      {
+        "src": "/uploads/WhatsApp%20Image%202026-04-10%20at%2009.43.25%20%282%29.jpeg",
         "alt": "Produits artisanaux français O'Méa"
       },
       {
-        "src": "/uploads/produits-box-omea.webp",
-        "alt": "Box O'Méa — cadeau entreprise premium"
+        "src": "/uploads/WhatsApp%20Image%202026-04-10%20at%2009.43.26.jpeg",
+        "alt": "Box O'Méa — soins naturels"
       },
       {
-        "src": "/uploads/1773840094503-gpc2v1.jpeg",
-        "alt": "Coffret personnalisé O'Méa"
+        "src": "/uploads/WhatsApp%20Image%202026-04-10%20at%2009.44.03.jpeg",
+        "alt": "Coffret grossesse O'Méa"
       }
     ]
   },
@@ -147,7 +151,7 @@
     ]
   },
   "personalization": {
-    "sectionTitle": "Votre coffret, à votre image",
+    "sectionTitle": "Votre coffret,\nà votre image",
     "sectionSubtitle": "Vous validez, on déploie. Un interlocuteur dédié pilote tout le processus.",
     "steps": [
       {

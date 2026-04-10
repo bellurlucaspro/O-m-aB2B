@@ -51,7 +51,7 @@ function TabButton({ label, tab, activeTab, onClick }: { label: string; tab: str
     <button onClick={onClick} style={{
       display: "flex", alignItems: "center", gap: "10px",
       padding: "12px 24px", borderRadius: "999px",
-      fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "0.85rem",
+      fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: "0.85rem",
       cursor: "pointer", border: isActive ? "none" : "1.5px solid rgba(135,163,141,0.15)",
       background: isActive ? "var(--green-deep)" : "white",
       color: isActive ? "white" : "var(--text-mid)",

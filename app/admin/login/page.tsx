@@ -38,7 +38,7 @@ export default function AdminLogin() {
         alignItems: "center",
         justifyContent: "center",
         background: "#f8f9fa",
-        fontFamily: "'Inter', sans-serif",
+        fontFamily: "var(--font-inter)",
       }}
     >
       <form
@@ -58,7 +58,7 @@ export default function AdminLogin() {
               fontSize: "1.5rem",
               fontWeight: 800,
               color: "#5F7263",
-              fontFamily: "'Manrope', sans-serif",
+              fontFamily: "var(--font-manrope)",
               marginBottom: "8px",
             }}
           >

@@ -197,13 +197,13 @@ export default function ImpactSection({ content }: { content?: ImpactContent }) 
                 border: "1px solid rgba(135,163,141,0.08)",
               }}>
                 <div style={{
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                  fontFamily: "var(--font-manrope)", fontWeight: 900,
                   fontSize: "1.6rem", color: "var(--green-deep)",
                   letterSpacing: "-0.03em", lineHeight: 1,
                 }}>
                   {s.isNumeric ? <Counter value={s.value} prefix={s.prefix} suffix={s.suffix} /> : <span>{s.raw}</span>}
                 </div>
-                <div style={{ fontSize: "0.7rem", color: "var(--text-mid)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginTop: "6px", fontFamily: "'Manrope', sans-serif" }}>
+                <div style={{ fontSize: "0.7rem", color: "var(--text-mid)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginTop: "6px", fontFamily: "var(--font-manrope)" }}>
                   {s.label}
                 </div>
               </div>
@@ -245,7 +245,7 @@ export default function ImpactSection({ content }: { content?: ImpactContent }) 
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "4px" }}>
-                    <h3 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "1.02rem", color: "var(--text-dark)", letterSpacing: "-0.01em" }}>{c.title}</h3>
+                    <h3 style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "1.02rem", color: "var(--text-dark)", letterSpacing: "-0.01em" }}>{c.title}</h3>
                     {c.badge && <span style={{ fontSize: "0.7rem", fontWeight: 800, color: "var(--green-deep)", background: "rgba(135,163,141,0.1)", padding: "2px 8px", borderRadius: "6px" }}>{c.badge}</span>}
                   </div>
                   <p style={{ fontSize: "0.82rem", color: "var(--text-mid)", lineHeight: 1.55 }}>{c.desc}</p>
@@ -258,7 +258,7 @@ export default function ImpactSection({ content }: { content?: ImpactContent }) 
             display: "inline-flex", alignItems: "center", gap: "9px",
             padding: "14px 24px", background: "var(--green-deep)",
             color: "white", borderRadius: "999px",
-            fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+            fontFamily: "var(--font-manrope)", fontWeight: 700,
             fontSize: "0.88rem", textDecoration: "none",
             boxShadow: "0 8px 28px rgba(45,74,62,0.2)",
             transition: "all 0.3s ease",

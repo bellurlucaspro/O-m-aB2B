@@ -156,7 +156,7 @@ export default function PartnerSection({ content }: { content?: PartnersContent 
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 32px" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
-          <span style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--sage)", fontFamily: "'Manrope', sans-serif" }}>{tag}</span>
+          <span style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--sage)", fontFamily: "var(--font-manrope)" }}>{tag}</span>
           <h2 style={{
             fontSize: "clamp(2rem, 3.5vw, 2.8rem)",
             fontWeight: 800, letterSpacing: "-0.03em",
@@ -197,7 +197,7 @@ export default function PartnerSection({ content }: { content?: PartnersContent 
                 boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
               }}>
                 <span style={{
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+                  fontFamily: "var(--font-manrope)", fontWeight: 900,
                   fontSize: "2rem", color: "var(--green-deep)",
                   letterSpacing: "-0.03em", lineHeight: 1,
                 }}>
@@ -236,7 +236,7 @@ export default function PartnerSection({ content }: { content?: PartnersContent 
 
               {/* Quote text */}
               <p className="ps-quote" style={{
-                fontFamily: "'Manrope', sans-serif", fontWeight: 600,
+                fontFamily: "var(--font-manrope)", fontWeight: 600,
                 fontSize: "clamp(1.1rem, 2vw, 1.35rem)",
                 color: "var(--text-dark)", lineHeight: 1.65,
                 marginBottom: "28px", fontStyle: "italic",
@@ -264,14 +264,14 @@ export default function PartnerSection({ content }: { content?: PartnersContent 
                     width: "48px", height: "48px", borderRadius: "50%",
                     background: "linear-gradient(135deg, var(--sage), var(--sage-dark))",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    fontFamily: "'Manrope', sans-serif", fontWeight: 800,
+                    fontFamily: "var(--font-manrope)", fontWeight: 800,
                     fontSize: "0.88rem", color: "white", flexShrink: 0,
                   }}>
                     {t.initials}
                   </div>
                 )}
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "1rem", color: "var(--text-dark)", letterSpacing: "-0.01em" }}>
+                  <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "1rem", color: "var(--text-dark)", letterSpacing: "-0.01em" }}>
                     {t.name}
                   </div>
                   <div style={{ fontSize: "0.76rem", color: "var(--text-mid)", fontWeight: 500 }}>
@@ -306,7 +306,7 @@ export default function PartnerSection({ content }: { content?: PartnersContent 
             {/* Counter + CTA */}
             <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
               <div style={{ textAlign: "center", padding: "8px 16px", background: "rgba(45,74,62,0.05)", borderRadius: "12px", border: "1px solid rgba(45,74,62,0.1)" }}>
-                <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 900, fontSize: "1.5rem", color: "var(--green-deep)", lineHeight: 1, letterSpacing: "-0.03em" }}>
+                <div style={{ fontFamily: "var(--font-manrope)", fontWeight: 900, fontSize: "1.5rem", color: "var(--green-deep)", lineHeight: 1, letterSpacing: "-0.03em" }}>
                   {counter}
                 </div>
                 <div style={{ fontSize: "0.65rem", color: "var(--text-mid)", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", marginTop: "4px" }}>
@@ -319,7 +319,7 @@ export default function PartnerSection({ content }: { content?: PartnersContent 
                   display: "inline-flex", alignItems: "center", gap: "8px",
                   padding: "13px 24px", background: "var(--green-deep)",
                   color: "white", borderRadius: "999px",
-                  fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+                  fontFamily: "var(--font-manrope)", fontWeight: 700,
                   fontSize: "0.85rem", textDecoration: "none",
                   boxShadow: "0 8px 28px rgba(45,74,62,0.2)",
                   transition: "all 0.3s ease",

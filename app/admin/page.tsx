@@ -175,7 +175,7 @@ export default function AdminDashboard() {
       {/* ---- Header ---- */}
       <div style={{ marginBottom: "32px" }}>
         <h1 style={{
-          fontFamily: "'Manrope', sans-serif",
+          fontFamily: "var(--font-manrope)",
           fontWeight: 800,
           fontSize: "1.75rem",
           color: "#0f172a",
@@ -212,7 +212,7 @@ export default function AdminDashboard() {
             </div>
           </div>
           <p style={{
-            fontFamily: "'Manrope', sans-serif", fontWeight: 800,
+            fontFamily: "var(--font-manrope)", fontWeight: 800,
             fontSize: "2.4rem", margin: 0, lineHeight: 1,
           }}>
             {data.submissionCount}
@@ -246,7 +246,7 @@ export default function AdminDashboard() {
             </div>
           </div>
           <p style={{
-            fontFamily: "'Manrope', sans-serif", fontWeight: 800,
+            fontFamily: "var(--font-manrope)", fontWeight: 800,
             fontSize: "2.4rem", color: "#0f172a", margin: 0, lineHeight: 1,
           }}>
             {data.productCount}
@@ -270,7 +270,7 @@ export default function AdminDashboard() {
             </div>
           </div>
           <p style={{
-            fontFamily: "'Manrope', sans-serif", fontWeight: 800,
+            fontFamily: "var(--font-manrope)", fontWeight: 800,
             fontSize: "2.4rem", color: "#0f172a", margin: 0, lineHeight: 1,
           }}>
             {data.unreadCount}
@@ -294,7 +294,7 @@ export default function AdminDashboard() {
             </div>
           </div>
           <p style={{
-            fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+            fontFamily: "var(--font-manrope)", fontWeight: 700,
             fontSize: "1.15rem", color: "#0f172a", margin: 0, lineHeight: 1.3,
           }}>
             {data.lastSubmissionDate ? relativeTime(data.lastSubmissionDate) : "Aucune"}
@@ -320,7 +320,7 @@ export default function AdminDashboard() {
             marginBottom: "20px",
           }}>
             <h2 style={{
-              fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+              fontFamily: "var(--font-manrope)", fontWeight: 700,
               fontSize: "1.1rem", color: "#0f172a", margin: 0,
             }}>
               Dernières demandes
@@ -415,7 +415,7 @@ export default function AdminDashboard() {
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div className="dash-card" style={{ padding: "20px" }}>
             <h3 style={{
-              fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+              fontFamily: "var(--font-manrope)", fontWeight: 700,
               fontSize: "1rem", color: "#0f172a", margin: "0 0 16px 0",
             }}>
               Accès rapide
@@ -468,7 +468,7 @@ export default function AdminDashboard() {
                 <TrendingUp size={16} />
               </div>
               <p style={{
-                fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+                fontFamily: "var(--font-manrope)", fontWeight: 700,
                 fontSize: "0.92rem", color: "#064e3b", margin: 0,
               }}>
                 Activité

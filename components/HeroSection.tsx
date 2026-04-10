@@ -9,7 +9,7 @@ function HeroCounter({ value, prefix = "", suffix = "", color, mobile }: { value
   const ref = useCounter(value, { suffix });
   return (
     <div style={{
-      fontFamily: "'Manrope', sans-serif", fontWeight: 900,
+      fontFamily: "var(--font-manrope)", fontWeight: 900,
       fontSize: mobile ? "2.8rem" : "3.4rem",
       color, letterSpacing: "-0.03em", lineHeight: 1,
     }}>
@@ -255,7 +255,7 @@ export default function HeroSection({
             <span style={{
               fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.18em",
               textTransform: "uppercase", color: "var(--sage)",
-              fontFamily: "'Manrope', sans-serif",
+              fontFamily: "var(--font-manrope)",
               display: "inline-flex", alignItems: "center", gap: "8px",
             }}>
               <ShieldCheck size={12} />
@@ -325,7 +325,7 @@ export default function HeroSection({
               display: "inline-flex", alignItems: "center", gap: "9px",
               padding: "15px 30px", background: "var(--green-deep)",
               color: "white", borderRadius: "999px",
-              fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+              fontFamily: "var(--font-manrope)", fontWeight: 700,
               fontSize: "0.92rem", textDecoration: "none",
               boxShadow: "0 8px 32px rgba(45,74,62,0.25)",
               transition: "all 0.3s ease",
@@ -339,7 +339,7 @@ export default function HeroSection({
               display: "inline-flex", alignItems: "center", gap: "7px",
               padding: "15px 28px", background: "transparent",
               color: "var(--text-mid)", borderRadius: "999px",
-              fontFamily: "'Manrope', sans-serif", fontWeight: 600,
+              fontFamily: "var(--font-manrope)", fontWeight: 600,
               fontSize: "0.85rem", textDecoration: "none",
               transition: "all 0.3s ease",
             }}
@@ -358,7 +358,7 @@ export default function HeroSection({
             <div style={{ display: "flex", gap: "2px" }}>
               {[1,2,3,4,5].map(s => <Star key={s} size={12} fill="var(--accent-gold)" style={{ color: "var(--accent-gold)" }} />)}
             </div>
-            <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--text-dark)", fontFamily: "'Manrope', sans-serif" }}>+50 entreprises nous font confiance</span>
+            <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--text-dark)", fontFamily: "var(--font-manrope)" }}>+1500 coffrets vendus</span>
           </div>
         </div>
 
@@ -439,7 +439,7 @@ export default function HeroSection({
               boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
             }}>
               <ShieldCheck size={13} style={{ color: "var(--green-deep)" }} />
-              <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "var(--green-deep)" }}>
+              <span style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "0.7rem", color: "var(--green-deep)" }}>
                 {carouselBadgeUrssaf}
               </span>
             </div>
@@ -453,7 +453,7 @@ export default function HeroSection({
               boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
             }}>
               <Package size={13} style={{ color: "var(--green-deep)" }} />
-              <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "var(--green-deep)" }}>
+              <span style={{ fontFamily: "var(--font-manrope)", fontWeight: 800, fontSize: "0.7rem", color: "var(--green-deep)" }}>
                 {carouselBadgeProducts}
               </span>
             </div>
@@ -486,13 +486,13 @@ export default function HeroSection({
               background: "radial-gradient(circle, rgba(168,188,151,0.15) 0%, transparent 70%)",
               borderRadius: "50%",
             }} />
-            <HeroCounter value={50} prefix="+" color="var(--green-deep)" mobile={isMobile} />
+            <HeroCounter value={1500} prefix="+" color="var(--green-deep)" mobile={isMobile} />
             <div style={{
               fontSize: "0.78rem", fontWeight: 600,
               color: "var(--text-mid)", letterSpacing: "0.12em",
               textTransform: "uppercase", marginTop: "8px",
             }}>
-              Entreprises partenaires
+              Coffrets vendus
             </div>
           </div>
 
