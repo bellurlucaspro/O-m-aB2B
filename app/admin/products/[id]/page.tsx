@@ -3,6 +3,12 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import {
+  ArrowLeft, Save, Eye, Check, Star, Package,
+  FileText, Euro, Palette as PaletteIcon, Layers,
+  Info, Sparkles, X, ExternalLink,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 interface ProductDetail {
   name: string;
@@ -150,11 +156,36 @@ function ColorField({
 
 type FormTab = "info" | "pricing" | "apparence" | "details";
 
-const TABS: { key: FormTab; label: string; icon: string }[] = [
-  { key: "info", label: "Informations", icon: "📝" },
-  { key: "pricing", label: "Composition & Tarifs", icon: "💰" },
-  { key: "apparence", label: "Apparence", icon: "🎨" },
-  { key: "details", label: "Produits du coffret", icon: "📦" },
+interface TabDef {
+  key: FormTab;
+  label: string;
+  icon: LucideIcon;
+  color: string;
+  desc: string;
+  tip?: string;
+}
+
+const TABS: TabDef[] = [
+  {
+    key: "info", label: "Identité", icon: FileText, color: "#87A38D",
+    desc: "Nom, catégorie, description et photo principale",
+    tip: "Ces informations apparaissent sur la landing page et dans les résultats de recherche. Soignez le nom et la description.",
+  },
+  {
+    key: "pricing", label: "Composition & Tarifs", icon: Euro, color: "#5F7263",
+    desc: "Liste des produits inclus, prix et TVA",
+    tip: "La composition est la liste des produits que contient le coffret. Le prix TTC est automatiquement converti en HT selon la TVA choisie.",
+  },
+  {
+    key: "apparence", label: "Apparence", icon: PaletteIcon, color: "#C06050",
+    desc: "Badge, couleurs et mise en avant sur la landing",
+    tip: "Le badge est un petit label coloré affiché sur la carte du coffret (ex: « Nouveau », « Populaire »). Utilisez-le pour guider l'attention des visiteurs.",
+  },
+  {
+    key: "details", label: "Variantes", icon: Layers, color: "#d97706",
+    desc: "Gammes du coffret (Essentiel, Premium, Prestige…)",
+    tip: "Créez plusieurs variantes si vous proposez différentes gammes à différents prix. Chaque variante a son propre nom, prix, photo et composition.",
+  },
 ];
 
 export default function AdminProductEdit() {
@@ -316,85 +347,248 @@ export default function AdminProductEdit() {
     );
   }
 
+  const activeTabDef = TABS.find((t) => t.key === activeTab)!;
+
   return (
-    <div>
-      {/* Back link */}
-      <Link
-        href="/admin/products"
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "6px",
-          color: "#6b7280",
-          textDecoration: "none",
-          fontSize: "0.85rem",
-          marginBottom: "20px",
-          transition: "all 0.2s ease",
-        }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = ACCENT; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#6b7280"; }}
-      >
-        &larr; Retour aux coffrets
-      </Link>
+    <div style={{ fontFamily: "var(--font-inter)" }}>
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .pe-breadcrumb a { color: #9ca3af; text-decoration: none; transition: color 0.15s ease; }
+        .pe-breadcrumb a:hover { color: #5F7263; }
+      `}</style>
 
-      <h1
-        style={{
-          fontSize: "1.5rem",
-          fontWeight: 800,
-          color: ACCENT,
-          fontFamily: "var(--font-manrope)",
-          marginBottom: "24px",
-        }}
-      >
-        Modifier le coffret
-      </h1>
+      {/* ═══════ Sticky top bar ═══════ */}
+      <div style={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        gap: "16px", flexWrap: "wrap",
+        padding: "20px 32px",
+        background: "white",
+        borderBottom: "1px solid #eef0f2",
+        position: "sticky", top: "64px",
+        zIndex: 30,
+        margin: "-28px -32px 24px",
+      }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          {/* Breadcrumb */}
+          <nav className="pe-breadcrumb" style={{
+            display: "flex", alignItems: "center", gap: "6px",
+            fontSize: "0.72rem", color: "#9ca3af", marginBottom: "6px",
+          }}>
+            <Link href="/admin/products" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+              <ArrowLeft size={11} strokeWidth={2.2} />
+              Coffrets
+            </Link>
+            <span>/</span>
+            <span>Modifier</span>
+          </nav>
 
-      {/* Message */}
-      {message ? (
+          {/* Title */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+            <h1 style={{
+              fontFamily: "var(--font-manrope)",
+              fontWeight: 900,
+              fontSize: "1.35rem",
+              color: "#0f172a",
+              margin: 0,
+              letterSpacing: "-0.025em",
+            }}>
+              {form.name || "Nouveau coffret"}
+            </h1>
+            {form.featured && (
+              <span style={{
+                display: "inline-flex", alignItems: "center", gap: "4px",
+                padding: "3px 10px", borderRadius: "999px",
+                background: "rgba(234,179,8,0.12)", color: "#d97706",
+                fontFamily: "var(--font-manrope)",
+                fontSize: "0.65rem", fontWeight: 800,
+                letterSpacing: "0.02em",
+              }}>
+                <Star size={10} strokeWidth={2.5} fill="#d97706" />
+                Mis en avant
+              </span>
+            )}
+            {form.subtitle && (
+              <span style={{
+                fontSize: "0.78rem", color: "#6b7280",
+                fontWeight: 500,
+              }}>
+                · {form.subtitle}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          {form.photo && (
+            <Link
+              href="/#produits"
+              target="_blank"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: "6px",
+                padding: "10px 16px", borderRadius: "10px",
+                background: "white", border: "1.5px solid #e5e7eb",
+                color: "#6b7280",
+                fontFamily: "var(--font-manrope)",
+                fontSize: "0.78rem", fontWeight: 700,
+                textDecoration: "none",
+                transition: "all 0.15s ease",
+              }}
+            >
+              <ExternalLink size={13} strokeWidth={2.2} />
+              Voir sur le site
+            </Link>
+          )}
+          <Link
+            href="/admin/products"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "6px",
+              padding: "10px 16px", borderRadius: "10px",
+              background: "white", border: "1.5px solid #e5e7eb",
+              color: "#6b7280",
+              fontFamily: "var(--font-manrope)",
+              fontSize: "0.78rem", fontWeight: 700,
+              textDecoration: "none",
+              transition: "all 0.15s ease",
+            }}
+          >
+            <X size={13} strokeWidth={2.2} />
+            Annuler
+          </Link>
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "8px",
+              padding: "11px 22px", borderRadius: "10px",
+              background: message?.type === "success" ? "#10b981" : ACCENT,
+              color: "white", border: "none",
+              fontFamily: "var(--font-manrope)",
+              fontWeight: 700, fontSize: "0.82rem",
+              cursor: saving ? "wait" : "pointer",
+              opacity: saving ? 0.7 : 1,
+              boxShadow: "0 2px 8px rgba(95,114,99,0.2)",
+              transition: "all 0.15s ease",
+            }}
+          >
+            {saving ? (
+              <>
+                <div style={{
+                  width: "14px", height: "14px",
+                  border: "2px solid rgba(255,255,255,0.3)",
+                  borderTopColor: "white",
+                  borderRadius: "50%",
+                  animation: "spin 0.8s linear infinite",
+                }} />
+                Enregistrement...
+              </>
+            ) : message?.type === "success" ? (
+              <><Check size={13} strokeWidth={3} /> Enregistré</>
+            ) : (
+              <><Save size={13} strokeWidth={2.2} /> Enregistrer</>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Error message */}
+      {message?.type === "error" && (
         <div
           style={{
             padding: "12px 16px",
-            borderRadius: "8px",
-            fontSize: "0.85rem",
-            marginBottom: "20px",
-            background: message.type === "success" ? "#ecfdf5" : "#fef2f2",
-            color: message.type === "success" ? "#10b981" : "#dc2626",
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
+            borderRadius: "10px",
+            fontSize: "0.82rem", fontWeight: 600,
+            marginBottom: "16px",
+            background: "#fef2f2",
+            color: "#dc2626",
+            border: "1px solid #fecaca",
+            display: "flex", alignItems: "center", gap: "8px",
           }}
         >
           {message.text}
         </div>
-      ) : null}
+      )}
 
-      {/* Tab navigation */}
+      {/* ═══════ Tab navigation ═══════ */}
       <div style={{
-        display: "flex", gap: "4px", marginBottom: "20px",
-        background: "white", borderRadius: "12px", padding: "6px",
-        boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
-        position: "sticky", top: "56px", zIndex: 30,
+        display: "flex", gap: "6px", marginBottom: "20px",
+        background: "white",
+        border: "1px solid #eef0f2",
+        borderRadius: "14px",
+        padding: "6px",
+        overflowX: "auto",
       }}>
-        {TABS.map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => setActiveTab(tab.key)}
-            style={{
-              flex: 1,
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-              padding: "10px 16px", borderRadius: "8px",
-              border: "none", cursor: "pointer",
-              fontSize: "0.82rem", fontWeight: activeTab === tab.key ? 650 : 450,
-              fontFamily: "var(--font-inter)",
-              background: activeTab === tab.key ? ACCENT : "transparent",
-              color: activeTab === tab.key ? "white" : "#6b7280",
-              transition: "all 0.2s ease",
-            }}
-          >
-            <span style={{ fontSize: "0.9rem" }}>{tab.icon}</span>
-            {tab.label}
-          </button>
-        ))}
+        {TABS.map((tab) => {
+          const Icon = tab.icon;
+          const isActive = activeTab === tab.key;
+          return (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              style={{
+                flex: 1,
+                display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+                padding: "12px 18px", borderRadius: "10px",
+                border: "none",
+                cursor: "pointer",
+                fontSize: "0.82rem",
+                fontWeight: 700,
+                fontFamily: "var(--font-manrope)",
+                background: isActive ? tab.color : "transparent",
+                color: isActive ? "white" : "#6b7280",
+                transition: "all 0.2s ease",
+                whiteSpace: "nowrap",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              <Icon size={14} strokeWidth={2.2} />
+              {tab.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* ═══════ Section intro ═══════ */}
+      <div style={{
+        display: "flex", alignItems: "flex-start", gap: "14px",
+        padding: "16px 20px",
+        background: `linear-gradient(135deg, ${activeTabDef.color}0d, ${activeTabDef.color}05)`,
+        border: `1px solid ${activeTabDef.color}25`,
+        borderRadius: "14px",
+        marginBottom: "20px",
+        animation: "fadeIn 0.25s ease",
+      }}>
+        <div style={{
+          width: "36px", height: "36px", borderRadius: "10px",
+          background: activeTabDef.color, color: "white",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          flexShrink: 0,
+        }}>
+          <activeTabDef.icon size={16} strokeWidth={2.2} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <h3 style={{
+            fontFamily: "var(--font-manrope)",
+            fontWeight: 800,
+            fontSize: "0.88rem",
+            color: "#0f172a",
+            margin: "0 0 3px",
+            letterSpacing: "-0.01em",
+          }}>
+            {activeTabDef.desc}
+          </h3>
+          {activeTabDef.tip && (
+            <p style={{
+              display: "flex", alignItems: "flex-start", gap: "6px",
+              fontSize: "0.76rem", color: "#6b7280",
+              margin: 0, lineHeight: 1.55,
+            }}>
+              <Sparkles size={11} strokeWidth={2.2} style={{ color: activeTabDef.color, flexShrink: 0, marginTop: "2px" }} />
+              <span><strong style={{ color: "#5F7263", fontWeight: 700 }}>Astuce :</strong> {activeTabDef.tip}</span>
+            </p>
+          )}
+        </div>
       </div>
 
       {/* 2-column layout */}
@@ -416,9 +610,9 @@ export default function AdminProductEdit() {
                   <p style={{ fontSize: "0.68rem", color: "#9ca3af", margin: "4px 0 0" }}>Le nom affiché sur la landing page</p>
                 </div>
                 <div style={fieldGroup}>
-                  <label style={labelStyle}>Sous-titre</label>
-                  <input style={inputStyle} value={form.subtitle} onChange={(e) => updateField("subtitle", e.target.value)} placeholder="L'attention qui compte" onFocus={focusInput} onBlur={blurInput} />
-                  <p style={{ fontSize: "0.68rem", color: "#9ca3af", margin: "4px 0 0" }}>Sous le nom du coffret</p>
+                  <label style={labelStyle}>Catégorie / occasion</label>
+                  <input style={inputStyle} value={form.subtitle} onChange={(e) => updateField("subtitle", e.target.value)} placeholder="Ex : Maternité, Noël, Événements CSE…" onFocus={focusInput} onBlur={blurInput} />
+                  <p style={{ fontSize: "0.68rem", color: "#9ca3af", margin: "4px 0 0" }}>Petit label affiché au-dessus du nom du coffret</p>
                 </div>
               </div>
               <div style={fieldGroup}>
@@ -791,15 +985,16 @@ export default function AdminProductEdit() {
               />
             </div>
             <div style={{ marginTop: "12px" }}>
-              <label style={labelStyle}>Texte alternatif</label>
+              <label style={labelStyle}>Description de l&apos;image</label>
               <input
                 style={inputStyle}
                 value={form.photoAlt}
                 onChange={(e) => updateField("photoAlt", e.target.value)}
-                placeholder="Description de l'image"
+                placeholder="Ex : Coffret grossesse avec produits naturels bio"
                 onFocus={focusInput}
                 onBlur={blurInput}
               />
+              <p style={{ fontSize: "0.68rem", color: "#9ca3af", margin: "4px 0 0" }}>Texte lu par les lecteurs d&apos;écran (accessibilité) et indexé par Google</p>
             </div>
           </div>
 
@@ -901,47 +1096,6 @@ export default function AdminProductEdit() {
             </div>
           </div>
 
-          {/* Save */}
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button
-              onClick={handleSave}
-              disabled={saving}
-              style={{
-                flex: 1,
-                padding: "12px",
-                background: ACCENT,
-                color: "white",
-                border: "none",
-                borderRadius: "10px",
-                fontSize: "0.88rem",
-                fontWeight: 600,
-                cursor: saving ? "wait" : "pointer",
-                opacity: saving ? 0.7 : 1,
-                transition: "all 0.2s ease",
-                boxShadow: "0 2px 8px rgba(45,74,62,0.2)",
-                fontFamily: "var(--font-manrope)",
-              }}
-            >
-              {saving ? "Enregistrement..." : "Enregistrer"}
-            </button>
-            <Link
-              href="/admin/products"
-              style={{
-                padding: "12px 20px",
-                background: "#f3f4f6",
-                color: "#374151",
-                border: "none",
-                borderRadius: "10px",
-                fontSize: "0.85rem",
-                fontWeight: 500,
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-              }}
-            >
-              Annuler
-            </Link>
-          </div>
         </div>
       </div>
     </div>
