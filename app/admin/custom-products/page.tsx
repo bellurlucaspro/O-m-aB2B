@@ -916,7 +916,11 @@ const styles = `
 
   .cp-root {
     font-family: var(--font-inter);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
+  .cp-root * { box-sizing: border-box; }
 
   /* ─── Topbar ─── */
   .cp-topbar {
