@@ -449,12 +449,12 @@ export default function AdminLayout({
                 background: "linear-gradient(135deg, #5F7263, #87A38D)",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontFamily: "var(--font-manrope)",
-                fontSize: "0.88rem", fontWeight: 800, color: "white",
+                fontSize: "0.8rem", fontWeight: 800, color: "white",
                 letterSpacing: "-0.01em",
                 boxShadow: "0 2px 6px rgba(95,114,99,0.25)",
                 flexShrink: 0,
               }}>
-                A
+                CR
               </div>
               <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
                 <p style={{
@@ -462,14 +462,14 @@ export default function AdminLayout({
                   fontSize: "0.82rem", fontWeight: 800, color: "#5F7263",
                   margin: 0, lineHeight: 1.25, letterSpacing: "-0.01em",
                 }}>
-                  Admin
+                  Catherine Rey
                 </p>
                 <p style={{
-                  fontSize: "0.6rem", color: "#94a3b8",
-                  margin: 0, fontWeight: 600,
+                  fontSize: "0.58rem", color: "#94a3b8",
+                  margin: 0, fontWeight: 700,
                   textTransform: "uppercase", letterSpacing: "0.1em",
                 }}>
-                  Administrateur
+                  Administratrice
                 </p>
               </div>
             </div>

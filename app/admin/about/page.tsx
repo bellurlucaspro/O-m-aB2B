@@ -5,7 +5,7 @@ import {
   Save, Check, ChevronDown, Plus, Trash2, GripVertical,
   Type, AlignLeft, MousePointerClick, Quote, BarChart3,
   Sparkles, BookOpen, Heart, TrendingUp, Target,
-  Image as ImageIcon, LayoutGrid, ListChecks,
+  Image as ImageIcon, LayoutGrid, ListChecks, Eye, Upload,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -219,6 +219,157 @@ function ImageField({ label, hint, value, onChange }: {
 }
 
 /* ------------------------------------------------------------------ */
+/*  ChoicePicker — visual button group for enum values                 */
+/* ------------------------------------------------------------------ */
+
+function ChoicePicker<T extends string>({
+  label, hint, value, onChange, options,
+}: {
+  label: string; hint?: string; value: T;
+  onChange: (v: T) => void;
+  options: { value: T; label: string; icon?: React.ReactNode }[];
+}) {
+  return (
+    <div className="ce-field">
+      <label className="ce-label">{label}</label>
+      <div className="ce-choice-group">
+        {options.map((opt) => (
+          <button
+            key={opt.value}
+            type="button"
+            className={`ce-choice ${value === opt.value ? "ce-choice--active" : ""}`}
+            onClick={() => onChange(opt.value)}
+          >
+            {opt.icon}
+            <span>{opt.label}</span>
+          </button>
+        ))}
+      </div>
+      {hint ? <p className="ce-hint">{hint}</p> : null}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  ColorPicker — visual color swatches + hex input                    */
+/* ------------------------------------------------------------------ */
+
+const BRAND_COLORS = [
+  { hex: "#87A38D", name: "Sauge" },
+  { hex: "#5F7263", name: "Vert profond" },
+  { hex: "#ABBFAF", name: "Sauge clair" },
+  { hex: "#FFEFDA", name: "Pêche" },
+  { hex: "#F0DFC5", name: "Pêche foncé" },
+  { hex: "#E8A87C", name: "Or" },
+  { hex: "#B8744A", name: "Terracotta" },
+  { hex: "#B4707A", name: "Mauve" },
+];
+
+function ColorPickerField({
+  label, hint, value, onChange,
+}: {
+  label: string; hint?: string; value: string; onChange: (v: string) => void;
+}) {
+  return (
+    <div className="ce-field">
+      <label className="ce-label">{label}</label>
+      <div className="ce-color-row">
+        {BRAND_COLORS.map((c) => {
+          const isActive = value === c.hex || value === `var(--${c.name.toLowerCase()})`;
+          return (
+            <button
+              key={c.hex}
+              type="button"
+              className={`ce-color-swatch ${isActive ? "ce-color-swatch--active" : ""}`}
+              style={{ background: c.hex }}
+              onClick={() => onChange(c.hex)}
+              title={c.name}
+              aria-label={c.name}
+            >
+              {isActive && <Check size={12} strokeWidth={3} style={{ color: "white" }} />}
+            </button>
+          );
+        })}
+        <input
+          type="color"
+          value={value && value.startsWith("#") ? value : "#87A38D"}
+          onChange={(e) => onChange(e.target.value)}
+          className="ce-color-input"
+          title="Choisir une couleur personnalisée"
+        />
+      </div>
+      {hint ? <p className="ce-hint">{hint}</p> : null}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  NumberComposer — compose chiffre = prefix + value + suffix         */
+/* ------------------------------------------------------------------ */
+
+function NumberComposer({
+  prefix, value, suffix, onChange,
+}: {
+  prefix: string; value: string; suffix: string;
+  onChange: (field: "prefix" | "value" | "suffix", v: string) => void;
+}) {
+  return (
+    <div>
+      <label className="ce-label">Chiffre affiché</label>
+      <div className="ce-number-composer">
+        <div className="ce-number-preview">
+          <span className="ce-number-preview__val">
+            {prefix || ""}{value || "?"}{suffix || ""}
+          </span>
+          <span className="ce-number-preview__hint">Aperçu</span>
+        </div>
+        <div className="ce-number-inputs">
+          <div>
+            <label className="ce-mini-label">Avant</label>
+            <input className="ce-input" value={prefix || ""}
+              onChange={(e) => onChange("prefix", e.target.value)}
+              placeholder="+" />
+          </div>
+          <div>
+            <label className="ce-mini-label">Chiffre</label>
+            <input className="ce-input" value={value || ""}
+              onChange={(e) => onChange("value", e.target.value)}
+              placeholder="50" />
+          </div>
+          <div>
+            <label className="ce-mini-label">Après</label>
+            <input className="ce-input" value={suffix || ""}
+              onChange={(e) => onChange("suffix", e.target.value)}
+              placeholder="%" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  SectionIntro — description en haut de chaque section               */
+/* ------------------------------------------------------------------ */
+
+function SectionIntro({ title, description, tip }: { title: string; description: string; tip?: string }) {
+  return (
+    <div className="ce-intro">
+      <h3 className="ce-intro__title">
+        <Eye size={14} strokeWidth={2.2} />
+        {title}
+      </h3>
+      <p className="ce-intro__desc">{description}</p>
+      {tip ? (
+        <p className="ce-intro__tip">
+          💡 <strong>Astuce :</strong> {tip}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Toast                                                              */
 /* ------------------------------------------------------------------ */
 
@@ -328,13 +479,55 @@ export default function AdminAboutPage() {
     if (!h) return <p className="ce-hint">Section non initialisée.</p>;
     return (
       <>
-        <Field label="Tag" hint="Petit label au-dessus du titre (ex: Notre histoire)" value={h.tag || ""} onChange={(v) => set("hero", { tag: v })} />
-        <ImageField label="Image principale" hint="Grande image à droite" value={h.image} onChange={(v) => set("hero", { image: v })} />
-        <ImageField label="Image secondaire" hint="Petite image superposée en bas à gauche" value={h.secondaryImage || ""} onChange={(v) => set("hero", { secondaryImage: v })} />
+        <SectionIntro
+          title="Grande bannière en haut de la page À propos"
+          description="C'est la première chose que les visiteurs voient. Elle donne le ton de votre histoire avec un titre accrocheur, deux images et des statistiques clés."
+          tip="Utilisez une image principale en haute résolution (format paysage). L'image secondaire est un détail superposé."
+        />
 
-        <Field icon={Type} label="Titre ligne 1" value={h.titleLine1} onChange={(v) => set("hero", { titleLine1: v })} />
-        <Field icon={Type} label="Titre ligne 2 (en italique accent)" value={h.titleLine2} onChange={(v) => set("hero", { titleLine2: v })} />
-        <Field icon={Type} label="Titre ligne 3" value={h.titleLine3} onChange={(v) => set("hero", { titleLine3: v })} />
+        <Field label="Étiquette au-dessus du titre" hint="Ex : « Notre histoire »" value={h.tag || ""} onChange={(v) => set("hero", { tag: v })} />
+
+        {/* Title preview card */}
+        <div className="ce-preview-card">
+          <div className="ce-preview-card__label">
+            <Eye size={12} /> Aperçu du titre
+          </div>
+          <div className="ce-preview-title">
+            <span>{h.titleLine1 || "Première ligne"}</span>
+            <span className="ce-preview-title__italic">{h.titleLine2 || "Partie en italique"}</span>
+            <span>{h.titleLine3 || "Dernière ligne"}</span>
+          </div>
+        </div>
+
+        <div className="ce-field">
+          <label className="ce-label">Titre en 3 lignes</label>
+          <div className="ce-title-lines">
+            <div className="ce-title-line-row">
+              <span className="ce-title-line-num">1</span>
+              <input className="ce-input" value={h.titleLine1 || ""}
+                onChange={(e) => set("hero", { titleLine1: e.target.value })}
+                placeholder="Ex : Transformer le" />
+            </div>
+            <div className="ce-title-line-row">
+              <span className="ce-title-line-num ce-title-line-num--accent">2</span>
+              <input className="ce-input ce-input--italic" value={h.titleLine2 || ""}
+                onChange={(e) => set("hero", { titleLine2: e.target.value })}
+                placeholder="Ex : cadeau d'entreprise (en italique, couleur accent)" />
+            </div>
+            <div className="ce-title-line-row">
+              <span className="ce-title-line-num">3</span>
+              <input className="ce-input" value={h.titleLine3 || ""}
+                onChange={(e) => set("hero", { titleLine3: e.target.value })}
+                placeholder="Ex : en geste humain" />
+            </div>
+          </div>
+          <p className="ce-hint">La ligne 2 apparaît en italique avec la couleur de marque.</p>
+        </div>
+
+        <div className="ce-grid-2">
+          <ImageField label="Image principale" hint="Grande image à droite du titre" value={h.image} onChange={(v) => set("hero", { image: v })} />
+          <ImageField label="Image secondaire" hint="Petit détail superposé" value={h.secondaryImage || ""} onChange={(v) => set("hero", { secondaryImage: v })} />
+        </div>
 
         <div className="ce-subsection">
           <div className="ce-subsection__header">
@@ -391,13 +584,16 @@ export default function AdminAboutPage() {
         <div className="ce-subsection">
           <div className="ce-subsection__header">
             <LayoutGrid size={15} />
-            <span>Badges flottants</span>
+            <span>Badges flottants sur l&apos;image</span>
             <span className="ce-badge">{h.badges?.length || 0}</span>
           </div>
+          <p className="ce-hint" style={{ marginBottom: "14px" }}>
+            Petits encarts positionnés sur l&apos;image principale. Utilisez-les pour mettre en avant une info clé (ex : « 100% Made in France »).
+          </p>
           {(h.badges || []).map((b, i) => (
-            <ItemCard key={i} index={i} label={b.title || "Sans titre"} onDelete={() => set("hero", { badges: (h.badges || []).filter((_, idx) => idx !== i) })}>
+            <ItemCard key={i} index={i} label={b.title || "Nouveau badge"} onDelete={() => set("hero", { badges: (h.badges || []).filter((_, idx) => idx !== i) })}>
               <div className="ce-row">
-                <Field label="Titre" value={b.title} onChange={(v) => {
+                <Field label="Titre principal" value={b.title} onChange={(v) => {
                   const arr = [...(h.badges || [])]; arr[i] = { ...arr[i], title: v }; set("hero", { badges: arr });
                 }} />
                 <Field label="Sous-titre" value={b.subtitle} onChange={(v) => {
@@ -405,12 +601,30 @@ export default function AdminAboutPage() {
                 }} />
               </div>
               <div className="ce-row">
-                <Field label="Position" hint="top-right ou bottom-right" value={b.position} onChange={(v) => {
-                  const arr = [...(h.badges || [])]; arr[i] = { ...arr[i], position: v }; set("hero", { badges: arr });
-                }} />
-                <Field label="Style" hint="dark (fond vert) ou light (fond blanc)" value={b.style} onChange={(v) => {
-                  const arr = [...(h.badges || [])]; arr[i] = { ...arr[i], style: v }; set("hero", { badges: arr });
-                }} />
+                <ChoicePicker
+                  label="Position sur l'image"
+                  value={b.position as "top-right" | "bottom-right" | "top-left" | "bottom-left"}
+                  options={[
+                    { value: "top-left" as const, label: "Haut gauche" },
+                    { value: "top-right" as const, label: "Haut droit" },
+                    { value: "bottom-left" as const, label: "Bas gauche" },
+                    { value: "bottom-right" as const, label: "Bas droit" },
+                  ]}
+                  onChange={(v) => {
+                    const arr = [...(h.badges || [])]; arr[i] = { ...arr[i], position: v }; set("hero", { badges: arr });
+                  }}
+                />
+                <ChoicePicker
+                  label="Apparence"
+                  value={b.style as "dark" | "light"}
+                  options={[
+                    { value: "dark" as const, label: "Fond foncé" },
+                    { value: "light" as const, label: "Fond clair" },
+                  ]}
+                  onChange={(v) => {
+                    const arr = [...(h.badges || [])]; arr[i] = { ...arr[i], style: v }; set("hero", { badges: arr });
+                  }}
+                />
               </div>
             </ItemCard>
           ))}
@@ -427,15 +641,22 @@ export default function AdminAboutPage() {
     if (!o) return <p className="ce-hint">Section non initialisée.</p>;
     return (
       <>
-        <Field label="Tag" hint="Petit label au-dessus du titre" value={o.tag} onChange={(v) => set("origin", { tag: v })} />
-        <ImageField label="Image" hint="Illustration de la section" value={o.image} onChange={(v) => set("origin", { image: v })} />
+        <SectionIntro
+          title="La section « Notre histoire »"
+          description="Racontez l'histoire de la marque : l'origine, la mission, les valeurs fondatrices. Plusieurs paragraphes + une citation mise en valeur."
+          tip="Gardez un ton humain et authentique. Un paragraphe = une idée. Évitez les textes trop longs."
+        />
+
+        <Field label="Étiquette au-dessus du titre" hint="Ex : « L'origine »" value={o.tag} onChange={(v) => set("origin", { tag: v })} />
+        <ImageField label="Photo de la section" hint="Une image qui illustre l'histoire" value={o.image} onChange={(v) => set("origin", { image: v })} />
+
         <div className="ce-row">
-          <Field label="Badge titre" value={o.badgeTitle} onChange={(v) => set("origin", { badgeTitle: v })} />
-          <Field label="Badge sous-titre" value={o.badgeSubtitle} onChange={(v) => set("origin", { badgeSubtitle: v })} />
+          <Field label="Titre du badge sur l'image" hint="Ex : « 2021 »" value={o.badgeTitle} onChange={(v) => set("origin", { badgeTitle: v })} />
+          <Field label="Sous-titre du badge" hint="Ex : « Année de création »" value={o.badgeSubtitle} onChange={(v) => set("origin", { badgeSubtitle: v })} />
         </div>
         <div className="ce-row">
-          <Field icon={Type} label="Titre" value={o.title} onChange={(v) => set("origin", { title: v })} />
-          <Field label="Titre accent" hint="Partie colorée du titre" value={o.titleAccent} onChange={(v) => set("origin", { titleAccent: v })} />
+          <Field label="Titre principal" value={o.title} onChange={(v) => set("origin", { title: v })} />
+          <Field label="Partie colorée du titre" hint="Mot ou expression mis en avant avec la couleur de marque" value={o.titleAccent} onChange={(v) => set("origin", { titleAccent: v })} />
         </div>
 
         <div className="ce-subsection">
@@ -471,42 +692,55 @@ export default function AdminAboutPage() {
     if (!v) return <p className="ce-hint">Section non initialisée.</p>;
     return (
       <>
-        <Field label="Tag" value={v.tag} onChange={(val) => set("values", { tag: val })} />
-        <Field icon={Type} label="Titre" value={v.title} onChange={(val) => set("values", { title: val })} />
+        <SectionIntro
+          title="Les valeurs fondamentales de la marque"
+          description="4 à 6 valeurs clés affichées sous forme de cartes numérotées. Chaque valeur a son propre titre, sa description, son image et une couleur accent."
+          tip="Gardez des titres courts (2-3 mots) et des textes de 1-2 phrases maximum."
+        />
+
+        <div className="ce-row">
+          <Field label="Étiquette au-dessus du titre" value={v.tag} onChange={(val) => set("values", { tag: val })} />
+          <Field label="Titre principal" value={v.title} onChange={(val) => set("values", { title: val })} />
+        </div>
         <Field label="Sous-titre" value={v.subtitle} onChange={(val) => set("values", { subtitle: val })} multiline />
 
         <div className="ce-subsection">
           <div className="ce-subsection__header">
             <LayoutGrid size={15} />
-            <span>Valeurs</span>
+            <span>Liste des valeurs</span>
             <span className="ce-badge">{v.items?.length || 0}</span>
           </div>
           <div className="ce-grid-2">
             {(v.items || []).map((item, i) => (
-              <ItemCard key={i} index={i} label={item.title || "Sans titre"} onDelete={() => {
+              <ItemCard key={i} index={i} label={item.title || "Nouvelle valeur"} onDelete={() => {
                 set("values", { items: (v.items || []).filter((_, idx) => idx !== i) });
               }}>
                 <div className="ce-row">
-                  <Field label="Numéro" hint="Ex: 01" value={item.num} onChange={(val) => {
+                  <Field label="Numéro affiché" hint="Ex : 01" value={item.num} onChange={(val) => {
                     const arr = [...(v.items || [])]; arr[i] = { ...arr[i], num: val }; set("values", { items: arr });
                   }} />
-                  <Field label="Titre" value={item.title} onChange={(val) => {
+                  <Field label="Titre de la valeur" value={item.title} onChange={(val) => {
                     const arr = [...(v.items || [])]; arr[i] = { ...arr[i], title: val }; set("values", { items: arr });
                   }} />
                 </div>
-                <Field label="Texte" value={item.text} onChange={(val) => {
+                <Field label="Description" value={item.text} onChange={(val) => {
                   const arr = [...(v.items || [])]; arr[i] = { ...arr[i], text: val }; set("values", { items: arr });
                 }} multiline />
-                <ImageField label="Image" value={item.image} onChange={(val) => {
+                <ImageField label="Image d'illustration" value={item.image} onChange={(val) => {
                   const arr = [...(v.items || [])]; arr[i] = { ...arr[i], image: val }; set("values", { items: arr });
                 }} />
-                <Field label="Couleur accent" hint="Code hex (ex: #87A38D)" value={item.accent} onChange={(val) => {
-                  const arr = [...(v.items || [])]; arr[i] = { ...arr[i], accent: val }; set("values", { items: arr });
-                }} />
+                <ColorPickerField
+                  label="Couleur d'accent"
+                  hint="Couleur utilisée pour mettre en valeur cette carte"
+                  value={item.accent}
+                  onChange={(val) => {
+                    const arr = [...(v.items || [])]; arr[i] = { ...arr[i], accent: val }; set("values", { items: arr });
+                  }}
+                />
               </ItemCard>
             ))}
           </div>
-          <button className="ce-btn-add" onClick={() => set("values", { items: [...(v.items || []), { num: "", title: "", text: "", image: "", accent: "" }] })}>
+          <button className="ce-btn-add" onClick={() => set("values", { items: [...(v.items || []), { num: "", title: "", text: "", image: "", accent: "#87A38D" }] })}>
             <Plus size={14} /> Ajouter une valeur
           </button>
         </div>
@@ -519,34 +753,46 @@ export default function AdminAboutPage() {
     if (!c) return <p className="ce-hint">Section non initialisée.</p>;
     return (
       <>
-        <Field icon={Type} label="Titre" value={c.title} onChange={(v) => set("chiffres", { title: v })} />
+        <SectionIntro
+          title="Les chiffres clés de la marque"
+          description="Données marquantes affichées en grand format : coffrets vendus, entreprises partenaires, satisfaction client, etc."
+          tip="Un chiffre = un signal fort. Privilégiez 3 à 4 chiffres maximum pour un impact visuel optimal."
+        />
+
+        <Field label="Titre de la section" value={c.title} onChange={(v) => set("chiffres", { title: v })} />
 
         <div className="ce-subsection">
           <div className="ce-subsection__header">
             <BarChart3 size={15} />
-            <span>Chiffres clés</span>
+            <span>Liste des chiffres</span>
             <span className="ce-badge">{c.items?.length || 0}</span>
           </div>
-          {(c.items || []).map((item, i) => (
-            <div key={i} className="ce-list-item" style={{ alignItems: "flex-start", gap: "6px" }}>
-              <GripVertical size={14} style={{ color: "#c4c9d1", flexShrink: 0, marginTop: "10px" }} />
-              <input className="ce-input" value={item.prefix || ""} onChange={(e) => {
-                const arr = [...(c.items || [])]; arr[i] = { ...arr[i], prefix: e.target.value }; set("chiffres", { items: arr });
-              }} placeholder="Préfixe" style={{ flex: "0 0 70px" }} />
-              <input className="ce-input" value={item.value} onChange={(e) => {
-                const arr = [...(c.items || [])]; arr[i] = { ...arr[i], value: e.target.value }; set("chiffres", { items: arr });
-              }} placeholder="Valeur" style={{ flex: "0 0 80px" }} />
-              <input className="ce-input" value={item.suffix || ""} onChange={(e) => {
-                const arr = [...(c.items || [])]; arr[i] = { ...arr[i], suffix: e.target.value }; set("chiffres", { items: arr });
-              }} placeholder="Suffixe" style={{ flex: "0 0 70px" }} />
-              <input className="ce-input" value={item.label} onChange={(e) => {
-                const arr = [...(c.items || [])]; arr[i] = { ...arr[i], label: e.target.value }; set("chiffres", { items: arr });
-              }} placeholder="Label" style={{ flex: 1 }} />
-              <button className="ce-btn-icon ce-btn-icon--danger" onClick={() => set("chiffres", { items: (c.items || []).filter((_, idx) => idx !== i) })} title="Supprimer">
-                <Trash2 size={14} />
-              </button>
-            </div>
-          ))}
+          <div className="ce-grid-2">
+            {(c.items || []).map((item, i) => (
+              <ItemCard key={i} index={i} label={item.label || "Nouveau chiffre"} onDelete={() => set("chiffres", { items: (c.items || []).filter((_, idx) => idx !== i) })}>
+                <NumberComposer
+                  prefix={item.prefix || ""}
+                  value={item.value || ""}
+                  suffix={item.suffix || ""}
+                  onChange={(field, val) => {
+                    const arr = [...(c.items || [])];
+                    arr[i] = { ...arr[i], [field]: val };
+                    set("chiffres", { items: arr });
+                  }}
+                />
+                <Field
+                  label="Légende sous le chiffre"
+                  hint="Ex : « Coffrets vendus »"
+                  value={item.label || ""}
+                  onChange={(val) => {
+                    const arr = [...(c.items || [])];
+                    arr[i] = { ...arr[i], label: val };
+                    set("chiffres", { items: arr });
+                  }}
+                />
+              </ItemCard>
+            ))}
+          </div>
           <button className="ce-btn-add" onClick={() => set("chiffres", { items: [...(c.items || []), { value: "", prefix: "", suffix: "", label: "" }] })}>
             <Plus size={14} /> Ajouter un chiffre
           </button>
@@ -560,8 +806,16 @@ export default function AdminAboutPage() {
     if (!b) return <p className="ce-hint">Section non initialisée.</p>;
     return (
       <>
-        <Field label="Tag" value={b.tag} onChange={(v) => set("benefits", { tag: v })} />
-        <Field icon={Type} label="Titre" value={b.title} onChange={(v) => set("benefits", { title: v })} />
+        <SectionIntro
+          title="Les bénéfices concrets pour les entreprises"
+          description="Cartes mettant en avant les résultats tangibles que les clients obtiennent (ex : -40% de turnover, +98% de satisfaction). Chaque carte a une métrique, un titre, un texte et une image."
+          tip="Utilisez des chiffres précis et vérifiables pour renforcer la crédibilité."
+        />
+
+        <div className="ce-row">
+          <Field label="Étiquette au-dessus du titre" value={b.tag} onChange={(v) => set("benefits", { tag: v })} />
+          <Field label="Titre principal" value={b.title} onChange={(v) => set("benefits", { title: v })} />
+        </div>
         <Field label="Sous-titre" value={b.subtitle} onChange={(v) => set("benefits", { subtitle: v })} multiline />
 
         <div className="ce-subsection">
@@ -609,7 +863,13 @@ export default function AdminAboutPage() {
     const t = c.testimonial || { quote: "", name: "", role: "", initials: "" };
     return (
       <>
-        <ImageField label="Image de fond" hint="Arrière-plan de la section CTA" value={c.bgImage} onChange={(v) => set("cta", { bgImage: v })} />
+        <SectionIntro
+          title="Appel à l'action final de la page"
+          description="Dernière section avant le footer. Elle combine un témoignage client, quelques métriques, un titre accrocheur et 2 boutons d'action pour convertir le visiteur."
+          tip="Le témoignage est la partie la plus puissante : choisissez une citation courte et percutante."
+        />
+
+        <ImageField label="Image de fond de la section" hint="Photo d'ambiance en arrière-plan" value={c.bgImage} onChange={(v) => set("cta", { bgImage: v })} />
 
         {/* Testimonial */}
         <div className="ce-subsection">
@@ -930,6 +1190,175 @@ export default function AdminAboutPage() {
           width: 20px; height: 20px; border-radius: 50%;
           background: rgba(255,255,255,0.2);
           display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ---- section intro ---- */
+        .ce-intro {
+          background: linear-gradient(135deg, rgba(135,163,141,0.08), rgba(255,239,218,0.25));
+          border: 1px solid rgba(135,163,141,0.15);
+          border-radius: 14px;
+          padding: 18px 22px;
+          margin-bottom: 24px;
+        }
+        .ce-intro__title {
+          display: flex; align-items: center; gap: 8px;
+          font-family: var(--font-manrope);
+          font-weight: 800; font-size: 0.92rem;
+          color: #5F7263;
+          margin: 0 0 6px;
+          letter-spacing: -0.01em;
+        }
+        .ce-intro__desc {
+          font-size: 0.82rem; color: #5F7263;
+          margin: 0 0 10px; line-height: 1.55;
+          opacity: 0.9;
+        }
+        .ce-intro__tip {
+          font-size: 0.75rem; color: #6b7280;
+          margin: 0; padding: 10px 14px;
+          background: rgba(255,255,255,0.6);
+          border-radius: 8px;
+          line-height: 1.55;
+        }
+
+        /* ---- preview card ---- */
+        .ce-preview-card {
+          background: #f9fafb;
+          border: 1.5px dashed #d4d8de;
+          border-radius: 12px;
+          padding: 20px 24px;
+          margin-bottom: 14px;
+        }
+        .ce-preview-card__label {
+          display: inline-flex; align-items: center; gap: 5px;
+          font-size: 0.62rem; font-weight: 700;
+          color: #9ca3af; text-transform: uppercase;
+          letter-spacing: 0.1em; margin-bottom: 10px;
+        }
+        .ce-preview-title {
+          display: flex; flex-direction: column; gap: 2px;
+          font-family: var(--font-manrope);
+          font-size: 1.4rem; font-weight: 900;
+          color: #1a1f25; letter-spacing: -0.03em;
+          line-height: 1.1;
+        }
+        .ce-preview-title__italic {
+          font-style: italic; color: #5F7263;
+          font-weight: 800;
+        }
+
+        /* ---- title lines editor ---- */
+        .ce-title-lines {
+          display: flex; flex-direction: column; gap: 8px;
+        }
+        .ce-title-line-row {
+          display: flex; align-items: center; gap: 10px;
+        }
+        .ce-title-line-num {
+          width: 24px; height: 24px; border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          background: #f3f4f6; color: #6b7280;
+          font-size: 0.7rem; font-weight: 800;
+          flex-shrink: 0;
+          font-family: var(--font-manrope);
+        }
+        .ce-title-line-num--accent {
+          background: rgba(135,163,141,0.15);
+          color: #5F7263;
+        }
+        .ce-input--italic {
+          font-style: italic;
+        }
+
+        /* ---- choice picker ---- */
+        .ce-choice-group {
+          display: flex; gap: 6px; flex-wrap: wrap;
+        }
+        .ce-choice {
+          display: flex; align-items: center; gap: 6px;
+          padding: 8px 14px; border-radius: 10px;
+          border: 1.5px solid #e5e7eb; background: white;
+          font-family: inherit;
+          font-size: 0.78rem; font-weight: 600;
+          color: #6b7280; cursor: pointer;
+          transition: all 0.15s ease;
+        }
+        .ce-choice:hover {
+          border-color: #87A38D; color: #5F7263;
+        }
+        .ce-choice--active {
+          background: #5F7263; color: white;
+          border-color: #5F7263;
+          box-shadow: 0 2px 8px rgba(95,114,99,0.2);
+        }
+
+        /* ---- color picker ---- */
+        .ce-color-row {
+          display: flex; align-items: center; gap: 8px;
+          flex-wrap: wrap;
+        }
+        .ce-color-swatch {
+          width: 32px; height: 32px; border-radius: 10px;
+          border: 2px solid transparent; cursor: pointer;
+          display: flex; align-items: center; justify-content: center;
+          transition: all 0.15s ease;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .ce-color-swatch:hover {
+          transform: scale(1.08);
+        }
+        .ce-color-swatch--active {
+          border-color: #1a1f25;
+          transform: scale(1.08);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .ce-color-input {
+          width: 32px; height: 32px; padding: 0;
+          border: 2px dashed #d4d8de; border-radius: 10px;
+          cursor: pointer; background: transparent;
+        }
+        .ce-color-input::-webkit-color-swatch { border-radius: 8px; border: none; }
+        .ce-color-input::-moz-color-swatch { border-radius: 8px; border: none; }
+
+        /* ---- number composer ---- */
+        .ce-number-composer {
+          background: #f9fafb;
+          border: 1px solid #eef0f2;
+          border-radius: 12px;
+          padding: 18px;
+          margin-bottom: 12px;
+        }
+        .ce-number-preview {
+          text-align: center;
+          padding: 14px 12px;
+          background: white;
+          border-radius: 10px;
+          border: 1px dashed #d4d8de;
+          margin-bottom: 14px;
+        }
+        .ce-number-preview__val {
+          display: block;
+          font-family: var(--font-manrope);
+          font-weight: 900; font-size: 2rem;
+          color: #5F7263; letter-spacing: -0.03em;
+          line-height: 1;
+        }
+        .ce-number-preview__hint {
+          display: block;
+          font-size: 0.58rem; font-weight: 700;
+          color: #9ca3af; text-transform: uppercase;
+          letter-spacing: 0.1em; margin-top: 6px;
+        }
+        .ce-number-inputs {
+          display: grid;
+          grid-template-columns: 1fr 1.3fr 1fr;
+          gap: 8px;
+        }
+        .ce-mini-label {
+          display: block;
+          font-size: 0.62rem; font-weight: 700;
+          color: #9ca3af; text-transform: uppercase;
+          letter-spacing: 0.08em; margin-bottom: 4px;
         }
 
         /* ---- loading ---- */
