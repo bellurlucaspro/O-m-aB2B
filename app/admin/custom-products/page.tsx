@@ -857,7 +857,12 @@ const styles = `
   @keyframes spin { to { transform: rotate(360deg); } }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  .cp-root { font-family: var(--font-inter); min-height: calc(100vh - 64px); }
+  .cp-root {
+    font-family: var(--font-inter);
+    min-height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+  }
 
   /* ─── Topbar ─── */
   .cp-topbar {
@@ -890,7 +895,8 @@ const styles = `
   /* ─── Builder layout ─── */
   .cp-builder {
     display: flex;
-    min-height: calc(100vh - 64px - 74px);
+    flex: 1;
+    min-height: 0;
   }
 
   /* ─── Sidebar ─── */
@@ -957,7 +963,6 @@ const styles = `
   .cp-editor {
     flex: 1; min-width: 0;
     padding: 28px 36px 120px;
-    overflow-y: auto;
     animation: fadeIn 0.25s ease;
   }
 
