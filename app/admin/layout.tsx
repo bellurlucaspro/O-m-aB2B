@@ -31,7 +31,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Contenu", href: "/admin/content", icon: FileText, group: "menu" },
   { label: "Page À propos", href: "/admin/about", icon: Info, group: "menu" },
   { label: "Coffrets", href: "/admin/products", icon: Package, group: "menu" },
-  { label: "Configurateur", href: "/admin/custom-products", icon: SlidersHorizontal, group: "menu" },
+  { label: "Coffret sur-mesure", href: "/admin/custom-products", icon: SlidersHorizontal, group: "menu" },
   { label: "Demandes", href: "/admin/submissions", icon: Inbox, group: "menu" },
   { label: "Paramètres", href: "#", icon: Settings, group: "general" },
 ];
