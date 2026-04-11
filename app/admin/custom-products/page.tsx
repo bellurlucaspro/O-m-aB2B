@@ -148,11 +148,15 @@ export default function CustomProductsAdmin() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/admin/custom-products").then(r => r.json()),
-      fetch("/api/admin/configurateur-settings").then(r => r.json()),
+      fetch("/api/admin/custom-products").then(r => r.ok ? r.json() : []).catch(() => []),
+      fetch("/api/admin/configurateur-settings").then(r => r.ok ? r.json() : DEFAULT_SETTINGS).catch(() => DEFAULT_SETTINGS),
     ]).then(([prods, setts]) => {
-      setProducts(prods);
-      setSettings(setts);
+      setProducts(Array.isArray(prods) ? prods : []);
+      setSettings(setts && typeof setts === "object" && setts.discountTiers ? setts : DEFAULT_SETTINGS);
+      setLoading(false);
+    }).catch(() => {
+      setProducts([]);
+      setSettings(DEFAULT_SETTINGS);
       setLoading(false);
     });
   }, []);
@@ -252,10 +256,13 @@ export default function CustomProductsAdmin() {
   const sampleTotalTTC = Math.round(sampleTotalHT * (1 + settings.tvaRate / 100));
 
   if (loading) return (
-    <div className="cp-loading">
-      <div className="cp-spinner" />
-      <span>Chargement du configurateur...</span>
-    </div>
+    <>
+      <style>{styles}</style>
+      <div className="cp-loading">
+        <div className="cp-spinner" />
+        <span>Chargement du configurateur…</span>
+      </div>
+    </>
   );
 
   const activeSectionDef = SECTIONS.find(s => s.key === activeSection)!;
@@ -1419,13 +1426,79 @@ const styles = `
   }
 
   @media (max-width: 1024px) {
-    .cp-builder { flex-direction: column; }
-    .cp-sidebar { width: 100%; border-right: none; border-bottom: 1px solid #eef0f2; }
-    .cp-quick-stats { flex-direction: row; border-top: 1px solid #eef0f2; padding-top: 16px; }
-    .cp-rules-grid { grid-template-columns: 1fr; }
-    .cp-tier__grid { grid-template-columns: 1fr; }
+    .cp-topbar {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 16px 18px;
+      gap: 12px;
+    }
+    .cp-topbar__title { font-size: 1.1rem; }
+    .cp-topbar__subtitle { font-size: 0.74rem; }
+    .cp-save { width: 100%; justify-content: center; }
+
+    .cp-builder {
+      flex-direction: column;
+      min-height: 0;
+    }
+    .cp-sidebar {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #eef0f2;
+      padding: 12px 14px;
+      gap: 6px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      flex-direction: row;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .cp-sidebar::-webkit-scrollbar { display: none; }
+    .cp-sidebar__label { display: none; }
+    .cp-sidebar__item {
+      flex: 0 0 auto;
+      min-width: 180px;
+      background: white;
+      border: 1.5px solid #eef0f2;
+    }
+    .cp-sidebar__item--active {
+      border-color: #87A38D;
+      background: rgba(135,163,141,0.08) !important;
+    }
+    .cp-quick-stats { display: none; }
+
+    .cp-editor {
+      padding: 20px 16px 60px;
+    }
+    .cp-section-header { margin-bottom: 18px; padding-bottom: 16px; gap: 12px; }
+    .cp-section-icon { width: 40px !important; height: 40px !important; }
+    .cp-section-title { font-size: 1.15rem !important; }
+    .cp-section-subtitle { font-size: 0.72rem !important; }
+
+    .cp-intro { padding: 14px 16px; margin-bottom: 18px; }
+    .cp-intro__title { font-size: 0.85rem; }
+    .cp-intro__desc { font-size: 0.76rem; }
+
+    .cp-filter-row { gap: 6px; }
+    .cp-filter { font-size: 0.72rem; padding: 8px 14px; }
+
+    .cp-card__header { padding: 12px 14px; gap: 10px; }
+    .cp-card__edit { flex-direction: column; gap: 14px; }
     .cp-card__row { grid-template-columns: 1fr; }
+
+    .cp-rules-grid { grid-template-columns: 1fr; }
+    .cp-tier { flex-wrap: wrap; }
+    .cp-tier__grid { grid-template-columns: 1fr; gap: 10px; }
     .cp-preview-grid { grid-template-columns: 1fr; }
-    .cp-cat-fields { grid-template-columns: 1fr; }
+
+    .cp-cat-row { flex-wrap: wrap; gap: 10px; }
+    .cp-cat-fields { grid-template-columns: 1fr; gap: 8px; }
+
+    .cp-input { font-size: 16px; } /* prevent iOS zoom */
+  }
+
+  @media (max-width: 600px) {
+    .cp-topbar { padding: 14px 16px; }
+    .cp-editor { padding: 16px 14px 60px; }
+    .cp-sidebar__item { min-width: 160px; }
   }
 `;
