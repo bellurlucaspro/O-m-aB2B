@@ -356,24 +356,160 @@ export default function AdminProductEdit() {
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         .pe-breadcrumb a { color: #9ca3af; text-decoration: none; transition: color 0.15s ease; }
         .pe-breadcrumb a:hover { color: #5F7263; }
+
+        .pe-topbar {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+          flex-wrap: wrap;
+          padding: 20px 32px;
+          background: white;
+          border-bottom: 1px solid #eef0f2;
+          position: sticky;
+          top: 64px;
+          z-index: 30;
+          margin: -28px -32px 24px;
+        }
+        .pe-topbar__heading { flex: 1; min-width: 0; }
+        .pe-topbar__title {
+          font-family: var(--font-manrope);
+          font-weight: 900;
+          font-size: 1.35rem;
+          color: #0f172a;
+          margin: 0;
+          letter-spacing: -0.025em;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .pe-topbar__actions {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+          flex-shrink: 0;
+        }
+        .pe-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 10px 16px;
+          border-radius: 10px;
+          font-family: var(--font-manrope);
+          font-size: 0.78rem;
+          font-weight: 700;
+          text-decoration: none;
+          transition: all 0.15s ease;
+          border: 1.5px solid transparent;
+          cursor: pointer;
+          white-space: nowrap;
+        }
+        .pe-btn--ghost {
+          background: white;
+          border-color: #e5e7eb;
+          color: #6b7280;
+        }
+        .pe-btn--ghost:hover:not(:disabled) { border-color: #87A38D; color: #5F7263; }
+        .pe-btn--primary {
+          background: #5F7263;
+          color: white;
+          padding: 11px 22px;
+          box-shadow: 0 2px 8px rgba(95,114,99,0.2);
+        }
+        .pe-btn--primary:hover:not(:disabled) { background: #4A5C4E; }
+        .pe-btn--saved { background: #10b981 !important; }
+
+        .pe-tabs {
+          display: flex;
+          gap: 6px;
+          margin-bottom: 20px;
+          background: white;
+          border: 1px solid #eef0f2;
+          border-radius: 14px;
+          padding: 6px;
+          overflow-x: auto;
+          scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
+        }
+        .pe-tabs::-webkit-scrollbar { display: none; }
+
+        .pe-intro {
+          display: flex;
+          align-items: flex-start;
+          gap: 14px;
+          padding: 16px 20px;
+          border-radius: 14px;
+          margin-bottom: 20px;
+          animation: fadeIn 0.25s ease;
+        }
+
+        @media (max-width: 900px) {
+          .pe-topbar {
+            padding: 14px 18px;
+            margin: -20px -16px 18px;
+            position: static;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+          }
+          .pe-topbar__heading {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+          }
+          .pe-topbar__title { font-size: 1.1rem; white-space: normal; }
+          .pe-topbar__actions {
+            width: 100%;
+            flex-wrap: wrap;
+          }
+          .pe-topbar__actions > a,
+          .pe-topbar__actions > button {
+            flex: 1;
+            min-width: 0;
+            justify-content: center;
+          }
+          .pe-btn--primary { padding: 11px 16px; }
+          /* Hide "See on site" button text on small screens (icon only) */
+          .pe-btn--view-site { flex: 0 0 auto !important; padding: 10px 12px !important; }
+          .pe-btn--view-site span { display: none; }
+
+          .pe-tabs {
+            padding: 4px;
+            gap: 4px;
+          }
+          .pe-tab {
+            flex: 0 0 auto !important;
+            padding: 10px 14px !important;
+            font-size: 0.74rem !important;
+          }
+
+          .pe-intro {
+            padding: 14px 16px;
+            gap: 12px;
+          }
+          .pe-intro-icon {
+            width: 32px !important;
+            height: 32px !important;
+          }
+          .pe-intro h3 { font-size: 0.82rem !important; }
+          .pe-intro p { font-size: 0.72rem !important; }
+        }
+
+        @media (max-width: 600px) {
+          .pe-topbar { margin: -20px -12px 16px; padding: 12px 14px; }
+          .pe-grid-2col {
+            grid-template-columns: 1fr !important;
+          }
+        }
       `}</style>
 
       {/* ═══════ Sticky top bar ═══════ */}
-      <div style={{
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        gap: "16px", flexWrap: "wrap",
-        padding: "20px 32px",
-        background: "white",
-        borderBottom: "1px solid #eef0f2",
-        position: "sticky", top: "64px",
-        zIndex: 30,
-        margin: "-28px -32px 24px",
-      }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
+      <div className="pe-topbar">
+        <div className="pe-topbar__heading">
           {/* Breadcrumb */}
           <nav className="pe-breadcrumb" style={{
             display: "flex", alignItems: "center", gap: "6px",
-            fontSize: "0.72rem", color: "#9ca3af", marginBottom: "6px",
+            fontSize: "0.7rem", color: "#9ca3af", marginBottom: "4px",
           }}>
             <Link href="/admin/products" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
               <ArrowLeft size={11} strokeWidth={2.2} />
@@ -385,14 +521,7 @@ export default function AdminProductEdit() {
 
           {/* Title */}
           <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
-            <h1 style={{
-              fontFamily: "var(--font-manrope)",
-              fontWeight: 900,
-              fontSize: "1.35rem",
-              color: "#0f172a",
-              margin: 0,
-              letterSpacing: "-0.025em",
-            }}>
+            <h1 className="pe-topbar__title">
               {form.name || "Nouveau coffret"}
             </h1>
             {form.featured && (
@@ -401,18 +530,16 @@ export default function AdminProductEdit() {
                 padding: "3px 10px", borderRadius: "999px",
                 background: "rgba(234,179,8,0.12)", color: "#d97706",
                 fontFamily: "var(--font-manrope)",
-                fontSize: "0.65rem", fontWeight: 800,
+                fontSize: "0.62rem", fontWeight: 800,
                 letterSpacing: "0.02em",
+                flexShrink: 0,
               }}>
                 <Star size={10} strokeWidth={2.5} fill="#d97706" />
                 Mis en avant
               </span>
             )}
             {form.subtitle && (
-              <span style={{
-                fontSize: "0.78rem", color: "#6b7280",
-                fontWeight: 500,
-              }}>
+              <span style={{ fontSize: "0.76rem", color: "#6b7280", fontWeight: 500 }}>
                 · {form.subtitle}
               </span>
             )}
@@ -420,57 +547,21 @@ export default function AdminProductEdit() {
         </div>
 
         {/* Actions */}
-        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+        <div className="pe-topbar__actions">
           {form.photo && (
-            <Link
-              href="/#produits"
-              target="_blank"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "6px",
-                padding: "10px 16px", borderRadius: "10px",
-                background: "white", border: "1.5px solid #e5e7eb",
-                color: "#6b7280",
-                fontFamily: "var(--font-manrope)",
-                fontSize: "0.78rem", fontWeight: 700,
-                textDecoration: "none",
-                transition: "all 0.15s ease",
-              }}
-            >
+            <Link href="/#produits" target="_blank" className="pe-btn pe-btn--ghost pe-btn--view-site">
               <ExternalLink size={13} strokeWidth={2.2} />
-              Voir sur le site
+              <span>Voir sur le site</span>
             </Link>
           )}
-          <Link
-            href="/admin/products"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: "6px",
-              padding: "10px 16px", borderRadius: "10px",
-              background: "white", border: "1.5px solid #e5e7eb",
-              color: "#6b7280",
-              fontFamily: "var(--font-manrope)",
-              fontSize: "0.78rem", fontWeight: 700,
-              textDecoration: "none",
-              transition: "all 0.15s ease",
-            }}
-          >
+          <Link href="/admin/products" className="pe-btn pe-btn--ghost">
             <X size={13} strokeWidth={2.2} />
             Annuler
           </Link>
           <button
             onClick={handleSave}
             disabled={saving}
-            style={{
-              display: "inline-flex", alignItems: "center", gap: "8px",
-              padding: "11px 22px", borderRadius: "10px",
-              background: message?.type === "success" ? "#10b981" : ACCENT,
-              color: "white", border: "none",
-              fontFamily: "var(--font-manrope)",
-              fontWeight: 700, fontSize: "0.82rem",
-              cursor: saving ? "wait" : "pointer",
-              opacity: saving ? 0.7 : 1,
-              boxShadow: "0 2px 8px rgba(95,114,99,0.2)",
-              transition: "all 0.15s ease",
-            }}
+            className={`pe-btn pe-btn--primary ${message?.type === "success" ? "pe-btn--saved" : ""}`}
           >
             {saving ? (
               <>
@@ -481,7 +572,7 @@ export default function AdminProductEdit() {
                   borderRadius: "50%",
                   animation: "spin 0.8s linear infinite",
                 }} />
-                Enregistrement...
+                Enregistrement…
               </>
             ) : message?.type === "success" ? (
               <><Check size={13} strokeWidth={3} /> Enregistré</>
@@ -511,14 +602,7 @@ export default function AdminProductEdit() {
       )}
 
       {/* ═══════ Tab navigation ═══════ */}
-      <div style={{
-        display: "flex", gap: "6px", marginBottom: "20px",
-        background: "white",
-        border: "1px solid #eef0f2",
-        borderRadius: "14px",
-        padding: "6px",
-        overflowX: "auto",
-      }}>
+      <div className="pe-tabs">
         {TABS.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.key;
@@ -526,6 +610,7 @@ export default function AdminProductEdit() {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
+              className="pe-tab"
               style={{
                 flex: 1,
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
@@ -550,16 +635,11 @@ export default function AdminProductEdit() {
       </div>
 
       {/* ═══════ Section intro ═══════ */}
-      <div style={{
-        display: "flex", alignItems: "flex-start", gap: "14px",
-        padding: "16px 20px",
+      <div className="pe-intro" style={{
         background: `linear-gradient(135deg, ${activeTabDef.color}0d, ${activeTabDef.color}05)`,
         border: `1px solid ${activeTabDef.color}25`,
-        borderRadius: "14px",
-        marginBottom: "20px",
-        animation: "fadeIn 0.25s ease",
       }}>
-        <div style={{
+        <div className="pe-intro-icon" style={{
           width: "36px", height: "36px", borderRadius: "10px",
           background: activeTabDef.color, color: "white",
           display: "flex", alignItems: "center", justifyContent: "center",
@@ -592,7 +672,7 @@ export default function AdminProductEdit() {
       </div>
 
       {/* 2-column layout */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: "20px", alignItems: "start" }}>
+      <div className="pe-grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: "20px", alignItems: "start" }}>
 
         {/* Left column: form (tabbed) */}
         <div>
