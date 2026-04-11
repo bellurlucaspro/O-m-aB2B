@@ -252,24 +252,35 @@ export default function CustomProductsAdmin() {
 
   // ⬇️ Loading guard MUST come before any derived computation
   if (loading) return (
-    <div style={{
-      display: "flex", flexDirection: "column",
-      alignItems: "center", justifyContent: "center",
-      minHeight: "60vh", gap: "14px",
-      color: "#6b7280", fontSize: "0.9rem",
-      fontFamily: "var(--font-inter)",
-      padding: "40px 20px",
-    }}>
+    <>
       <div style={{
-        width: "32px", height: "32px",
-        border: "3px solid #eef0f2",
-        borderTopColor: "#5F7263",
-        borderRadius: "50%",
-        animation: "spin 0.8s linear infinite",
-      }} />
-      <span>Chargement du configurateur…</span>
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-    </div>
+        position: "fixed", top: "64px", left: 0, right: 0,
+        background: "#f59e0b", color: "white",
+        padding: "8px 16px", textAlign: "center",
+        fontSize: "0.75rem", fontWeight: 800,
+        zIndex: 99999, fontFamily: "monospace",
+      }}>
+        ⏳ LOADING STATE · fetching APIs…
+      </div>
+      <div style={{
+        display: "flex", flexDirection: "column",
+        alignItems: "center", justifyContent: "center",
+        minHeight: "60vh", gap: "14px",
+        color: "#6b7280", fontSize: "0.9rem",
+        fontFamily: "var(--font-inter)",
+        padding: "80px 20px 40px",
+      }}>
+        <div style={{
+          width: "32px", height: "32px",
+          border: "3px solid #eef0f2",
+          borderTopColor: "#5F7263",
+          borderRadius: "50%",
+          animation: "spin 0.8s linear infinite",
+        }} />
+        <span>Chargement du configurateur…</span>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      </div>
+    </>
   );
 
   // Derived (uses the safe `settings` shadow above)
@@ -296,10 +307,21 @@ export default function CustomProductsAdmin() {
 
   return (
     <div className="cp-root">
+      {/* ⚠️ DEBUG BANNER — temporary diagnostic */}
+      <div style={{
+        position: "fixed", top: "64px", left: 0, right: 0,
+        background: "#ef4444", color: "white",
+        padding: "8px 16px", textAlign: "center",
+        fontSize: "0.75rem", fontWeight: 800,
+        zIndex: 99999,
+        fontFamily: "monospace",
+      }}>
+        ✅ PAGE CUSTOM-PRODUCTS LOADED · {new Date().toISOString().slice(11, 19)} · {products.length} produits · {settings.discountTiers.length} paliers
+      </div>
       <style>{styles}</style>
 
       {/* Top bar */}
-      <div className="cp-topbar">
+      <div className="cp-topbar" style={{ marginTop: "40px" }}>
         <div>
           <h1 className="cp-topbar__title">Constructeur de coffret sur-mesure</h1>
           <p className="cp-topbar__subtitle">
