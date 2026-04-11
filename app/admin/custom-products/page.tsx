@@ -918,6 +918,8 @@ const styles = `
     font-family: var(--font-inter);
     display: block;
     width: 100%;
+    max-width: 100%;
+    position: relative;
   }
   .cp-root * { box-sizing: border-box; }
 
@@ -1504,6 +1506,14 @@ const styles = `
   }
 
   @media (max-width: 1024px) {
+    .cp-root,
+    .cp-root > *,
+    .cp-builder,
+    .cp-builder > * {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
     .cp-topbar {
       flex-direction: column;
       align-items: stretch;
