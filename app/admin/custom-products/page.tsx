@@ -136,6 +136,21 @@ function ImageUploader({ current, onUpload, onRemove, size = 80 }: { current?: s
 /*  Main page                                                          */
 /* ------------------------------------------------------------------ */
 
+function DiagnosticBar() {
+  return (
+    <div style={{
+      position: "fixed", top: "64px", left: 0, right: 0,
+      background: "#e11d48", color: "white",
+      padding: "20px", textAlign: "center",
+      fontSize: "1rem", fontWeight: 900,
+      zIndex: 99999, fontFamily: "monospace",
+      border: "4px solid yellow",
+    }}>
+      🚨 BUILD 4632e6a+1 — SI TU VOIS CECI, REACT RENDER OK
+    </div>
+  );
+}
+
 export default function CustomProductsAdmin() {
   const [products, setProducts] = useState<CustomProduct[]>([]);
   const [rawSettings, setSettings] = useState<ConfigurateurSettings>(DEFAULT_SETTINGS);
@@ -286,22 +301,14 @@ export default function CustomProductsAdmin() {
   // ⬇️ Loading guard MUST come before any derived computation
   if (loading) return (
     <>
-      <div style={{
-        position: "fixed", top: "64px", left: 0, right: 0,
-        background: "#3b82f6", color: "white",
-        padding: "12px 16px", textAlign: "center",
-        fontSize: "0.85rem", fontWeight: 900,
-        zIndex: 99999, fontFamily: "monospace",
-      }}>
-        🔵 VERSION v3 · LOADING STATE (shouldn&apos;t appear)
-      </div>
+      <DiagnosticBar />
       <div style={{
         display: "flex", flexDirection: "column",
         alignItems: "center", justifyContent: "center",
         minHeight: "60vh", gap: "14px",
         color: "#6b7280", fontSize: "0.9rem",
         fontFamily: "var(--font-inter)",
-        padding: "80px 20px 40px",
+        padding: "140px 20px 40px",
       }}>
         <div style={{
           width: "32px", height: "32px",
@@ -340,21 +347,11 @@ export default function CustomProductsAdmin() {
 
   return (
     <div className="cp-root">
-      {/* ⚠️ DEBUG BANNER — temporary diagnostic */}
-      <div style={{
-        position: "fixed", top: "64px", left: 0, right: 0,
-        background: "#10b981", color: "white",
-        padding: "12px 16px", textAlign: "center",
-        fontSize: "0.85rem", fontWeight: 900,
-        zIndex: 99999,
-        fontFamily: "monospace",
-      }}>
-        🟢 VERSION v3 · BUILD {new Date().toISOString().slice(11, 19)} · {products.length}p · {settings.discountTiers.length}t
-      </div>
+      <DiagnosticBar />
       <style>{styles}</style>
 
       {/* Top bar */}
-      <div className="cp-topbar" style={{ marginTop: "40px" }}>
+      <div className="cp-topbar" style={{ marginTop: "100px" }}>
         <div>
           <h1 className="cp-topbar__title">Constructeur de coffret sur-mesure</h1>
           <p className="cp-topbar__subtitle">
