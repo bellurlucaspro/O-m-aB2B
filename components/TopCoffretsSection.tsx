@@ -161,8 +161,32 @@ export default function TopCoffretsSection({ content }: { content?: TopCoffretsC
         @media (max-width: 900px) {
           .tc-layout { grid-template-columns: 1fr !important; }
           .tc-hero-inner { flex-direction: column !important; }
-          .tc-hero-img { height: 240px !important; min-height: 240px !important; }
-          .tc-hero-text { padding: 28px 24px !important; }
+          .tc-hero-img {
+            height: 320px !important;
+            min-height: 320px !important;
+            flex: 0 0 320px !important;
+          }
+          .tc-hero-text { padding: 24px 22px !important; }
+
+          /* Side cards: photo 2/3, text 1/3 */
+          .tc-side-card {
+            min-height: 360px;
+          }
+          .tc-side-img {
+            height: 260px !important;
+          }
+          .tc-side-card > div:last-child {
+            padding: 14px 18px !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .tc-hero-img {
+            height: 260px !important;
+            min-height: 260px !important;
+            flex: 0 0 260px !important;
+          }
+          .tc-side-card { min-height: 320px; }
+          .tc-side-img { height: 220px !important; }
         }
       `}</style>
 

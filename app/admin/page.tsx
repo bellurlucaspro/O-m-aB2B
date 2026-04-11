@@ -902,12 +902,25 @@ const styles = `
   }
 
   @media (max-width: 1024px) {
-    .dash-stats { grid-template-columns: repeat(2, 1fr); }
+    .dash-stats { grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .dash-main { grid-template-columns: 1fr; }
+    .dash-stat { padding: 16px; border-radius: 14px; }
+    .dash-stat__top { margin-bottom: 10px; }
+    .dash-stat__label { font-size: 0.62rem; letter-spacing: 0.05em; }
+    .dash-stat__icon { width: 28px; height: 28px; border-radius: 8px; }
+    .dash-stat__val { font-size: 1.5rem; }
+    .dash-stat__sub { font-size: 0.66rem; margin-top: 4px; }
+    .dash-stat__trend { font-size: 0.6rem; padding: 3px 6px; margin-top: 8px; }
+    .dash-stat__link { font-size: 0.64rem; margin-top: 8px; }
   }
   @media (max-width: 640px) {
-    .dash-stats { grid-template-columns: 1fr; }
-    .dash-root { padding: 20px 16px 60px; }
-    .dash-hero { padding: 22px 20px; }
+    .dash-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .dash-root { padding: 20px 14px 60px; }
+    .dash-hero { padding: 20px 18px; }
+    .dash-hero__greeting { font-size: 1.3rem; }
+    .dash-hero__msg { font-size: 0.82rem; }
+    .dash-stat { padding: 14px; }
+    .dash-stat__val { font-size: 1.35rem; }
+    .dash-stat__label { font-size: 0.58rem; }
   }
 `;
