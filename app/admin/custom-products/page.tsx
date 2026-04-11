@@ -288,12 +288,12 @@ export default function CustomProductsAdmin() {
     <>
       <div style={{
         position: "fixed", top: "64px", left: 0, right: 0,
-        background: "#f59e0b", color: "white",
-        padding: "8px 16px", textAlign: "center",
-        fontSize: "0.75rem", fontWeight: 800,
+        background: "#3b82f6", color: "white",
+        padding: "12px 16px", textAlign: "center",
+        fontSize: "0.85rem", fontWeight: 900,
         zIndex: 99999, fontFamily: "monospace",
       }}>
-        ⏳ LOADING STATE · fetching APIs…
+        🔵 VERSION v3 · LOADING STATE (shouldn&apos;t appear)
       </div>
       <div style={{
         display: "flex", flexDirection: "column",
@@ -343,13 +343,13 @@ export default function CustomProductsAdmin() {
       {/* ⚠️ DEBUG BANNER — temporary diagnostic */}
       <div style={{
         position: "fixed", top: "64px", left: 0, right: 0,
-        background: "#ef4444", color: "white",
-        padding: "8px 16px", textAlign: "center",
-        fontSize: "0.75rem", fontWeight: 800,
+        background: "#10b981", color: "white",
+        padding: "12px 16px", textAlign: "center",
+        fontSize: "0.85rem", fontWeight: 900,
         zIndex: 99999,
         fontFamily: "monospace",
       }}>
-        ✅ PAGE CUSTOM-PRODUCTS LOADED · {new Date().toISOString().slice(11, 19)} · {products.length} produits · {settings.discountTiers.length} paliers
+        🟢 VERSION v3 · BUILD {new Date().toISOString().slice(11, 19)} · {products.length}p · {settings.discountTiers.length}t
       </div>
       <style>{styles}</style>
 
