@@ -28,7 +28,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard, group: "menu" },
-  { label: "Contenu", href: "/admin/content", icon: FileText, group: "menu" },
+  { label: "Pages & contenu", href: "/admin/content", icon: FileText, group: "menu" },
   { label: "Page À propos", href: "/admin/about", icon: Info, group: "menu" },
   { label: "Coffrets", href: "/admin/products", icon: Package, group: "menu" },
   { label: "Coffret sur-mesure", href: "/admin/custom-products", icon: SlidersHorizontal, group: "menu" },

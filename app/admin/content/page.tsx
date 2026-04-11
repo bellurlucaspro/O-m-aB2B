@@ -63,22 +63,76 @@ interface SectionDef {
   label: string;
   icon: LucideIcon;
   color: string;
+  desc: string;
+  tip?: string;
 }
 
 const SECTIONS: SectionDef[] = [
-  { key: "banner", label: "Bannière", icon: Megaphone, color: "#5F7263" },
-  { key: "hero", label: "Hero", icon: Sparkles, color: "#87A38D" },
-  { key: "topCoffrets", label: "Top Coffrets", icon: Star, color: "#d97706" },
-  { key: "benefits", label: "Avantages", icon: Heart, color: "#E8A87C" },
-  { key: "whyOmea", label: "Pourquoi O'Méa", icon: Columns2, color: "#5F7263" },
-  { key: "impact", label: "Impact", icon: BarChart3, color: "#6366f1" },
-  { key: "testimonials", label: "Témoignages", icon: MessageSquare, color: "#8b5cf6" },
-  { key: "personalization", label: "Personnalisation", icon: Palette, color: "#ec4899" },
-  { key: "partners", label: "Partenaires", icon: Handshake, color: "#0ea5e9" },
-  { key: "process", label: "Processus", icon: Truck, color: "#14b8a6" },
-  { key: "cta", label: "Appel à l'action", icon: Target, color: "#f59e0b" },
-  { key: "faq", label: "FAQ", icon: HelpCircle, color: "#f97316" },
-  { key: "footer", label: "Footer", icon: Footprints, color: "#64748b" },
+  {
+    key: "banner", label: "Bannière d'annonce", icon: Megaphone, color: "#5F7263",
+    desc: "Bandeau défilant tout en haut du site",
+    tip: "Utilisez cette bannière pour des annonces temporaires (promo, évènement, nouveauté). Vous pouvez la désactiver à tout moment.",
+  },
+  {
+    key: "hero", label: "Hero — accueil", icon: Sparkles, color: "#87A38D",
+    desc: "Grande bannière en haut de la page d'accueil",
+    tip: "C'est la première chose que voient les visiteurs. Titre accrocheur, photo du produit et boutons d'action principaux.",
+  },
+  {
+    key: "topCoffrets", label: "Top coffrets", icon: Star, color: "#d97706",
+    desc: "Classement des 3 coffrets les plus demandés",
+    tip: "Mettez en avant vos best-sellers avec leurs photos, prix et statistiques pour créer de la preuve sociale.",
+  },
+  {
+    key: "benefits", label: "Vos avantages", icon: Heart, color: "#E8A87C",
+    desc: "Les 4 piliers du service pour les DRH",
+    tip: "Chaque avantage = une promesse forte avec une icône et une description courte.",
+  },
+  {
+    key: "whyOmea", label: "Pourquoi O'Méa", icon: Columns2, color: "#5F7263",
+    desc: "Comparatif à gauche + valeurs au centre",
+    tip: "Positionne O'Méa face à la concurrence ou aux solutions classiques. Liste de points forts en 2 colonnes.",
+  },
+  {
+    key: "impact", label: "Impact RH mesurable", icon: BarChart3, color: "#6366f1",
+    desc: "Statistiques et métriques de retour sur investissement",
+    tip: "Mettez des chiffres qui parlent aux DRH : taux de satisfaction, rétention, engagement, ROI.",
+  },
+  {
+    key: "testimonials", label: "Témoignages clients", icon: MessageSquare, color: "#8b5cf6",
+    desc: "Carrousel de citations clients",
+    tip: "Privilégiez des citations courtes et des noms réels avec fonction + entreprise pour renforcer la crédibilité.",
+  },
+  {
+    key: "personalization", label: "Personnalisation", icon: Palette, color: "#ec4899",
+    desc: "Section présentant les options de personnalisation",
+    tip: "Décrit le processus de co-création avec le client (logo, message, packaging sur-mesure).",
+  },
+  {
+    key: "partners", label: "Entreprises partenaires", icon: Handshake, color: "#0ea5e9",
+    desc: "Logos et témoignages des entreprises clientes",
+    tip: "Affichez les logos des entreprises connues qui vous font confiance. Plus il y en a, plus c'est rassurant.",
+  },
+  {
+    key: "process", label: "Processus de commande", icon: Truck, color: "#14b8a6",
+    desc: "Les étapes de la commande pour rassurer le client",
+    tip: "Expliquez en 3-4 étapes claires comment passer commande, de la demande de devis à la livraison.",
+  },
+  {
+    key: "cta", label: "Formulaire devis", icon: Target, color: "#f59e0b",
+    desc: "Section d'appel à l'action principale avec formulaire",
+    tip: "C'est ici que les visiteurs demandent un devis. Titre percutant + garanties visibles + formulaire simple.",
+  },
+  {
+    key: "faq", label: "FAQ", icon: HelpCircle, color: "#f97316",
+    desc: "Questions fréquentes des clients",
+    tip: "Anticipez les objections : prix, délais, personnalisation, livraison, URSSAF, etc. Gardez des réponses courtes.",
+  },
+  {
+    key: "footer", label: "Pied de page", icon: Footprints, color: "#64748b",
+    desc: "Liens, contact et mentions légales en bas de page",
+    tip: "Informations pratiques : email, téléphone, réseaux sociaux, liens légaux, navigation secondaire.",
+  },
 ];
 
 /* Section selectors on the landing page for preview scroll sync */
@@ -96,25 +150,6 @@ const SECTION_ANCHORS: Record<string, string> = {
   faq: "#faq, [data-section='faq']",
   footer: "footer",
 };
-
-/* Check how "complete" a section is */
-function getSectionStatus(content: SiteContent, key: string): "complete" | "partial" | "empty" {
-  const c = content[key as keyof SiteContent];
-  if (!c) return "empty";
-  const values = Object.values(c);
-  const filled = values.filter((v) => {
-    if (typeof v === "string") return v.trim().length > 0;
-    if (typeof v === "boolean") return true;
-    if (Array.isArray(v)) return v.length > 0;
-    if (typeof v === "object" && v !== null) {
-      return Object.values(v).some((sv) => typeof sv === "string" ? sv.trim().length > 0 : true);
-    }
-    return false;
-  });
-  if (filled.length === 0) return "empty";
-  if (filled.length === values.length) return "complete";
-  return "partial";
-}
 
 /* ------------------------------------------------------------------ */
 /*  Reusable field                                                     */
@@ -1403,10 +1438,6 @@ export default function AdminContentPage() {
     process: renderProcess, cta: renderCTA, faq: renderFAQ, footer: renderFooter,
   };
 
-  /* Progress stats */
-  const completedCount = SECTIONS.filter((s) => getSectionStatus(content, s.key) === "complete").length;
-  const progressPercent = Math.round((completedCount / SECTIONS.length) * 100);
-
   return (
     <div className="ce-root">
       <style>{`
@@ -1435,36 +1466,27 @@ export default function AdminContentPage() {
 
         /* ---- top bar ---- */
         .ce-topbar {
-          display: flex; align-items: center; gap: 12px;
-          padding: 12px 20px;
+          display: flex; align-items: flex-start; gap: 16px;
+          padding: 18px 24px;
           background: white;
           border-bottom: 1px solid #eef0f2;
           z-index: 40;
         }
+        .ce-topbar__heading { flex: 1; min-width: 0; }
         .ce-topbar__title {
-          font-family: var(--font-manrope); font-weight: 750;
-          font-size: 0.95rem; color: #1a1f25; margin: 0;
+          font-family: var(--font-manrope); font-weight: 900;
+          font-size: 1.3rem; color: #1a1f25; margin: 0;
+          letter-spacing: -0.025em;
         }
-        .ce-topbar__progress {
-          display: flex; align-items: center; gap: 8px;
-          margin-left: 16px;
-        }
-        .ce-topbar__bar {
-          width: 120px; height: 4px; background: #eef0f2;
-          border-radius: 2px; overflow: hidden;
-        }
-        .ce-topbar__bar-fill {
-          height: 100%; border-radius: 2px;
-          background: linear-gradient(90deg, #87A38D, #5F7263);
-          transition: width 0.4s ease;
-        }
-        .ce-topbar__percent {
-          font-size: 0.68rem; font-weight: 600; color: #6b7280;
-          white-space: nowrap;
+        .ce-topbar__sub {
+          font-size: 0.8rem; color: #6b7280;
+          margin: 4px 0 0; line-height: 1.5;
+          max-width: 640px;
         }
         .ce-topbar__actions {
           display: flex; align-items: center; gap: 6px;
           margin-left: auto;
+          padding-top: 4px;
         }
         .ce-topbar__autosave {
           display: flex; align-items: center; gap: 5px;
@@ -1499,57 +1521,82 @@ export default function AdminContentPage() {
 
         /* ---- LEFT SIDEBAR (section list) ---- */
         .ce-sidebar {
-          width: 240px; flex-shrink: 0;
+          width: 300px; flex-shrink: 0;
           background: #fafbfc;
           border-right: 1px solid #eef0f2;
           overflow-y: auto;
-          padding: 16px 0;
-          height: calc(100vh - 64px - 50px);
+          padding: 18px 14px;
+          height: calc(100vh - 64px - 96px);
           position: sticky; top: 0;
+          display: flex; flex-direction: column; gap: 4px;
         }
         .ce-sidebar__label {
-          font-size: 0.6rem; font-weight: 650; text-transform: uppercase;
+          font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
           letter-spacing: 0.1em; color: #9ca3af;
-          padding: 0 16px; margin-bottom: 8px;
+          padding: 0 10px; margin: 0 0 10px;
         }
         .ce-sidebar__item {
-          display: flex; align-items: center; gap: 10px;
-          padding: 10px 16px; cursor: pointer;
-          border: none; background: none; width: 100%; text-align: left;
-          font-family: inherit; font-size: 0.8rem; font-weight: 450;
-          color: #6b7280; transition: all 0.15s ease;
-          position: relative; border-left: 3px solid transparent;
+          display: flex; align-items: flex-start; gap: 12px;
+          padding: 12px 12px; cursor: pointer;
+          border: none; background: transparent;
+          width: 100%; text-align: left;
+          border-radius: 12px;
+          font-family: inherit;
+          transition: all 0.15s ease;
         }
         .ce-sidebar__item:hover {
-          background: rgba(135,163,141,0.06); color: #374151;
+          background: rgba(135,163,141,0.06);
         }
         .ce-sidebar__item--active {
           background: rgba(135,163,141,0.1);
-          border-left-color: #5F7263;
-          color: #5F7263; font-weight: 600;
         }
         .ce-sidebar__icon {
-          width: 30px; height: 30px; border-radius: 8px;
+          width: 36px; height: 36px; border-radius: 10px;
           display: flex; align-items: center; justify-content: center;
           flex-shrink: 0; transition: all 0.15s ease;
         }
-        .ce-sidebar__status {
-          width: 7px; height: 7px; border-radius: 50%;
-          margin-left: auto; flex-shrink: 0;
+        .ce-sidebar__text {
+          display: flex; flex-direction: column; gap: 2px;
+          min-width: 0; flex: 1;
         }
-        .ce-sidebar__status--complete { background: #10b981; }
-        .ce-sidebar__status--partial { background: #f59e0b; }
-        .ce-sidebar__status--empty { background: #e5e7eb; }
+        .ce-sidebar__item-label {
+          font-family: var(--font-manrope);
+          font-weight: 700; font-size: 0.82rem;
+          color: #1a1f25; letter-spacing: -0.01em;
+          line-height: 1.3;
+        }
+        .ce-sidebar__item--active .ce-sidebar__item-label { color: #5F7263; }
+        .ce-sidebar__item-desc {
+          font-size: 0.68rem; color: #9ca3af;
+          line-height: 1.45;
+        }
 
-        .ce-sidebar__kbd {
-          font-size: 0.58rem; font-weight: 500; color: #c4c9d1;
-          margin-left: auto; font-family: 'SF Mono', monospace;
-          padding: 1px 4px; border-radius: 3px;
-          border: 1px solid #e5e7eb; background: white;
-          display: none;
+        /* ---- Tip box ---- */
+        .ce-tip {
+          display: flex; align-items: flex-start; gap: 12px;
+          padding: 14px 18px;
+          background: linear-gradient(135deg, rgba(135,163,141,0.08), rgba(255,239,218,0.3));
+          border: 1px solid rgba(135,163,141,0.15);
+          border-radius: 14px;
+          margin-bottom: 24px;
         }
-        .ce-sidebar__item:hover .ce-sidebar__kbd { display: block; }
-        .ce-sidebar__item--active .ce-sidebar__kbd { display: block; color: #87A38D; }
+        .ce-tip__icon {
+          width: 28px; height: 28px; border-radius: 8px;
+          background: #5F7263; color: white;
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+        }
+        .ce-tip__label {
+          display: block;
+          font-family: var(--font-manrope);
+          font-size: 0.68rem; font-weight: 800;
+          color: #5F7263; text-transform: uppercase;
+          letter-spacing: 0.08em; margin-bottom: 2px;
+        }
+        .ce-tip__text {
+          font-size: 0.82rem; color: #4b5563;
+          line-height: 1.55; margin: 0;
+        }
 
         /* ---- CENTER EDITOR ---- */
         .ce-editor {
@@ -1778,17 +1825,14 @@ export default function AdminContentPage() {
       `}</style>
 
       {/* ============================================================ */}
-      {/*  TOP BAR — Title + Progress + Actions                         */}
+      {/*  TOP BAR — Title + Actions                                    */}
       {/* ============================================================ */}
       <div className="ce-topbar">
-        <h1 className="ce-topbar__title">Éditeur de contenu</h1>
-
-        {/* Progress bar */}
-        <div className="ce-topbar__progress">
-          <div className="ce-topbar__bar">
-            <div className="ce-topbar__bar-fill" style={{ width: `${progressPercent}%` }} />
-          </div>
-          <span className="ce-topbar__percent">{completedCount}/{SECTIONS.length} sections</span>
+        <div className="ce-topbar__heading">
+          <h1 className="ce-topbar__title">Pages de votre site</h1>
+          <p className="ce-topbar__sub">
+            Modifiez les textes, images et contenus de toutes les sections de votre landing page. Les changements sont visibles en direct à droite.
+          </p>
         </div>
 
         <div className="ce-topbar__actions">
@@ -1847,18 +1891,16 @@ export default function AdminContentPage() {
 
         {/* ---- LEFT: Section sidebar ---- */}
         <aside className="ce-sidebar">
-          <p className="ce-sidebar__label">Structure de la page</p>
-          {SECTIONS.map((s, idx) => {
+          <p className="ce-sidebar__label">Sections de la page d&apos;accueil</p>
+          {SECTIONS.map((s) => {
             const Icon = s.icon;
             const isActive = activeSection === s.key;
-            const status = getSectionStatus(content, s.key);
             return (
               <button
                 key={s.key}
                 className={`ce-sidebar__item ${isActive ? "ce-sidebar__item--active" : ""}`}
                 onClick={() => selectSection(s.key)}
                 onMouseEnter={() => {
-                  /* Hover → highlight in preview */
                   if (iframeRef.current?.contentWindow) {
                     iframeRef.current.contentWindow.postMessage(
                       { type: "omea-highlight", selector: SECTION_ANCHORS[s.key], on: true },
@@ -1884,11 +1926,10 @@ export default function AdminContentPage() {
                 >
                   <Icon size={15} strokeWidth={isActive ? 2.2 : 1.6} />
                 </div>
-                <span>{s.label}</span>
-                <span className={`ce-sidebar__status ce-sidebar__status--${status}`} title={
-                  status === "complete" ? "Complet" : status === "partial" ? "Partiel" : "Vide"
-                } />
-                <span className="ce-sidebar__kbd">{idx + 1}</span>
+                <div className="ce-sidebar__text">
+                  <span className="ce-sidebar__item-label">{s.label}</span>
+                  <span className="ce-sidebar__item-desc">{s.desc}</span>
+                </div>
               </button>
             );
           })}
@@ -1918,16 +1959,16 @@ export default function AdminContentPage() {
                   <div className="ce-section-icon" style={{ background: s.color + "14", color: s.color }}>
                     <Icon size={22} />
                   </div>
-                  <div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
                     <h2 className="ce-section-title">{s.label}</h2>
-                    <p className="ce-section-subtitle">Section {idx + 1} sur {SECTIONS.length}</p>
+                    <p className="ce-section-subtitle">{s.desc}</p>
                   </div>
                   <div className="ce-section-nav">
                     <button
                       className="ce-section-nav-btn"
                       onClick={() => selectSection(SECTIONS[idx - 1]?.key)}
                       disabled={idx === 0}
-                      title="Section precedente"
+                      title="Section précédente"
                     >
                       <ChevronDown size={14} style={{ transform: "rotate(90deg)" }} />
                     </button>
@@ -1941,6 +1982,19 @@ export default function AdminContentPage() {
                     </button>
                   </div>
                 </div>
+
+                {/* Tip box */}
+                {s.tip && (
+                  <div className="ce-tip">
+                    <div className="ce-tip__icon">
+                      <Sparkles size={13} strokeWidth={2.5} />
+                    </div>
+                    <div>
+                      <span className="ce-tip__label">Astuce</span>
+                      <p className="ce-tip__text">{s.tip}</p>
+                    </div>
+                  </div>
+                )}
 
                 {/* Section content */}
                 <div className="ce-editor__body" key={activeSection}>
