@@ -139,7 +139,7 @@ function ImageUploader({ current, onUpload, onRemove, size = 80 }: { current?: s
 export default function CustomProductsAdmin() {
   const [products, setProducts] = useState<CustomProduct[]>([]);
   const [rawSettings, setSettings] = useState<ConfigurateurSettings>(DEFAULT_SETTINGS);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // ⚠️ DEBUG: start as non-loading to test render
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionKey>("catalog");
