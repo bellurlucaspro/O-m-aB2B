@@ -27,7 +27,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Dashboard", href: "/admin", icon: LayoutDashboard, group: "menu" },
+  { label: "Tableau de bord", href: "/admin", icon: LayoutDashboard, group: "menu" },
   { label: "Pages & contenu", href: "/admin/content", icon: FileText, group: "menu" },
   { label: "Page À propos", href: "/admin/about", icon: Info, group: "menu" },
   { label: "Coffrets", href: "/admin/products", icon: Package, group: "menu" },
