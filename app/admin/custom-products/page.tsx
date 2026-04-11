@@ -136,25 +136,10 @@ function ImageUploader({ current, onUpload, onRemove, size = 80 }: { current?: s
 /*  Main page                                                          */
 /* ------------------------------------------------------------------ */
 
-function DiagnosticBar() {
-  return (
-    <div style={{
-      position: "fixed", top: "64px", left: 0, right: 0,
-      background: "#e11d48", color: "white",
-      padding: "20px", textAlign: "center",
-      fontSize: "1rem", fontWeight: 900,
-      zIndex: 99999, fontFamily: "monospace",
-      border: "4px solid yellow",
-    }}>
-      🚨 BUILD 4632e6a+1 — SI TU VOIS CECI, REACT RENDER OK
-    </div>
-  );
-}
-
 export default function CustomProductsAdmin() {
   const [products, setProducts] = useState<CustomProduct[]>([]);
   const [rawSettings, setSettings] = useState<ConfigurateurSettings>(DEFAULT_SETTINGS);
-  const [loading, setLoading] = useState(false); // ⚠️ DEBUG: start as non-loading to test render
+  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionKey>("catalog");
@@ -300,27 +285,24 @@ export default function CustomProductsAdmin() {
 
   // ⬇️ Loading guard MUST come before any derived computation
   if (loading) return (
-    <>
-      <DiagnosticBar />
+    <div style={{
+      display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center",
+      minHeight: "60vh", gap: "14px",
+      color: "#6b7280", fontSize: "0.9rem",
+      fontFamily: "var(--font-inter)",
+      padding: "40px 20px",
+    }}>
       <div style={{
-        display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center",
-        minHeight: "60vh", gap: "14px",
-        color: "#6b7280", fontSize: "0.9rem",
-        fontFamily: "var(--font-inter)",
-        padding: "140px 20px 40px",
-      }}>
-        <div style={{
-          width: "32px", height: "32px",
-          border: "3px solid #eef0f2",
-          borderTopColor: "#5F7263",
-          borderRadius: "50%",
-          animation: "spin 0.8s linear infinite",
-        }} />
-        <span>Chargement du configurateur…</span>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
-    </>
+        width: "32px", height: "32px",
+        border: "3px solid #eef0f2",
+        borderTopColor: "#5F7263",
+        borderRadius: "50%",
+        animation: "spin 0.8s linear infinite",
+      }} />
+      <span>Chargement du configurateur…</span>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
   );
 
   // Derived (uses the safe `settings` shadow above)
@@ -347,11 +329,10 @@ export default function CustomProductsAdmin() {
 
   return (
     <div className="cp-root">
-      <DiagnosticBar />
       <style>{styles}</style>
 
       {/* Top bar */}
-      <div className="cp-topbar" style={{ marginTop: "100px" }}>
+      <div className="cp-topbar">
         <div>
           <h1 className="cp-topbar__title">Constructeur de coffret sur-mesure</h1>
           <p className="cp-topbar__subtitle">
