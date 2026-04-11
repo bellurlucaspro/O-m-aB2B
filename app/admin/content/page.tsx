@@ -297,6 +297,15 @@ export default function AdminContentPage() {
   const [refreshing, setRefreshing] = useState(false);
   const [panelMode, setPanelMode] = useState<"both" | "editor" | "preview">("both");
   const [autoSaveStatus, setAutoSaveStatus] = useState<"idle" | "saving" | "saved">("idle");
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -1531,8 +1540,141 @@ export default function AdminContentPage() {
           display: flex; flex-direction: column; gap: 4px;
         }
 
-        /* ─── Mobile nav toggle (hidden on desktop) ─── */
-        .ce-mobile-nav { display: none; }
+        /* ─── Mobile picker + bottom sheet ─── */
+        .ce-mobile-picker {
+          display: none;
+          width: 100%;
+          align-items: center;
+          gap: 12px;
+          padding: 14px 16px;
+          background: white;
+          border: none;
+          border-bottom: 1px solid #eef0f2;
+          cursor: pointer;
+          font-family: inherit;
+          text-align: left;
+          transition: background 0.15s ease;
+        }
+        .ce-mobile-picker:active { background: #fafbfc; }
+        .ce-mobile-picker__icon {
+          width: 40px; height: 40px; border-radius: 11px;
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+        }
+        .ce-mobile-picker__text {
+          flex: 1; min-width: 0;
+          display: flex; flex-direction: column; gap: 2px;
+        }
+        .ce-mobile-picker__label {
+          font-size: 0.62rem; font-weight: 700;
+          color: #9ca3af; text-transform: uppercase;
+          letter-spacing: 0.08em;
+        }
+        .ce-mobile-picker__name {
+          font-family: var(--font-manrope);
+          font-weight: 800; font-size: 0.95rem;
+          color: #1a1f25; letter-spacing: -0.01em;
+        }
+
+        .ce-mobile-overlay {
+          display: none;
+          position: fixed; inset: 0;
+          background: rgba(15,23,42,0.5);
+          backdrop-filter: blur(4px);
+          z-index: 90;
+          animation: fadeOverlay 0.25s ease;
+        }
+        @keyframes fadeOverlay {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        .ce-mobile-sheet {
+          display: none;
+          position: fixed;
+          left: 0; right: 0; bottom: 0;
+          z-index: 100;
+          background: white;
+          border-radius: 24px 24px 0 0;
+          max-height: 85vh;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 -12px 40px rgba(0,0,0,0.15);
+        }
+        @keyframes slideUp {
+          from { transform: translateY(100%); }
+          to { transform: translateY(0); }
+        }
+        .ce-mobile-sheet__handle {
+          width: 44px; height: 4px;
+          background: #d1d5db; border-radius: 999px;
+          margin: 10px auto 6px;
+          flex-shrink: 0;
+        }
+        .ce-mobile-sheet__header {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 12px 20px 16px;
+          border-bottom: 1px solid #f3f4f6;
+          flex-shrink: 0;
+        }
+        .ce-mobile-sheet__header h3 {
+          font-family: var(--font-manrope);
+          font-weight: 900; font-size: 1rem;
+          color: #0f172a; margin: 0;
+          letter-spacing: -0.01em;
+        }
+        .ce-mobile-sheet__close {
+          width: 32px; height: 32px; border-radius: 8px;
+          background: #f3f4f6; border: none;
+          color: #6b7280; cursor: pointer;
+          display: flex; align-items: center; justify-content: center;
+        }
+        .ce-mobile-sheet__list {
+          flex: 1;
+          overflow-y: auto;
+          padding: 8px 12px 24px;
+          -webkit-overflow-scrolling: touch;
+        }
+        .ce-mobile-sheet__item {
+          display: flex; align-items: center; gap: 12px;
+          width: 100%;
+          padding: 13px 14px;
+          background: transparent;
+          border: none;
+          border-radius: 12px;
+          text-align: left;
+          font-family: inherit;
+          cursor: pointer;
+          margin-bottom: 2px;
+          transition: background 0.15s ease;
+        }
+        .ce-mobile-sheet__item:active { background: #f3f4f6; }
+        .ce-mobile-sheet__item--active {
+          background: rgba(135,163,141,0.1) !important;
+        }
+        .ce-mobile-sheet__icon {
+          width: 36px; height: 36px; border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+        }
+        .ce-mobile-sheet__text {
+          flex: 1; min-width: 0;
+          display: flex; flex-direction: column; gap: 2px;
+        }
+        .ce-mobile-sheet__label {
+          font-family: var(--font-manrope);
+          font-weight: 800; font-size: 0.88rem;
+          color: #1a1f25; letter-spacing: -0.01em;
+        }
+        .ce-mobile-sheet__item--active .ce-mobile-sheet__label { color: #5F7263; }
+        .ce-mobile-sheet__desc {
+          font-size: 0.7rem; color: #9ca3af;
+          line-height: 1.4;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
         .ce-sidebar__label {
           font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
           letter-spacing: 0.1em; color: #9ca3af;
@@ -1838,77 +1980,24 @@ export default function AdminContentPage() {
           .ce-topbar__sub { font-size: 0.74rem; max-width: 100%; }
           .ce-topbar__actions { margin-left: 0; width: 100%; flex-wrap: wrap; gap: 8px; }
 
-          /* Builder stacks vertically */
-          .ce-builder {
-            flex-direction: column;
-          }
+          /* Mobile picker + sheet become visible */
+          .ce-mobile-picker { display: flex; }
+          .ce-mobile-overlay { display: block; }
+          .ce-mobile-sheet { display: flex; }
 
-          /* Sidebar becomes horizontal pills at the top */
-          .ce-sidebar {
-            width: 100% !important;
-            height: auto !important;
-            max-height: none;
-            position: relative;
-            top: auto;
-            flex-direction: row;
-            overflow-x: auto;
-            overflow-y: hidden;
-            padding: 12px 14px;
-            gap: 8px;
-            border-right: none;
-            border-bottom: 1px solid #eef0f2;
-            -webkit-overflow-scrolling: touch;
-            scroll-snap-type: x proximity;
-          }
-          .ce-sidebar::-webkit-scrollbar { height: 0; }
-          .ce-sidebar__label { display: none; }
-          .ce-sidebar__item {
-            flex-shrink: 0;
-            width: auto;
-            min-width: 180px;
-            max-width: 260px;
-            scroll-snap-align: start;
-            padding: 10px 14px;
-            background: white;
-            border: 1.5px solid #eef0f2;
-            border-radius: 12px;
-          }
-          .ce-sidebar__item--active {
-            background: rgba(135,163,141,0.12) !important;
-            border-color: #87A38D;
-          }
-          .ce-sidebar__text { gap: 1px; }
-          .ce-sidebar__item-label { font-size: 0.78rem; }
-          .ce-sidebar__item-desc {
-            font-size: 0.62rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-          .ce-sidebar__icon { width: 30px; height: 30px; }
+          /* Builder stacks, desktop sidebar hidden */
+          .ce-builder { flex-direction: column; }
+          .ce-sidebar { display: none !important; }
 
-          /* Editor takes full width with natural scroll */
-          .ce-editor,
-          .ce-builder > div.ce-editor {
-            height: auto !important;
-            overflow: visible !important;
+          /* Editor takes full width, natural scroll */
+          .ce-editor {
             padding: 20px 18px 80px !important;
           }
 
           /* Hide live preview on mobile (not usable) */
           .cp-root,
-          .ce-builder--both .cp-root {
-            display: none !important;
-          }
-          .ce-builder--preview .cp-root {
-            display: flex !important;
-            width: 100% !important;
-            height: calc(100vh - 150px) !important;
-            position: relative !important;
-          }
-
-          /* Hide view mode toggle on mobile (no preview) */
-          .ce-panel-btn { display: none; }
+          .ce-builder--both .cp-root { display: none !important; }
+          .ce-panel-btn { display: none !important; }
 
           /* Section header adjustments */
           .ce-section-header {
@@ -1935,8 +2024,6 @@ export default function AdminContentPage() {
 
         @media (max-width: 640px) {
           .ce-topbar { padding: 12px 14px; }
-          .ce-sidebar { padding: 10px 12px; gap: 6px; }
-          .ce-sidebar__item { min-width: 160px; padding: 9px 12px; }
           .ce-editor { padding: 16px 14px 70px !important; }
           .ce-input { font-size: 16px; } /* Prevent iOS zoom on focus */
         }
@@ -2003,60 +2090,131 @@ export default function AdminContentPage() {
       </div>
 
       {/* ============================================================ */}
+      {/*  MOBILE SECTION PICKER (card button)                          */}
+      {/* ============================================================ */}
+      {isMobile && (() => {
+        const current = SECTIONS.find((s) => s.key === activeSection);
+        if (!current) return null;
+        const CurIcon = current.icon;
+        const idx = SECTIONS.indexOf(current);
+        return (
+          <>
+            <button
+              className="ce-mobile-picker"
+              onClick={() => setMobileNavOpen(true)}
+            >
+              <div className="ce-mobile-picker__icon" style={{ background: `${current.color}18`, color: current.color }}>
+                <CurIcon size={18} strokeWidth={2.2} />
+              </div>
+              <div className="ce-mobile-picker__text">
+                <span className="ce-mobile-picker__label">Section {idx + 1} sur {SECTIONS.length}</span>
+                <span className="ce-mobile-picker__name">{current.label}</span>
+              </div>
+              <ChevronDown size={16} style={{ color: "#9ca3af" }} />
+            </button>
+
+            {mobileNavOpen && (
+              <>
+                <div className="ce-mobile-overlay" onClick={() => setMobileNavOpen(false)} />
+                <div className="ce-mobile-sheet">
+                  <div className="ce-mobile-sheet__handle" />
+                  <div className="ce-mobile-sheet__header">
+                    <h3>Choisir une section</h3>
+                    <button onClick={() => setMobileNavOpen(false)} className="ce-mobile-sheet__close">
+                      <ChevronDown size={18} style={{ transform: "rotate(-90deg)" }} />
+                    </button>
+                  </div>
+                  <div className="ce-mobile-sheet__list">
+                    {SECTIONS.map((s) => {
+                      const Icon = s.icon;
+                      const isActive = activeSection === s.key;
+                      return (
+                        <button
+                          key={s.key}
+                          className={`ce-mobile-sheet__item ${isActive ? "ce-mobile-sheet__item--active" : ""}`}
+                          onClick={() => {
+                            selectSection(s.key);
+                            setMobileNavOpen(false);
+                          }}
+                        >
+                          <div className="ce-mobile-sheet__icon" style={{ background: `${s.color}18`, color: s.color }}>
+                            <Icon size={16} strokeWidth={2.2} />
+                          </div>
+                          <div className="ce-mobile-sheet__text">
+                            <span className="ce-mobile-sheet__label">{s.label}</span>
+                            <span className="ce-mobile-sheet__desc">{s.desc}</span>
+                          </div>
+                          {isActive && <Check size={14} strokeWidth={2.5} style={{ color: "#5F7263", flexShrink: 0 }} />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </>
+            )}
+          </>
+        );
+      })()}
+
+      {/* ============================================================ */}
       {/*  3-COLUMN BUILDER                                              */}
       {/* ============================================================ */}
       <div className={`ce-builder ce-builder--${panelMode}`}>
 
-        {/* ---- LEFT: Section sidebar ---- */}
-        <aside className="ce-sidebar">
-          <p className="ce-sidebar__label">Sections de la page d&apos;accueil</p>
-          {SECTIONS.map((s) => {
-            const Icon = s.icon;
-            const isActive = activeSection === s.key;
-            return (
-              <button
-                key={s.key}
-                className={`ce-sidebar__item ${isActive ? "ce-sidebar__item--active" : ""}`}
-                onClick={() => selectSection(s.key)}
-                onMouseEnter={() => {
-                  if (iframeRef.current?.contentWindow) {
-                    iframeRef.current.contentWindow.postMessage(
-                      { type: "omea-highlight", selector: SECTION_ANCHORS[s.key], on: true },
-                      "*"
-                    );
-                  }
-                }}
-                onMouseLeave={() => {
-                  if (iframeRef.current?.contentWindow) {
-                    iframeRef.current.contentWindow.postMessage(
-                      { type: "omea-highlight", selector: SECTION_ANCHORS[s.key], on: false },
-                      "*"
-                    );
-                  }
-                }}
-              >
-                <div
-                  className="ce-sidebar__icon"
-                  style={{
-                    background: isActive ? s.color + "18" : "rgba(0,0,0,0.03)",
-                    color: isActive ? s.color : "#9ca3af",
+        {/* ---- LEFT: Section sidebar (desktop only) ---- */}
+        {!isMobile && (
+          <aside className="ce-sidebar">
+            <p className="ce-sidebar__label">Sections de la page d&apos;accueil</p>
+            {SECTIONS.map((s) => {
+              const Icon = s.icon;
+              const isActive = activeSection === s.key;
+              return (
+                <button
+                  key={s.key}
+                  className={`ce-sidebar__item ${isActive ? "ce-sidebar__item--active" : ""}`}
+                  onClick={() => selectSection(s.key)}
+                  onMouseEnter={() => {
+                    if (iframeRef.current?.contentWindow) {
+                      iframeRef.current.contentWindow.postMessage(
+                        { type: "omea-highlight", selector: SECTION_ANCHORS[s.key], on: true },
+                        "*"
+                      );
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (iframeRef.current?.contentWindow) {
+                      iframeRef.current.contentWindow.postMessage(
+                        { type: "omea-highlight", selector: SECTION_ANCHORS[s.key], on: false },
+                        "*"
+                      );
+                    }
                   }}
                 >
-                  <Icon size={15} strokeWidth={isActive ? 2.2 : 1.6} />
-                </div>
-                <div className="ce-sidebar__text">
-                  <span className="ce-sidebar__item-label">{s.label}</span>
-                  <span className="ce-sidebar__item-desc">{s.desc}</span>
-                </div>
-              </button>
-            );
-          })}
-        </aside>
+                  <div
+                    className="ce-sidebar__icon"
+                    style={{
+                      background: isActive ? s.color + "18" : "rgba(0,0,0,0.03)",
+                      color: isActive ? s.color : "#9ca3af",
+                    }}
+                  >
+                    <Icon size={15} strokeWidth={isActive ? 2.2 : 1.6} />
+                  </div>
+                  <div className="ce-sidebar__text">
+                    <span className="ce-sidebar__item-label">{s.label}</span>
+                    <span className="ce-sidebar__item-desc">{s.desc}</span>
+                  </div>
+                </button>
+              );
+            })}
+          </aside>
+        )}
 
         {/* ---- CENTER: Active section editor ---- */}
         <div
           className={`ce-editor ${panelMode === "preview" ? "ce-editor--hidden" : ""}`}
-          style={{
+          style={isMobile ? {
+            padding: "18px 16px 80px",
+          } : {
             padding: "24px 32px 120px",
             height: "calc(100vh - 114px)",
             overflowY: "scroll",
