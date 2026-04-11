@@ -235,26 +235,7 @@ export default function CustomProductsAdmin() {
     setSettings({ ...settings, discountTiers: settings.discountTiers.filter((_, i) => i !== idx) });
   };
 
-  // Derived
-  const settingsCats: ProductCategory[] = settings.categories || DEFAULT_SETTINGS.categories || [];
-  const derivedCategories = settingsCats.map((c, i) => ({
-    ...c,
-    Icon: (c.icon && ICON_MAP[c.icon]) || Tag,
-    color: CATEGORY_COLORS[i % CATEGORY_COLORS.length],
-  }));
-  const catLookup = new Map(derivedCategories.map(c => [c.value, c]));
-  const filteredProducts = filterCat === "all" ? products : products.filter(p => p.category === filterCat);
-  const catCounts = derivedCategories.map(c => ({ ...c, count: products.filter(p => p.category === c.value).length }));
-
-  // Preview sample
-  const sampleUnitHT = products.slice(0, 3).reduce((s, p) => s + p.price, 0);
-  const sampleQty = 25;
-  const sampleTier = settings.discountTiers.find(t => sampleQty >= t.min && sampleQty <= (t.max ?? Infinity)) || settings.discountTiers[0];
-  const sampleDiscount = sampleTier?.discount || 0;
-  const sampleDiscountedHT = Math.round(sampleUnitHT * (1 - sampleDiscount / 100));
-  const sampleTotalHT = sampleDiscountedHT * sampleQty;
-  const sampleTotalTTC = Math.round(sampleTotalHT * (1 + settings.tvaRate / 100));
-
+  // ⬇️ Loading guard MUST come before any derived computation
   if (loading) return (
     <div style={{
       display: "flex", flexDirection: "column",
@@ -275,6 +256,41 @@ export default function CustomProductsAdmin() {
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
+
+  // Defensive: guarantee valid shape before any computation
+  const safeSettings: ConfigurateurSettings = {
+    discountTiers: Array.isArray(settings?.discountTiers) && settings.discountTiers.length > 0
+      ? settings.discountTiers
+      : DEFAULT_SETTINGS.discountTiers,
+    minQuantity: settings?.minQuantity ?? DEFAULT_SETTINGS.minQuantity,
+    quantityStep: settings?.quantityStep ?? DEFAULT_SETTINGS.quantityStep,
+    tvaRate: settings?.tvaRate ?? DEFAULT_SETTINGS.tvaRate,
+    customOptionMinQty: settings?.customOptionMinQty ?? DEFAULT_SETTINGS.customOptionMinQty,
+    categories: Array.isArray(settings?.categories) && settings.categories.length > 0
+      ? settings.categories
+      : DEFAULT_SETTINGS.categories,
+  };
+  const safeProducts: CustomProduct[] = Array.isArray(products) ? products : [];
+
+  // Derived
+  const settingsCats: ProductCategory[] = safeSettings.categories || [];
+  const derivedCategories = settingsCats.map((c, i) => ({
+    ...c,
+    Icon: (c.icon && ICON_MAP[c.icon]) || Tag,
+    color: CATEGORY_COLORS[i % CATEGORY_COLORS.length],
+  }));
+  const catLookup = new Map(derivedCategories.map(c => [c.value, c]));
+  const filteredProducts = filterCat === "all" ? safeProducts : safeProducts.filter(p => p.category === filterCat);
+  const catCounts = derivedCategories.map(c => ({ ...c, count: safeProducts.filter(p => p.category === c.value).length }));
+
+  // Preview sample
+  const sampleUnitHT = safeProducts.slice(0, 3).reduce((s, p) => s + p.price, 0);
+  const sampleQty = 25;
+  const sampleTier = safeSettings.discountTiers.find(t => sampleQty >= t.min && sampleQty <= (t.max ?? Infinity)) || safeSettings.discountTiers[0];
+  const sampleDiscount = sampleTier?.discount || 0;
+  const sampleDiscountedHT = Math.round(sampleUnitHT * (1 - sampleDiscount / 100));
+  const sampleTotalHT = sampleDiscountedHT * sampleQty;
+  const sampleTotalTTC = Math.round(sampleTotalHT * (1 + safeSettings.tvaRate / 100));
 
   const activeSectionDef = SECTIONS.find(s => s.key === activeSection)!;
 
@@ -859,9 +875,6 @@ const styles = `
 
   .cp-root {
     font-family: var(--font-inter);
-    min-height: calc(100vh - 64px);
-    display: flex;
-    flex-direction: column;
   }
 
   /* ─── Topbar ─── */
@@ -895,8 +908,7 @@ const styles = `
   /* ─── Builder layout ─── */
   .cp-builder {
     display: flex;
-    flex: 1;
-    min-height: 0;
+    align-items: flex-start;
   }
 
   /* ─── Sidebar ─── */
@@ -962,7 +974,7 @@ const styles = `
   /* ─── Editor ─── */
   .cp-editor {
     flex: 1; min-width: 0;
-    padding: 28px 36px 120px;
+    padding: 28px 36px 60px;
     animation: fadeIn 0.25s ease;
   }
 
