@@ -256,13 +256,24 @@ export default function CustomProductsAdmin() {
   const sampleTotalTTC = Math.round(sampleTotalHT * (1 + settings.tvaRate / 100));
 
   if (loading) return (
-    <>
-      <style>{styles}</style>
-      <div className="cp-loading">
-        <div className="cp-spinner" />
-        <span>Chargement du configurateur…</span>
-      </div>
-    </>
+    <div style={{
+      display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center",
+      minHeight: "60vh", gap: "14px",
+      color: "#6b7280", fontSize: "0.9rem",
+      fontFamily: "var(--font-inter)",
+      padding: "40px 20px",
+    }}>
+      <div style={{
+        width: "32px", height: "32px",
+        border: "3px solid #eef0f2",
+        borderTopColor: "#5F7263",
+        borderRadius: "50%",
+        animation: "spin 0.8s linear infinite",
+      }} />
+      <span>Chargement du configurateur…</span>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
   );
 
   const activeSectionDef = SECTIONS.find(s => s.key === activeSection)!;
