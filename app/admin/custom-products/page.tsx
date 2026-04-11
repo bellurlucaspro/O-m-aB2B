@@ -148,49 +148,57 @@ export default function CustomProductsAdmin() {
 
   useEffect(() => {
     let cancelled = false;
+    let done = false;
 
-    // Hard timeout: jamais plus de 5s en loading
-    const timeout = setTimeout(() => {
-      if (!cancelled) {
-        console.warn("[custom-products] API timeout, falling back to defaults");
-        setProducts([]);
-        setSettings(DEFAULT_SETTINGS);
-        setLoading(false);
-      }
+    // Hard timeout: max 5s avant fallback forcé
+    const timeout = window.setTimeout(function () {
+      if (cancelled || done) return;
+      done = true;
+      setProducts([]);
+      setSettings(DEFAULT_SETTINGS);
+      setLoading(false);
     }, 5000);
 
-    const safeJson = async (url: string, fallback: unknown) => {
-      try {
-        const r = await fetch(url, { credentials: "include", cache: "no-store" });
-        if (!r.ok) return fallback;
-        const ct = r.headers.get("content-type") || "";
-        if (!ct.includes("application/json")) return fallback;
-        return await r.json();
-      } catch {
-        return fallback;
-      }
-    };
-
-    (async () => {
-      const [prods, setts] = await Promise.all([
-        safeJson("/api/admin/custom-products", []),
-        safeJson("/api/admin/configurateur-settings", DEFAULT_SETTINGS),
-      ]);
-      if (cancelled) return;
-      clearTimeout(timeout);
-      const settsObj = setts as ConfigurateurSettings;
-      setProducts(Array.isArray(prods) ? prods as CustomProduct[] : []);
-      setSettings(
-        settsObj && typeof settsObj === "object" && Array.isArray(settsObj.discountTiers)
-          ? settsObj
-          : DEFAULT_SETTINGS
-      );
+    // Fetch ultra-simple avec .then() en chaine — pas d'async/await
+    function finalize(prods: unknown, setts: unknown) {
+      if (cancelled || done) return;
+      done = true;
+      window.clearTimeout(timeout);
+      const safeProds: CustomProduct[] = Array.isArray(prods) ? (prods as CustomProduct[]) : [];
+      const s = setts as ConfigurateurSettings | null | undefined;
+      const safeSetts: ConfigurateurSettings =
+        s && typeof s === "object" && Array.isArray((s as ConfigurateurSettings).discountTiers)
+          ? (s as ConfigurateurSettings)
+          : DEFAULT_SETTINGS;
+      setProducts(safeProds);
+      setSettings(safeSetts);
       setLoading(false);
-    })();
+    }
 
-    return () => {
+    function parseOrFallback(r: Response, fallback: unknown): Promise<unknown> {
+      if (!r.ok) return Promise.resolve(fallback);
+      const ct = r.headers.get("content-type") || "";
+      if (ct.indexOf("application/json") === -1) return Promise.resolve(fallback);
+      return r.json().catch(function () { return fallback; });
+    }
+
+    const p1 = fetch("/api/admin/custom-products", { credentials: "include", cache: "no-store" })
+      .then(function (r) { return parseOrFallback(r, []); })
+      .catch(function () { return []; });
+
+    const p2 = fetch("/api/admin/configurateur-settings", { credentials: "include", cache: "no-store" })
+      .then(function (r) { return parseOrFallback(r, DEFAULT_SETTINGS); })
+      .catch(function () { return DEFAULT_SETTINGS; });
+
+    Promise.all([p1, p2]).then(function (results) {
+      finalize(results[0], results[1]);
+    }).catch(function () {
+      finalize([], DEFAULT_SETTINGS);
+    });
+
+    return function () {
       cancelled = true;
-      clearTimeout(timeout);
+      window.clearTimeout(timeout);
     };
   }, []);
 
