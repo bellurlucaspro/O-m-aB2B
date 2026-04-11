@@ -436,25 +436,39 @@ export default function AdminLayout({
 
             {/* User */}
             <div style={{
-              display: "flex", alignItems: "center", gap: "10px",
-              padding: "6px 12px 6px 6px",
-              borderRadius: "12px",
-              border: "1px solid #f1f5f9",
+              display: "flex", alignItems: "center", gap: "12px",
+              padding: "6px 16px 6px 6px",
+              borderRadius: "999px",
+              background: "rgba(95,114,99,0.04)",
+              border: "1px solid rgba(95,114,99,0.1)",
               cursor: "default",
+              transition: "all 0.2s ease",
             }}>
               <div style={{
-                width: "32px", height: "32px", borderRadius: "10px",
+                width: "36px", height: "36px", borderRadius: "50%",
                 background: "linear-gradient(135deg, #5F7263, #87A38D)",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "0.75rem", fontWeight: 700, color: "white",
+                fontFamily: "var(--font-manrope)",
+                fontSize: "0.88rem", fontWeight: 800, color: "white",
+                letterSpacing: "-0.01em",
+                boxShadow: "0 2px 6px rgba(95,114,99,0.25)",
+                flexShrink: 0,
               }}>
                 A
               </div>
-              <div>
-                <p style={{ fontSize: "0.82rem", fontWeight: 600, color: "#1e293b", margin: 0, lineHeight: 1.2 }}>
+              <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
+                <p style={{
+                  fontFamily: "var(--font-manrope)",
+                  fontSize: "0.82rem", fontWeight: 800, color: "#5F7263",
+                  margin: 0, lineHeight: 1.25, letterSpacing: "-0.01em",
+                }}>
                   Admin
                 </p>
-                <p style={{ fontSize: "0.65rem", color: "#94a3b8", margin: 0 }}>
+                <p style={{
+                  fontSize: "0.6rem", color: "#94a3b8",
+                  margin: 0, fontWeight: 600,
+                  textTransform: "uppercase", letterSpacing: "0.1em",
+                }}>
                   Administrateur
                 </p>
               </div>
