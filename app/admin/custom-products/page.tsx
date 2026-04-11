@@ -147,18 +147,51 @@ export default function CustomProductsAdmin() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useEffect(() => {
-    Promise.all([
-      fetch("/api/admin/custom-products").then(r => r.ok ? r.json() : []).catch(() => []),
-      fetch("/api/admin/configurateur-settings").then(r => r.ok ? r.json() : DEFAULT_SETTINGS).catch(() => DEFAULT_SETTINGS),
-    ]).then(([prods, setts]) => {
-      setProducts(Array.isArray(prods) ? prods : []);
-      setSettings(setts && typeof setts === "object" && Array.isArray(setts.discountTiers) ? setts : DEFAULT_SETTINGS);
+    let cancelled = false;
+
+    // Hard timeout: jamais plus de 5s en loading
+    const timeout = setTimeout(() => {
+      if (!cancelled) {
+        console.warn("[custom-products] API timeout, falling back to defaults");
+        setProducts([]);
+        setSettings(DEFAULT_SETTINGS);
+        setLoading(false);
+      }
+    }, 5000);
+
+    const safeJson = async (url: string, fallback: unknown) => {
+      try {
+        const r = await fetch(url, { credentials: "include", cache: "no-store" });
+        if (!r.ok) return fallback;
+        const ct = r.headers.get("content-type") || "";
+        if (!ct.includes("application/json")) return fallback;
+        return await r.json();
+      } catch {
+        return fallback;
+      }
+    };
+
+    (async () => {
+      const [prods, setts] = await Promise.all([
+        safeJson("/api/admin/custom-products", []),
+        safeJson("/api/admin/configurateur-settings", DEFAULT_SETTINGS),
+      ]);
+      if (cancelled) return;
+      clearTimeout(timeout);
+      const settsObj = setts as ConfigurateurSettings;
+      setProducts(Array.isArray(prods) ? prods as CustomProduct[] : []);
+      setSettings(
+        settsObj && typeof settsObj === "object" && Array.isArray(settsObj.discountTiers)
+          ? settsObj
+          : DEFAULT_SETTINGS
+      );
       setLoading(false);
-    }).catch(() => {
-      setProducts([]);
-      setSettings(DEFAULT_SETTINGS);
-      setLoading(false);
-    });
+    })();
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
   }, []);
 
   // Local safe view of settings — tout le JSX qui suit utilise `settings` naturellement
