@@ -138,7 +138,7 @@ function ImageUploader({ current, onUpload, onRemove, size = 80 }: { current?: s
 
 export default function CustomProductsAdmin() {
   const [products, setProducts] = useState<CustomProduct[]>([]);
-  const [settings, setSettings] = useState<ConfigurateurSettings>(DEFAULT_SETTINGS);
+  const [rawSettings, setSettings] = useState<ConfigurateurSettings>(DEFAULT_SETTINGS);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -152,7 +152,7 @@ export default function CustomProductsAdmin() {
       fetch("/api/admin/configurateur-settings").then(r => r.ok ? r.json() : DEFAULT_SETTINGS).catch(() => DEFAULT_SETTINGS),
     ]).then(([prods, setts]) => {
       setProducts(Array.isArray(prods) ? prods : []);
-      setSettings(setts && typeof setts === "object" && setts.discountTiers ? setts : DEFAULT_SETTINGS);
+      setSettings(setts && typeof setts === "object" && Array.isArray(setts.discountTiers) ? setts : DEFAULT_SETTINGS);
       setLoading(false);
     }).catch(() => {
       setProducts([]);
@@ -160,6 +160,21 @@ export default function CustomProductsAdmin() {
       setLoading(false);
     });
   }, []);
+
+  // Local safe view of settings — tout le JSX qui suit utilise `settings` naturellement
+  // mais avec la garantie que tous les champs sont valides
+  const settings: ConfigurateurSettings = {
+    discountTiers: Array.isArray(rawSettings?.discountTiers) && rawSettings.discountTiers.length > 0
+      ? rawSettings.discountTiers
+      : DEFAULT_SETTINGS.discountTiers,
+    minQuantity: rawSettings?.minQuantity ?? DEFAULT_SETTINGS.minQuantity,
+    quantityStep: rawSettings?.quantityStep ?? DEFAULT_SETTINGS.quantityStep,
+    tvaRate: rawSettings?.tvaRate ?? DEFAULT_SETTINGS.tvaRate,
+    customOptionMinQty: rawSettings?.customOptionMinQty ?? DEFAULT_SETTINGS.customOptionMinQty,
+    categories: Array.isArray(rawSettings?.categories) && rawSettings.categories.length > 0
+      ? rawSettings.categories
+      : DEFAULT_SETTINGS.categories,
+  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -257,40 +272,25 @@ export default function CustomProductsAdmin() {
     </div>
   );
 
-  // Defensive: guarantee valid shape before any computation
-  const safeSettings: ConfigurateurSettings = {
-    discountTiers: Array.isArray(settings?.discountTiers) && settings.discountTiers.length > 0
-      ? settings.discountTiers
-      : DEFAULT_SETTINGS.discountTiers,
-    minQuantity: settings?.minQuantity ?? DEFAULT_SETTINGS.minQuantity,
-    quantityStep: settings?.quantityStep ?? DEFAULT_SETTINGS.quantityStep,
-    tvaRate: settings?.tvaRate ?? DEFAULT_SETTINGS.tvaRate,
-    customOptionMinQty: settings?.customOptionMinQty ?? DEFAULT_SETTINGS.customOptionMinQty,
-    categories: Array.isArray(settings?.categories) && settings.categories.length > 0
-      ? settings.categories
-      : DEFAULT_SETTINGS.categories,
-  };
-  const safeProducts: CustomProduct[] = Array.isArray(products) ? products : [];
-
-  // Derived
-  const settingsCats: ProductCategory[] = safeSettings.categories || [];
+  // Derived (uses the safe `settings` shadow above)
+  const settingsCats: ProductCategory[] = settings.categories || [];
   const derivedCategories = settingsCats.map((c, i) => ({
     ...c,
     Icon: (c.icon && ICON_MAP[c.icon]) || Tag,
     color: CATEGORY_COLORS[i % CATEGORY_COLORS.length],
   }));
   const catLookup = new Map(derivedCategories.map(c => [c.value, c]));
-  const filteredProducts = filterCat === "all" ? safeProducts : safeProducts.filter(p => p.category === filterCat);
-  const catCounts = derivedCategories.map(c => ({ ...c, count: safeProducts.filter(p => p.category === c.value).length }));
+  const filteredProducts = filterCat === "all" ? products : products.filter(p => p.category === filterCat);
+  const catCounts = derivedCategories.map(c => ({ ...c, count: products.filter(p => p.category === c.value).length }));
 
   // Preview sample
-  const sampleUnitHT = safeProducts.slice(0, 3).reduce((s, p) => s + p.price, 0);
+  const sampleUnitHT = products.slice(0, 3).reduce((s, p) => s + p.price, 0);
   const sampleQty = 25;
-  const sampleTier = safeSettings.discountTiers.find(t => sampleQty >= t.min && sampleQty <= (t.max ?? Infinity)) || safeSettings.discountTiers[0];
+  const sampleTier = settings.discountTiers.find(t => sampleQty >= t.min && sampleQty <= (t.max ?? Infinity)) || settings.discountTiers[0];
   const sampleDiscount = sampleTier?.discount || 0;
   const sampleDiscountedHT = Math.round(sampleUnitHT * (1 - sampleDiscount / 100));
   const sampleTotalHT = sampleDiscountedHT * sampleQty;
-  const sampleTotalTTC = Math.round(sampleTotalHT * (1 + safeSettings.tvaRate / 100));
+  const sampleTotalTTC = Math.round(sampleTotalHT * (1 + settings.tvaRate / 100));
 
   const activeSectionDef = SECTIONS.find(s => s.key === activeSection)!;
 
