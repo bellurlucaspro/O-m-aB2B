@@ -336,7 +336,7 @@ export default function CustomProductsAdmin() {
   const activeSectionDef = SECTIONS.find(s => s.key === activeSection)!;
 
   return (
-    <div className="cp-root">
+    <div className="cps-root">
       <style>{styles}</style>
 
       {/* Top bar */}
@@ -914,14 +914,14 @@ const styles = `
   @keyframes spin { to { transform: rotate(360deg); } }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  .cp-root {
+  .cps-root {
     font-family: var(--font-inter);
     display: block;
     width: 100%;
     max-width: 100%;
     position: relative;
   }
-  .cp-root * { box-sizing: border-box; }
+  .cps-root * { box-sizing: border-box; }
 
   /* ─── Topbar ─── */
   .cp-topbar {
@@ -1506,8 +1506,8 @@ const styles = `
   }
 
   @media (max-width: 1024px) {
-    .cp-root,
-    .cp-root > *,
+    .cps-root,
+    .cps-root > *,
     .cp-builder,
     .cp-builder > * {
       width: 100% !important;
