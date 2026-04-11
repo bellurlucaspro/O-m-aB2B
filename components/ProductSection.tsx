@@ -514,7 +514,7 @@ export default function ProductSection({
         }
         .px-card-grid {
           display: grid;
-          grid-template-columns: 1.1fr 1fr;
+          grid-template-columns: 2fr 1fr;
           gap: 48px;
           align-items: center;
           max-width: 1200px;
@@ -675,7 +675,7 @@ export default function ProductSection({
           {/* Photo */}
           <div>
             <div className="px-photo-wrap" style={{
-              height: "420px", borderRadius: "24px", overflow: "hidden",
+              height: "520px", borderRadius: "24px", overflow: "hidden",
               position: "relative",
               boxShadow: "0 24px 72px rgba(45,74,62,0.12)",
             }}>

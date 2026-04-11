@@ -5,13 +5,14 @@ import Image from "next/image";
 import { ArrowRight, ShieldCheck, Truck, Clock, Star, ChevronLeft, ChevronRight, Package } from "lucide-react";
 import { gsap, ScrollTrigger, ease, useCounter } from "@/lib/motion";
 
-function HeroCounter({ value, prefix = "", suffix = "", color, mobile }: { value: number; prefix?: string; suffix?: string; color: string; mobile: boolean }) {
+function HeroCounter({ value, prefix = "", suffix = "", color }: { value: number; prefix?: string; suffix?: string; color: string; mobile?: boolean }) {
   const ref = useCounter(value, { suffix });
   return (
     <div style={{
       fontFamily: "var(--font-manrope)", fontWeight: 900,
-      fontSize: mobile ? "2.8rem" : "3.4rem",
+      fontSize: "clamp(2rem, 6vw, 3.4rem)",
       color, letterSpacing: "-0.03em", lineHeight: 1,
+      wordBreak: "keep-all", whiteSpace: "nowrap",
     }}>
       {prefix}<span ref={ref}>0{suffix}</span>
     </div>
@@ -462,16 +463,25 @@ export default function HeroSection({
       </div>
 
       {/* ════════ BENTO STATS ════════ */}
-      <div className="h-a h-trust" style={{
-        maxWidth: "1340px", margin: "0 auto",
-        padding: isMobile ? "24px 20px 40px" : "0 48px 60px",
-        width: "100%",
-      }}>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : "1.2fr 1fr 1fr",
-          gap: "16px",
-        }}>
+      <style>{`
+        .h-bento {
+          max-width: 1340px;
+          margin: 0 auto;
+          padding: 0 48px 60px;
+          width: 100%;
+        }
+        .h-bento-grid {
+          display: grid;
+          grid-template-columns: 1.2fr 1fr 1fr;
+          gap: 16px;
+        }
+        @media (max-width: 900px) {
+          .h-bento { padding: 24px 20px 40px; }
+          .h-bento-grid { grid-template-columns: 1fr; gap: 12px; }
+        }
+      `}</style>
+      <div className="h-a h-trust h-bento">
+        <div className="h-bento-grid">
           {/* Card 1 — Large accent */}
           <div style={{
             background: "var(--pink)",
