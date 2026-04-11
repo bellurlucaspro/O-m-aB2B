@@ -397,7 +397,7 @@ export default function AdminLayout({
       {/* ============================================================ */}
       <main style={{
         flex: 1, minWidth: 0,
-        ...(isContentPage ? { height: "100vh", overflow: "hidden" } : {}),
+        ...(isContentPage && !isMobile ? { height: "100vh", overflow: "hidden" } : {}),
       }}>
         {/* Header */}
         <header style={{
@@ -479,7 +479,7 @@ export default function AdminLayout({
         {/* Page content */}
         <div style={{
           padding: isContentPage ? "0" : "28px 32px",
-          ...(isContentPage ? { height: "calc(100vh - 64px)", overflow: "hidden" } : {}),
+          ...(isContentPage && !isMobile ? { height: "calc(100vh - 64px)", overflow: "hidden" } : {}),
         }}>
           {children}
         </div>
