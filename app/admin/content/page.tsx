@@ -1530,6 +1530,9 @@ export default function AdminContentPage() {
           position: sticky; top: 0;
           display: flex; flex-direction: column; gap: 4px;
         }
+
+        /* ─── Mobile nav toggle (hidden on desktop) ─── */
+        .ce-mobile-nav { display: none; }
         .ce-sidebar__label {
           font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
           letter-spacing: 0.1em; color: #9ca3af;
@@ -1821,6 +1824,121 @@ export default function AdminContentPage() {
         .cp-iframe {
           width: 100%; height: 100%; border: none;
           transform-origin: top left;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           MOBILE / TABLET (< 1024px)
+           ═══════════════════════════════════════════════════════════ */
+        @media (max-width: 1023px) {
+          .ce-topbar {
+            padding: 14px 18px;
+            flex-wrap: wrap;
+          }
+          .ce-topbar__title { font-size: 1.1rem; }
+          .ce-topbar__sub { font-size: 0.74rem; max-width: 100%; }
+          .ce-topbar__actions { margin-left: 0; width: 100%; flex-wrap: wrap; gap: 8px; }
+
+          /* Builder stacks vertically */
+          .ce-builder {
+            flex-direction: column;
+          }
+
+          /* Sidebar becomes horizontal pills at the top */
+          .ce-sidebar {
+            width: 100% !important;
+            height: auto !important;
+            max-height: none;
+            position: relative;
+            top: auto;
+            flex-direction: row;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 12px 14px;
+            gap: 8px;
+            border-right: none;
+            border-bottom: 1px solid #eef0f2;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x proximity;
+          }
+          .ce-sidebar::-webkit-scrollbar { height: 0; }
+          .ce-sidebar__label { display: none; }
+          .ce-sidebar__item {
+            flex-shrink: 0;
+            width: auto;
+            min-width: 180px;
+            max-width: 260px;
+            scroll-snap-align: start;
+            padding: 10px 14px;
+            background: white;
+            border: 1.5px solid #eef0f2;
+            border-radius: 12px;
+          }
+          .ce-sidebar__item--active {
+            background: rgba(135,163,141,0.12) !important;
+            border-color: #87A38D;
+          }
+          .ce-sidebar__text { gap: 1px; }
+          .ce-sidebar__item-label { font-size: 0.78rem; }
+          .ce-sidebar__item-desc {
+            font-size: 0.62rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .ce-sidebar__icon { width: 30px; height: 30px; }
+
+          /* Editor takes full width with natural scroll */
+          .ce-editor,
+          .ce-builder > div.ce-editor {
+            height: auto !important;
+            overflow: visible !important;
+            padding: 20px 18px 80px !important;
+          }
+
+          /* Hide live preview on mobile (not usable) */
+          .cp-root,
+          .ce-builder--both .cp-root {
+            display: none !important;
+          }
+          .ce-builder--preview .cp-root {
+            display: flex !important;
+            width: 100% !important;
+            height: calc(100vh - 150px) !important;
+            position: relative !important;
+          }
+
+          /* Hide view mode toggle on mobile (no preview) */
+          .ce-panel-btn { display: none; }
+
+          /* Section header adjustments */
+          .ce-section-header {
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+          }
+          .ce-section-icon {
+            width: 38px !important;
+            height: 38px !important;
+          }
+          .ce-section-title { font-size: 1.1rem !important; }
+          .ce-section-subtitle { font-size: 0.72rem !important; }
+          .ce-section-nav { margin-left: 0; }
+
+          .ce-row, .ce-grid-2 {
+            grid-template-columns: 1fr !important;
+          }
+
+          .ce-tip { padding: 12px 14px; margin-bottom: 18px; }
+          .ce-tip__text { font-size: 0.78rem; }
+        }
+
+        @media (max-width: 640px) {
+          .ce-topbar { padding: 12px 14px; }
+          .ce-sidebar { padding: 10px 12px; gap: 6px; }
+          .ce-sidebar__item { min-width: 160px; padding: 9px 12px; }
+          .ce-editor { padding: 16px 14px 70px !important; }
+          .ce-input { font-size: 16px; } /* Prevent iOS zoom on focus */
         }
       `}</style>
 
