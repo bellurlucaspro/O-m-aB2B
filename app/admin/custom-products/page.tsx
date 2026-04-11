@@ -145,6 +145,8 @@ export default function CustomProductsAdmin() {
   const [activeSection, setActiveSection] = useState<SectionKey>("catalog");
   const [filterCat, setFilterCat] = useState<string>("all");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [expandedCatIdx, setExpandedCatIdx] = useState<number | null>(null);
+  const [expandedTierIdx, setExpandedTierIdx] = useState<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -655,61 +657,96 @@ export default function CustomProductsAdmin() {
                 </div>
 
                 <div className="cp-tiers">
-                  {settings.discountTiers.map((t, i) => (
-                    <div key={i} className="cp-tier">
-                      <div className="cp-tier__number">{i + 1}</div>
-                      <div className="cp-tier__grid">
-                        <div>
-                          <label className="cp-mini-label">À partir de</label>
-                          <div className="cp-tier-input-wrap">
-                            <input
-                              type="number"
-                              value={t.min}
-                              onChange={e => updateTier(i, { min: parseInt(e.target.value) || 0 })}
-                              className="cp-tier-input"
-                            />
-                            <span className="cp-tier-input-suffix">coffrets</span>
+                  {settings.discountTiers.map((t, i) => {
+                    const isExpanded = expandedTierIdx === i;
+                    const rangeLabel = t.max === null ? `${t.min}+ coffrets` : `${t.min}–${t.max} coffrets`;
+                    return (
+                      <div key={i} className={`cp-tier-item ${isExpanded ? "cp-tier-item--expanded" : ""}`}>
+                        {/* Compact row */}
+                        <button
+                          type="button"
+                          className="cp-tier-head"
+                          onClick={() => setExpandedTierIdx(isExpanded ? null : i)}
+                        >
+                          <div className="cp-tier__number">{i + 1}</div>
+                          <div className="cp-tier-head-text">
+                            <span className="cp-tier-head-range">{rangeLabel}</span>
+                            <span className="cp-tier-head-discount">
+                              {t.discount > 0 ? `−${t.discount}% de remise` : "Prix plein"}
+                            </span>
                           </div>
-                        </div>
-                        <div>
-                          <label className="cp-mini-label">Jusqu&apos;à</label>
-                          <div className="cp-tier-input-wrap">
-                            <input
-                              type="number"
-                              value={t.max ?? ""}
-                              placeholder="∞"
-                              onChange={e => {
-                                const val = e.target.value;
-                                updateTier(i, { max: val === "" ? null : parseInt(val) || 0 });
+                          <ChevronDown
+                            size={15}
+                            strokeWidth={2.2}
+                            style={{
+                              color: "#9ca3af",
+                              transition: "transform 0.25s ease",
+                              transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                              flexShrink: 0,
+                            }}
+                          />
+                        </button>
+
+                        {/* Expanded editor */}
+                        {isExpanded && (
+                          <div className="cp-tier-body">
+                            <div>
+                              <label className="cp-mini-label">À partir de</label>
+                              <div className="cp-tier-input-wrap">
+                                <input
+                                  type="number"
+                                  value={t.min}
+                                  onChange={e => updateTier(i, { min: parseInt(e.target.value) || 0 })}
+                                  className="cp-tier-input"
+                                />
+                                <span className="cp-tier-input-suffix">coffrets</span>
+                              </div>
+                            </div>
+                            <div>
+                              <label className="cp-mini-label">Jusqu&apos;à</label>
+                              <div className="cp-tier-input-wrap">
+                                <input
+                                  type="number"
+                                  value={t.max ?? ""}
+                                  placeholder="∞"
+                                  onChange={e => {
+                                    const val = e.target.value;
+                                    updateTier(i, { max: val === "" ? null : parseInt(val) || 0 });
+                                  }}
+                                  className="cp-tier-input"
+                                />
+                                <span className="cp-tier-input-suffix">{t.max === null ? "illimité" : "coffrets"}</span>
+                              </div>
+                            </div>
+                            <div>
+                              <label className="cp-mini-label">Remise appliquée</label>
+                              <div className="cp-tier-input-wrap">
+                                <input
+                                  type="number"
+                                  value={t.discount}
+                                  onChange={e => updateTier(i, { discount: Math.max(0, Math.min(100, parseFloat(e.target.value) || 0)) })}
+                                  className="cp-tier-input"
+                                />
+                                <span className="cp-tier-input-suffix">%</span>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                removeTier(i);
+                                setExpandedTierIdx(null);
                               }}
-                              className="cp-tier-input"
-                            />
-                            <span className="cp-tier-input-suffix">{t.max === null ? "illimité" : "coffrets"}</span>
+                              disabled={settings.discountTiers.length <= 1}
+                              className="cp-btn-danger"
+                              style={{ alignSelf: "flex-start" }}
+                            >
+                              <Trash2 size={13} strokeWidth={2.2} /> Supprimer ce palier
+                            </button>
                           </div>
-                        </div>
-                        <div>
-                          <label className="cp-mini-label">Remise appliquée</label>
-                          <div className="cp-tier-input-wrap">
-                            <input
-                              type="number"
-                              value={t.discount}
-                              onChange={e => updateTier(i, { discount: Math.max(0, Math.min(100, parseFloat(e.target.value) || 0)) })}
-                              className="cp-tier-input"
-                            />
-                            <span className="cp-tier-input-suffix">%</span>
-                          </div>
-                        </div>
+                        )}
                       </div>
-                      <button
-                        onClick={() => removeTier(i)}
-                        disabled={settings.discountTiers.length <= 1}
-                        className="cp-tier__del"
-                        title="Supprimer ce palier"
-                      >
-                        <Trash2 size={13} />
-                      </button>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
@@ -827,72 +864,97 @@ export default function CustomProductsAdmin() {
                     const Icon = (c.icon && ICON_MAP[c.icon]) || Tag;
                     const color = CATEGORY_COLORS[i % CATEGORY_COLORS.length];
                     const count = products.filter(p => p.category === c.value).length;
+                    const isExpanded = expandedCatIdx === i;
                     return (
-                      <div key={i} className="cp-cat-row">
-                        <div className="cp-cat-icon" style={{ background: `${color}15`, color }}>
-                          <Icon size={16} strokeWidth={2.2} />
-                        </div>
-                        <div className="cp-cat-fields">
-                          <div>
-                            <label className="cp-mini-label">Nom affiché</label>
-                            <input
-                              className="cp-input"
-                              value={c.label}
-                              onChange={e => {
-                                const cats = [...(settings.categories || [])];
-                                cats[i] = { ...cats[i], label: e.target.value };
-                                setSettings({ ...settings, categories: cats });
-                              }}
-                              placeholder="Ex : Soins"
-                            />
-                          </div>
-                          <div>
-                            <label className="cp-mini-label">Identifiant technique</label>
-                            <input
-                              className="cp-input"
-                              value={c.value}
-                              onChange={e => {
-                                const oldVal = c.value;
-                                const newVal = e.target.value.trim() || oldVal;
-                                const cats = [...(settings.categories || [])];
-                                cats[i] = { ...cats[i], value: newVal };
-                                setSettings({ ...settings, categories: cats });
-                                if (oldVal !== newVal) {
-                                  setProducts(products.map(p => p.category === oldVal ? { ...p, category: newVal } : p));
-                                }
-                              }}
-                              placeholder="ex: soin"
-                            />
-                          </div>
-                          <div>
-                            <label className="cp-mini-label">Icône</label>
-                            <select
-                              className="cp-input"
-                              value={c.icon || "Tag"}
-                              onChange={e => {
-                                const cats = [...(settings.categories || [])];
-                                cats[i] = { ...cats[i], icon: e.target.value };
-                                setSettings({ ...settings, categories: cats });
-                              }}
-                            >
-                              {Object.keys(ICON_MAP).map(k => <option key={k} value={k}>{k}</option>)}
-                            </select>
-                          </div>
-                        </div>
-                        <div className="cp-cat-count">
-                          <span className="cp-cat-count__val">{count}</span>
-                          <span className="cp-cat-count__label">produit{count !== 1 ? "s" : ""}</span>
-                        </div>
+                      <div key={i} className={`cp-cat-item ${isExpanded ? "cp-cat-item--expanded" : ""}`}>
+                        {/* Compact row */}
                         <button
-                          onClick={() => {
-                            if (count > 0 && !confirm(`Cette catégorie contient ${count} produit(s). Supprimer quand même ?`)) return;
-                            setSettings({ ...settings, categories: (settings.categories || []).filter((_, idx) => idx !== i) });
-                          }}
-                          className="cp-cat-del"
-                          title="Supprimer la catégorie"
+                          type="button"
+                          className="cp-cat-head"
+                          onClick={() => setExpandedCatIdx(isExpanded ? null : i)}
                         >
-                          <Trash2 size={13} />
+                          <div className="cp-cat-icon" style={{ background: `${color}15`, color }}>
+                            <Icon size={16} strokeWidth={2.2} />
+                          </div>
+                          <div className="cp-cat-head-text">
+                            <span className="cp-cat-head-name">{c.label || "(sans nom)"}</span>
+                            <span className="cp-cat-head-meta">{count} produit{count !== 1 ? "s" : ""} · {c.value}</span>
+                          </div>
+                          <ChevronDown
+                            size={15}
+                            strokeWidth={2.2}
+                            style={{
+                              color: "#9ca3af",
+                              transition: "transform 0.25s ease",
+                              transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                              flexShrink: 0,
+                            }}
+                          />
                         </button>
+
+                        {/* Expanded editor */}
+                        {isExpanded && (
+                          <div className="cp-cat-body">
+                            <div>
+                              <label className="cp-mini-label">Nom affiché</label>
+                              <input
+                                className="cp-input"
+                                value={c.label}
+                                onChange={e => {
+                                  const cats = [...(settings.categories || [])];
+                                  cats[i] = { ...cats[i], label: e.target.value };
+                                  setSettings({ ...settings, categories: cats });
+                                }}
+                                placeholder="Ex : Soins"
+                              />
+                            </div>
+                            <div>
+                              <label className="cp-mini-label">Identifiant technique</label>
+                              <input
+                                className="cp-input"
+                                value={c.value}
+                                onChange={e => {
+                                  const oldVal = c.value;
+                                  const newVal = e.target.value.trim() || oldVal;
+                                  const cats = [...(settings.categories || [])];
+                                  cats[i] = { ...cats[i], value: newVal };
+                                  setSettings({ ...settings, categories: cats });
+                                  if (oldVal !== newVal) {
+                                    setProducts(products.map(p => p.category === oldVal ? { ...p, category: newVal } : p));
+                                  }
+                                }}
+                                placeholder="ex: soin"
+                              />
+                              <p className="cp-hint">Utilisé dans le code, en minuscules sans espaces</p>
+                            </div>
+                            <div>
+                              <label className="cp-mini-label">Icône</label>
+                              <select
+                                className="cp-input"
+                                value={c.icon || "Tag"}
+                                onChange={e => {
+                                  const cats = [...(settings.categories || [])];
+                                  cats[i] = { ...cats[i], icon: e.target.value };
+                                  setSettings({ ...settings, categories: cats });
+                                }}
+                              >
+                                {Object.keys(ICON_MAP).map(k => <option key={k} value={k}>{k}</option>)}
+                              </select>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (count > 0 && !confirm(`Cette catégorie contient ${count} produit(s). Supprimer quand même ?`)) return;
+                                setSettings({ ...settings, categories: (settings.categories || []).filter((_, idx) => idx !== i) });
+                                setExpandedCatIdx(null);
+                              }}
+                              className="cp-btn-danger"
+                              style={{ alignSelf: "flex-start" }}
+                            >
+                              <Trash2 size={13} strokeWidth={2.2} /> Supprimer cette catégorie
+                            </button>
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -1349,15 +1411,44 @@ const styles = `
     background: #f0f1f3; color: #6b7280;
   }
 
-  /* ─── Tiers ─── */
-  .cp-tiers { display: flex; flex-direction: column; gap: 10px; }
-  .cp-tier {
-    display: flex; align-items: center; gap: 14px;
-    padding: 14px 16px;
+  /* ─── Tiers (accordion) ─── */
+  .cp-tiers { display: flex; flex-direction: column; gap: 8px; }
+  .cp-tier-item {
     background: #fafbfc;
     border: 1px solid #eef0f2;
     border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.2s ease;
   }
+  .cp-tier-item--expanded {
+    background: white;
+    border-color: #d4d8de;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+  .cp-tier-head {
+    display: flex; align-items: center; gap: 12px;
+    width: 100%; padding: 14px 16px;
+    background: transparent; border: none;
+    cursor: pointer; text-align: left;
+    font-family: inherit;
+  }
+  .cp-tier-head:hover { background: rgba(135,163,141,0.03); }
+  .cp-tier-head-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .cp-tier-head-range {
+    font-family: var(--font-manrope); font-weight: 800;
+    font-size: 0.88rem; color: #0f172a;
+    letter-spacing: -0.01em;
+  }
+  .cp-tier-head-discount {
+    font-size: 0.72rem; color: #5F7263;
+    font-weight: 600;
+  }
+  .cp-tier-body {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 4px 16px 18px 56px;
+    animation: fadeIn 0.2s ease;
+  }
+
   .cp-tier__number {
     width: 28px; height: 28px; border-radius: 50%;
     background: #5F7263; color: white;
@@ -1439,15 +1530,45 @@ const styles = `
     gap: 16px; margin-top: 10px;
   }
 
-  /* ─── Categories ─── */
-  .cp-categories { display: flex; flex-direction: column; gap: 10px; }
-  .cp-cat-row {
-    display: flex; align-items: center; gap: 14px;
-    padding: 14px 16px;
+  /* ─── Categories (accordion) ─── */
+  .cp-categories { display: flex; flex-direction: column; gap: 8px; }
+  .cp-cat-item {
     background: #fafbfc;
     border: 1px solid #eef0f2;
     border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.2s ease;
   }
+  .cp-cat-item--expanded {
+    background: white;
+    border-color: #d4d8de;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+  .cp-cat-head {
+    display: flex; align-items: center; gap: 12px;
+    width: 100%; padding: 14px 16px;
+    background: transparent; border: none;
+    cursor: pointer; text-align: left;
+    font-family: inherit;
+  }
+  .cp-cat-head:hover { background: rgba(135,163,141,0.03); }
+  .cp-cat-head-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .cp-cat-head-name {
+    font-family: var(--font-manrope); font-weight: 800;
+    font-size: 0.88rem; color: #0f172a;
+    letter-spacing: -0.01em;
+  }
+  .cp-cat-head-meta {
+    font-size: 0.7rem; color: #9ca3af;
+    font-weight: 500;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .cp-cat-body {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 4px 16px 18px 56px;
+    animation: fadeIn 0.2s ease;
+  }
+
   .cp-cat-icon {
     width: 36px; height: 36px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
@@ -1574,12 +1695,17 @@ const styles = `
     .cp-card__row { grid-template-columns: 1fr; }
 
     .cp-rules-grid { grid-template-columns: 1fr; }
-    .cp-tier { flex-wrap: wrap; }
-    .cp-tier__grid { grid-template-columns: 1fr; gap: 10px; }
     .cp-preview-grid { grid-template-columns: 1fr; }
 
-    .cp-cat-row { flex-wrap: wrap; gap: 10px; }
-    .cp-cat-fields { grid-template-columns: 1fr; gap: 8px; }
+    /* Accordion bodies: reduce left padding on mobile */
+    .cp-cat-body,
+    .cp-tier-body {
+      padding-left: 16px;
+    }
+    .cp-cat-head,
+    .cp-tier-head {
+      padding: 12px 14px;
+    }
 
     .cp-input { font-size: 16px; } /* prevent iOS zoom */
   }
